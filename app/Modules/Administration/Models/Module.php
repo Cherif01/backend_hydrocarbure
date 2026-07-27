@@ -6,16 +6,16 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 
 #[Fillable(['name', 'description', 'is_active'])]
-class Role extends Model
+class Module extends Model
 {
-    protected $table = 'roles';
+    protected $table = 'modules';
 
     protected $casts = [
         'is_active' => 'boolean',
     ];
 
-    public function users()
+    public function userModules()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(UserModule::class, 'module_id');
     }
 }

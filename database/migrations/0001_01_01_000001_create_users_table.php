@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('username')->unique()->index();
             $table->string('telephone', length: 30)->unique()->index();
             $table->string('email')->nullable()->index();
-            $table->foreignIdFor(Role::class)->nullable()->constrained()->nullOnDelete();
+            $table->enum('role', ['user', 'admin', 'super_admin', 'client'])->default('user');
             $table->string('avatar')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamp('email_verified_at')->nullable();

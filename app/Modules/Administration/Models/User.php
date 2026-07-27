@@ -4,6 +4,7 @@ namespace App\Modules\Administration\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Modules\Gestions\Models\AffectationStation;
 use App\Traits\CloudflareUpload;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
@@ -14,7 +15,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Str;
 
-#[Fillable(['name', 'email', 'telephone', 'username', 'is_active', 'role_id', 'avatar', 'password'])]
+#[Fillable(['name', 'email', 'telephone', 'username', 'is_active', 'role', 'avatar', 'password'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -42,10 +43,6 @@ class User extends Authenticatable
         static::creating(function (User $user) {
             if (empty($user->username)) {
                 $user->username = static::generateUniqueUsername($user->name);
-            }
-
-            if (empty($user->role_id)) {
-                $user->role_id = Role::where('name', 'user')->value('id') ?? null;
             }
         });
     }
@@ -90,8 +87,13 @@ class User extends Authenticatable
         return 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&color=7F9CF5&background=EBF4FF';
     }
 
-    public function role()
+    public function userModules()
     {
-        return $this->belongsTo(Role::class);
+        return $this->hasMany(UserModule::class, 'user_id');
+    }
+
+    public function affectations()
+    {
+        return $this->hasMany(AffectationStation::class, 'user_id');
     }
 }

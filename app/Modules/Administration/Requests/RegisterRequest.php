@@ -19,7 +19,7 @@ class RegisterRequest extends FormRequest
             'name' => ['required', 'string', 'min:2', 'max:160'],
             'telephone' => ['required', 'string', 'min:9', 'max:14', 'unique:users,telephone'],
             'email' => ['nullable', 'email', 'unique:users,email'],
-            'role_id' => ['nullable', 'integer', 'exists:roles,id'],
+            'role' => ['nullable', 'string', 'in:user,super_admin,admin,client'],
             'avatar' => ['nullable', 'image', 'mimes:png,jpg,jpeg', 'max:2048'],
             'password' => ['required', 'string', 'min:6', 'confirmed']
 
@@ -49,7 +49,7 @@ class RegisterRequest extends FormRequest
             'email.unique'   => "Cette adresse email est déjà utilisée.",
 
             // Role
-            'role_id.exists' => "Ce rôle n'existe pas.",
+            'role.in' => "Ce rôle est invalide.",
 
             // Avatar
             'avatar.image' => "L'avatar n'est pas une image valide.",

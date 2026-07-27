@@ -5,7 +5,7 @@ namespace App\Modules\Administration\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Override;
 
-class RoleRequest extends FormRequest
+class ModuleRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -15,7 +15,7 @@ class RoleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255|unique:roles,name,' . $this->route('role'),
+            'name' => 'required|string|max:255|unique:modules,name,' . $this->route('module'),
             'description' => "nullable|string|max:255"
         ];
     }
@@ -24,9 +24,9 @@ class RoleRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => "Le nom du role est requis.",
-            'name.unique' => "Le nom du role doit être unique.",
-            'description.max' => "La description du role doit être de plus de 255 caractères.",
+            'name.required' => "Le nom du module est requis.",
+            'name.unique' => "Le nom du module doit être unique.",
+            'description.max' => "La description du module doit être de plus de 255 caractères.",
         ];
     }
 }

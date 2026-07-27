@@ -3,7 +3,6 @@
 namespace App\Modules\Administration\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Modules\Administration\Models\Role;
 use App\Modules\Administration\Models\User;
 use App\Modules\Administration\Requests\LoginRequest;
 use App\Modules\Administration\Requests\RegisterRequest;
@@ -31,7 +30,7 @@ class AuthController extends Controller
             'name' => $data['name'],
             'telephone' => $data['telephone'],
             'email' => $data['email'],
-            'role_id' => $data['role_id'] ?? null,
+            'role' => $data['role'] ?? 'user',
             'avatar' => $data['avatar'] ?? null,
             'password' => Hash::make($data['password']),
         ]);
@@ -100,35 +99,6 @@ class AuthController extends Controller
         );
     }
 
-    public function switchRole(Request $request, User $user)
-    {
-        if (!$request->user()->hasRole('super_admin')) {
-            return $this->errorResponse(
-                "Vous n'avez pas la permission de changer le rôle d'un utilisateur.",
-                403
-            );
-        }
-
-        $validated = $request->validate([
-            'role_id' => 'required|integer|exists:roles,id',
-        ]);
-
-        $ancienRoleId = $user->role_id;
-
-        $user->update(['role_id' => $validated['role_id']]);
-
-        logActivity(
-            "Changement de rôle de l'utilisateur " . $user->name,
-            ['ancien_role_id' => $ancienRoleId, 'nouveau_role_id' => $user->role_id],
-            $user
-        );
-
-        return $this->successResponse(
-            new UserResource($user->fresh('role')),
-            "Rôle de l'utilisateur changé avec succès."
-        );
-    }
-
     public function updateProfile(UpdateProfileRequest $request)
     {
         $user = $request->user();
@@ -187,7 +157,7 @@ class AuthController extends Controller
 
     public function users(Request $request)
     {
-        $users = User::with('role')->orderBy('created_at', 'desc')->get();
+        $users = User::with('userModules')->orderBy('created_at', 'desc')->get();
 
         return $this->successResponse(
             UserResource::collection($users),
