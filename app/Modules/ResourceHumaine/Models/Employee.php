@@ -3,6 +3,7 @@
 namespace App\Modules\ResourceHumaine\Models;
 
 use App\Modules\Administration\Models\User;
+use App\Modules\Gestions\Models\AffectationPistolet;
 use App\Modules\Gestions\Models\Station;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
@@ -30,5 +31,10 @@ class Employee extends Model
     public function updatedBy()
     {
         return $this->belongsTo(User::class, 'updated_by');
+    }
+
+    public function affectationsPistolets()
+    {
+        return $this->hasMany(AffectationPistolet::class, 'employee_id');
     }
 }
