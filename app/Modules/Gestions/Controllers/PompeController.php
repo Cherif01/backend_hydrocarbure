@@ -7,6 +7,7 @@ use App\Modules\Gestions\Models\Pompe;
 use App\Modules\Gestions\Requests\PompeRequest;
 use App\Modules\Gestions\Resources\PompeResource;
 use App\Traits\ApiResponses;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -50,11 +51,9 @@ class PompeController extends Controller
             $data['station_id'] = $scope['station_id'];
         }
 
-        if (empty($data['reference'])) {
-            $data['reference'] = $this->generateUniqueReference();
-        }
-
-        $pompe = Pompe::create($data)->load(['station', 'createdBy', 'updatedBy']);
+        $hasAutomaticReference = empty($data['reference']);
+        $pompe = $this->createWithReferenceRetry($data, $hasAutomaticReference)
+            ->load(['station', 'createdBy', 'updatedBy']);
 
         logActivity("Creation d'une pompe", $pompe->toArray(), $pompe);
 
@@ -107,6 +106,41 @@ class PompeController extends Controller
                 $query->where('station_id', $scope['station_id']);
             })
             ->findOrFail($pompeId);
+    }
+
+    private function createWithReferenceRetry(array $data, bool $hasAutomaticReference): Pompe
+    {
+        $maxAttempts = $hasAutomaticReference ? 3 : 1;
+
+        for ($attempt = 1; $attempt <= $maxAttempts; $attempt++) {
+            if ($hasAutomaticReference) {
+                $data['reference'] = $this->generateUniqueReference();
+            }
+
+            try {
+                return Pompe::create($data);
+            } catch (QueryException $exception) {
+                $canRetry = $hasAutomaticReference
+                    && $attempt < $maxAttempts
+                    && $this->isReferenceCollision($exception);
+
+                if (! $canRetry) {
+                    throw $exception;
+                }
+            }
+        }
+
+        throw new \LogicException('La creation de la pompe a echoue.');
+    }
+
+    private function isReferenceCollision(QueryException $exception): bool
+    {
+        $sqlState = $exception->errorInfo[0] ?? (string) $exception->getCode();
+        $message = strtolower($exception->getMessage());
+
+        return in_array($sqlState, ['23000', '23505'], true)
+            && (str_contains($message, 'pompes.reference')
+                || str_contains($message, 'pompes_reference_unique'));
     }
 
     private function generateUniqueReference(): string

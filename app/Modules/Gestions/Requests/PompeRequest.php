@@ -13,6 +13,17 @@ class PompeRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation(): void
+    {
+        $scope = $this->attributes->get('station_scope', []);
+
+        if ($scope['is_station_scoped'] ?? false) {
+            $this->merge([
+                'station_id' => $scope['station_id'],
+            ]);
+        }
+    }
+
     public function rules(): array
     {
         $pompe = $this->route('pompe');

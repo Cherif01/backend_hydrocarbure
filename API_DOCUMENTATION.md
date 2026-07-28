@@ -1339,13 +1339,38 @@ Hydrocarbons and their prices are global. They are never filtered by station.
 | `GET` | `/api/v1/gestions/hydrocarbures/{hydrocarbure}` | Admin or assigned manager |
 | `PUT`, `PATCH` | `/api/v1/gestions/hydrocarbures/{hydrocarbure}` | Admin only |
 
-### Create Or Update Payload
+### Create Payload (`POST`)
 
 ```json
 {
     "libelle": "Essence",
     "prix_achat": 800,
     "prix_vente": 850
+}
+```
+
+All three fields are required.
+
+### Complete Update Payload (`PUT`)
+
+```json
+{
+    "libelle": "Essence super",
+    "prix_achat": 810,
+    "prix_vente": 875
+}
+```
+
+All three fields are required.
+
+### Partial Update Payload (`PATCH`)
+
+Only the fields to update are required. Fields that are not sent keep their
+current values.
+
+```json
+{
+    "prix_vente": 875
 }
 ```
 
@@ -1486,6 +1511,8 @@ There is no `DELETE` route for pistolets.
 - `prix_vente`: required numeric, minimum 0
 - the label is not required to be unique
 - no purchase/sale price comparison is currently applied
+- all three fields are required for `POST` and `PUT`
+- `PATCH` validates only the fields included in the request
 
 ### Pompe
 

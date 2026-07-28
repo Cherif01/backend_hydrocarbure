@@ -14,10 +14,12 @@ class HydrocarbureRequest extends FormRequest
 
     public function rules(): array
     {
+        $presenceRule = $this->isMethod('PATCH') ? 'sometimes' : 'required';
+
         return [
-            'libelle' => ['required', 'string', 'max:255'],
-            'prix_achat' => ['required', 'numeric', 'min:0'],
-            'prix_vente' => ['required', 'numeric', 'min:0'],
+            'libelle' => [$presenceRule, 'string', 'max:255'],
+            'prix_achat' => [$presenceRule, 'numeric', 'min:0'],
+            'prix_vente' => [$presenceRule, 'numeric', 'min:0'],
         ];
     }
 

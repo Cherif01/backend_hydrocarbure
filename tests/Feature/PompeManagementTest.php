@@ -116,6 +116,25 @@ class PompeManagementTest extends TestCase
         ]);
     }
 
+    public function test_invalid_station_sent_by_manager_is_ignored_before_validation(): void
+    {
+        $managerStation = $this->createStation();
+        $manager = $this->createManager($managerStation);
+        Sanctum::actingAs($manager);
+
+        $response = $this->postJson('/api/v1/gestions/pompes', [
+            'station_id' => 999999,
+            'libelle' => 'Pompe avec station imposee',
+        ])->assertOk()
+            ->assertJsonMissingValidationErrors(['station_id'])
+            ->assertJsonPath('data.station_id', $managerStation->id);
+
+        $this->assertDatabaseHas('pompes', [
+            'id' => $response->json('data.id'),
+            'station_id' => $managerStation->id,
+        ]);
+    }
+
     public function test_manager_cannot_move_pump_to_another_station(): void
     {
         $managerStation = $this->createStation();
@@ -180,6 +199,24 @@ class PompeManagementTest extends TestCase
             'libelle' => 'Pompe suivante',
         ])->assertOk()
             ->assertJsonPath('data.reference', 'POM100');
+    }
+
+    public function test_automatic_reference_increments_from_pom01_to_pom02(): void
+    {
+        $station = $this->createStation();
+        Sanctum::actingAs($this->createUser('admin'));
+
+        $this->postJson('/api/v1/gestions/pompes', [
+            'station_id' => $station->id,
+            'libelle' => 'Premiere pompe',
+        ])->assertOk()
+            ->assertJsonPath('data.reference', 'POM01');
+
+        $this->postJson('/api/v1/gestions/pompes', [
+            'station_id' => $station->id,
+            'libelle' => 'Deuxieme pompe',
+        ])->assertOk()
+            ->assertJsonPath('data.reference', 'POM02');
     }
 
     public function test_reference_must_be_unique_and_station_must_exist(): void

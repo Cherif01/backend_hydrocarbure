@@ -52,14 +52,15 @@ class HydrocarbureController extends Controller
     {
         $data = $request->validated();
         $data['updated_by'] = Auth::id();
-        $oldHydrocarbure = $hydrocarbure->replicate()->fill($hydrocarbure->getAttributes());
+        $auditFields = ['libelle', 'prix_achat', 'prix_vente', 'created_by', 'updated_by'];
+        $oldHydrocarbure = $hydrocarbure->only($auditFields);
 
         $hydrocarbure->update($data);
         $hydrocarbure->load(['createdBy', 'updatedBy']);
 
         logActivity("Mise a jour d'un hydrocarbure", [
-            'oldHydrocarbure' => $oldHydrocarbure->toArray(),
-            'newHydrocarbure' => $hydrocarbure->toArray(),
+            'oldHydrocarbure' => $oldHydrocarbure,
+            'newHydrocarbure' => $hydrocarbure->only($auditFields),
         ], $hydrocarbure);
 
         return $this->successResponse(
