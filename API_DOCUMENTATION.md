@@ -207,6 +207,106 @@ When a user verifies the access code for a module and has an active `gerant_stat
 }
 ```
 
+### Hydrocarbure Resource
+
+Hydrocarbon prices are returned as strings with exactly two decimal places. This
+keeps monetary values stable and avoids floating-point rounding in JSON clients.
+
+```json
+{
+    "id": 1,
+    "libelle": "Essence",
+    "prix_achat": "800.00",
+    "prix_vente": "850.00",
+    "created_by": {
+        "id": 1,
+        "name": "Admin User",
+        "telephone": "0700000000"
+    },
+    "updated_by": {
+        "id": 2,
+        "name": "Admin User",
+        "telephone": "0711111111"
+    },
+    "created_at": "28-07-2026 14:00:00",
+    "updated_at": "28-07-2026 14:30:00"
+}
+```
+
+### Pompe Resource
+
+```json
+{
+    "id": 1,
+    "reference": "POM01",
+    "station_id": 3,
+    "libelle": "Pompe principale",
+    "description": "Pompe de la piste 1",
+    "is_active": true,
+    "station": {
+        "id": 3,
+        "reference": "STAAB12CD",
+        "libelle": "Station Bonaberi",
+        "description": "Station principale",
+        "adresse": "Bonaberi",
+        "ville": "Douala"
+    },
+    "created_by": {
+        "id": 1,
+        "name": "Admin User",
+        "telephone": "0700000000"
+    },
+    "updated_by": {
+        "id": 2,
+        "name": "Manager User",
+        "telephone": "0711111111"
+    },
+    "created_at": "28-07-2026 14:00:00",
+    "updated_at": "28-07-2026 14:30:00"
+}
+```
+
+### Pistolet Resource
+
+```json
+{
+    "id": 1,
+    "pompe_id": 1,
+    "hydrocarbure_id": 1,
+    "libelle": "Pistolet essence 1",
+    "is_active": true,
+    "pompe": {
+        "id": 1,
+        "reference": "POM01",
+        "station_id": 3,
+        "libelle": "Pompe principale",
+        "station": {
+            "id": 3,
+            "reference": "STAAB12CD",
+            "libelle": "Station Bonaberi"
+        }
+    },
+    "hydrocarbure": {
+        "id": 1,
+        "libelle": "Essence",
+        "prix_achat": "800.00",
+        "prix_vente": "850.00"
+    },
+    "created_by": {
+        "id": 1,
+        "name": "Admin User",
+        "telephone": "0700000000"
+    },
+    "updated_by": {
+        "id": 2,
+        "name": "Manager User",
+        "telephone": "0711111111"
+    },
+    "created_at": "28-07-2026 14:00:00",
+    "updated_at": "28-07-2026 14:30:00"
+}
+```
+
 ## Authentication Endpoints
 
 ### Register
@@ -1218,6 +1318,115 @@ When a user verifies the access code for a module and has an active `gerant_stat
 }
 ```
 
+## Hydrocarbure Endpoints
+
+Hydrocarbons and their prices are global. They are never filtered by station.
+
+### Access
+
+- `admin` and `super_admin`: read, create and update
+- active `gerant_station` with an active station assignment: read only
+- `gerant_station` without an active station assignment: `403`
+- ordinary authenticated user: `403`
+- unauthenticated user: `401`
+
+### Available Routes
+
+| Method | URL | Access |
+| --- | --- | --- |
+| `GET` | `/api/v1/gestions/hydrocarbures` | Admin or assigned manager |
+| `POST` | `/api/v1/gestions/hydrocarbures` | Admin only |
+| `GET` | `/api/v1/gestions/hydrocarbures/{hydrocarbure}` | Admin or assigned manager |
+| `PUT`, `PATCH` | `/api/v1/gestions/hydrocarbures/{hydrocarbure}` | Admin only |
+
+### Create Or Update Payload
+
+```json
+{
+    "libelle": "Essence",
+    "prix_achat": 800,
+    "prix_vente": 850
+}
+```
+
+There is no `DELETE` route for hydrocarbons.
+
+## Pompe Endpoints
+
+A pump belongs to one station. Its reference is globally unique and is generated
+as `POM01`, `POM02`, and so on when omitted.
+
+### Access And Station Scope
+
+- `admin` and `super_admin`: global access and free station selection
+- active `gerant_station`: access limited to the active assigned station
+- a manager-supplied `station_id` is ignored and replaced by the scoped station
+- direct access to a pump outside the manager station returns `404`
+- missing active station assignment returns `403`
+- ordinary authenticated user returns `403`
+- unauthenticated user returns `401`
+
+### Available Routes
+
+| Method | URL |
+| --- | --- |
+| `GET` | `/api/v1/gestions/pompes` |
+| `POST` | `/api/v1/gestions/pompes` |
+| `GET` | `/api/v1/gestions/pompes/{pompe}` |
+| `PUT`, `PATCH` | `/api/v1/gestions/pompes/{pompe}` |
+
+### Create Or Update Payload
+
+```json
+{
+    "reference": "POM01",
+    "station_id": 3,
+    "libelle": "Pompe principale",
+    "description": "Pompe de la piste 1",
+    "is_active": true
+}
+```
+
+`reference` is optional. `station_id` is required for administrators and may be
+omitted by a station-scoped manager. There is no `DELETE` route for pumps.
+
+## Pistolet Endpoints
+
+A nozzle belongs to a pump and a global hydrocarbon. Its station is resolved
+through `pistolet -> pompe -> station`.
+
+### Access And Station Scope
+
+- `admin` and `super_admin`: global access
+- active `gerant_station`: access only through pumps belonging to the assigned station
+- a pump outside the manager station is rejected with `404` on create or update
+- a pistolet outside the manager station returns `404`
+- missing active station assignment returns `403`
+- ordinary authenticated user returns `403`
+- unauthenticated user returns `401`
+
+### Available Routes
+
+| Method | URL |
+| --- | --- |
+| `GET` | `/api/v1/gestions/pistolets` |
+| `POST` | `/api/v1/gestions/pistolets` |
+| `GET` | `/api/v1/gestions/pistolets/{pistolet}` |
+| `PUT`, `PATCH` | `/api/v1/gestions/pistolets/{pistolet}` |
+
+### Create Or Update Payload
+
+```json
+{
+    "pompe_id": 1,
+    "hydrocarbure_id": 1,
+    "libelle": "Pistolet essence 1",
+    "is_active": true
+}
+```
+
+There is no `DELETE` route for pistolets.
+
 ## Validation Summary
 
 ### Register
@@ -1270,6 +1479,29 @@ When a user verifies the access code for a module and has an active `gerant_stat
 - `station_id`: required, existing station id
 - `user_id`: required, existing user id
 
+### Hydrocarbure
+
+- `libelle`: required string, max 255
+- `prix_achat`: required numeric, minimum 0
+- `prix_vente`: required numeric, minimum 0
+- the label is not required to be unique
+- no purchase/sale price comparison is currently applied
+
+### Pompe
+
+- `reference`: optional string, max 255, globally unique
+- `station_id`: required for administrators, existing station id
+- `libelle`: required string, max 255
+- `description`: optional string
+- `is_active`: optional boolean
+
+### Pistolet
+
+- `pompe_id`: required, existing pump id, additionally checked against manager station scope
+- `hydrocarbure_id`: required, existing hydrocarbon id
+- `libelle`: required string, max 255
+- `is_active`: optional boolean
+
 ## Common Frontend Notes
 
 - Always store the bearer token after login or register.
@@ -1277,6 +1509,8 @@ When a user verifies the access code for a module and has an active `gerant_stat
 - `verify-access-code` is a second-level access validation for assigned modules.
 - For users linked to `gerant_station`, an active station affectation is required.
 - Some delete endpoints return only `status` and `message`.
+- Hydrocarbures, pompes and pistolets do not expose a `DELETE` route.
+- Hydrocarbon monetary values are serialized as strings with two decimal places.
 - Dates can differ by endpoint:
     - some raw models return ISO timestamps
     - resources return formatted dates like `27-07-2026 21:35:00`
