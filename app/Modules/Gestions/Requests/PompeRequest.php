@@ -29,19 +29,24 @@ class PompeRequest extends FormRequest
         $pompe = $this->route('pompe');
         $pompeId = is_object($pompe) ? $pompe->id : $pompe;
         $scope = $this->attributes->get('station_scope', []);
-        $stationRule = ($scope['is_station_scoped'] ?? false) ? 'nullable' : 'required';
+        $isPatch = $this->isMethod('PATCH');
+        $stationRule = $isPatch || ($scope['is_station_scoped'] ?? false)
+            ? 'sometimes'
+            : 'required';
+        $libelleRule = $isPatch ? 'sometimes' : 'required';
 
         return [
             'reference' => [
+                'sometimes',
                 'nullable',
                 'string',
                 'max:255',
                 Rule::unique('pompes', 'reference')->ignore($pompeId),
             ],
             'station_id' => [$stationRule, 'integer', 'exists:stations,id'],
-            'libelle' => ['required', 'string', 'max:255'],
-            'description' => ['nullable', 'string'],
-            'is_active' => ['nullable', 'boolean'],
+            'libelle' => [$libelleRule, 'string', 'max:255'],
+            'description' => ['sometimes', 'nullable', 'string'],
+            'is_active' => ['sometimes', 'boolean'],
         ];
     }
 

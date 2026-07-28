@@ -15,6 +15,16 @@ class PompeController extends Controller
 {
     use ApiResponses;
 
+    private const AUDIT_FIELDS = [
+        'reference',
+        'station_id',
+        'libelle',
+        'description',
+        'is_active',
+        'created_by',
+        'updated_by',
+    ];
+
     public function index(Request $request)
     {
         $scope = $this->stationScope($request);
@@ -51,11 +61,11 @@ class PompeController extends Controller
             $data['station_id'] = $scope['station_id'];
         }
 
-        $hasAutomaticReference = empty($data['reference']);
+        $hasAutomaticReference = $this->referenceIsMissingOrEmpty($data);
         $pompe = $this->createWithReferenceRetry($data, $hasAutomaticReference)
             ->load(['station', 'createdBy', 'updatedBy']);
 
-        logActivity("Creation d'une pompe", $pompe->toArray(), $pompe);
+        logActivity("Creation d'une pompe", $pompe->only(self::AUDIT_FIELDS), $pompe);
 
         return $this->successResponse(
             new PompeResource($pompe),
@@ -74,18 +84,18 @@ class PompeController extends Controller
             $data['station_id'] = $scope['station_id'];
         }
 
-        if (empty($data['reference'])) {
+        if ($this->referenceIsMissingOrEmpty($data)) {
             unset($data['reference']);
         }
 
-        $oldPompe = $pompe->replicate()->fill($pompe->getAttributes());
+        $oldPompe = $pompe->only(self::AUDIT_FIELDS);
 
         $pompe->update($data);
         $pompe->load(['station', 'createdBy', 'updatedBy']);
 
         logActivity("Mise a jour d'une pompe", [
-            'oldPompe' => $oldPompe->toArray(),
-            'newPompe' => $pompe->toArray(),
+            'oldPompe' => $oldPompe,
+            'newPompe' => $pompe->only(self::AUDIT_FIELDS),
         ], $pompe);
 
         return $this->successResponse(
@@ -97,6 +107,13 @@ class PompeController extends Controller
     private function stationScope(Request $request): array
     {
         return $request->attributes->get('station_scope');
+    }
+
+    private function referenceIsMissingOrEmpty(array $data): bool
+    {
+        return ! array_key_exists('reference', $data)
+            || $data['reference'] === null
+            || $data['reference'] === '';
     }
 
     private function resolveAccessiblePompe(int $pompeId, array $scope): Pompe

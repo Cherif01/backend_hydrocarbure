@@ -1400,11 +1400,10 @@ as `POM01`, `POM02`, and so on when omitted.
 | `GET` | `/api/v1/gestions/pompes/{pompe}` |
 | `PUT`, `PATCH` | `/api/v1/gestions/pompes/{pompe}` |
 
-### Create Or Update Payload
+### Create Payload (`POST`)
 
 ```json
 {
-    "reference": "POM01",
     "station_id": 3,
     "libelle": "Pompe principale",
     "description": "Pompe de la piste 1",
@@ -1412,8 +1411,40 @@ as `POM01`, `POM02`, and so on when omitted.
 }
 ```
 
-`reference` is optional. `station_id` is required for administrators and may be
-omitted by a station-scoped manager. There is no `DELETE` route for pumps.
+`reference` is optional. When it is absent, null, or empty, the backend generates
+the next sequential reference. `station_id` is required for administrators and
+may be omitted by a station-scoped manager.
+
+### Complete Update Payload (`PUT`)
+
+```json
+{
+    "station_id": 4,
+    "libelle": "Pompe principale actualisee",
+    "description": "Pompe de la piste 2",
+    "is_active": true
+}
+```
+
+`libelle` and, for administrators, `station_id` are required. `reference`,
+`description`, and `is_active` remain optional. An absent, null, or empty
+`reference` keeps the current reference.
+
+### Partial Update Payload (`PATCH`)
+
+Only the fields to update are required. Fields that are not sent keep their
+current values.
+
+```json
+{
+    "description": "Maintenance terminee",
+    "is_active": false
+}
+```
+
+For a station-scoped manager, the backend always replaces any supplied
+`station_id` with the manager station, for both creation and update. There is
+intentionally no `DELETE` route for pumps; use `is_active` to stop using a pump.
 
 ## Pistolet Endpoints
 
@@ -1517,10 +1548,12 @@ There is no `DELETE` route for pistolets.
 ### Pompe
 
 - `reference`: optional string, max 255, globally unique
-- `station_id`: required for administrators, existing station id
-- `libelle`: required string, max 255
+- `station_id`: required for administrators on `POST` and `PUT`, optional on `PATCH`, existing station id
+- `libelle`: required string on `POST` and `PUT`, optional on `PATCH`, max 255
 - `description`: optional string
-- `is_active`: optional boolean
+- `is_active`: optional non-null boolean
+- an absent, null, or empty reference generates the next `POM<number>` on `POST`
+- an absent, null, or empty reference preserves the current value on `PUT` and `PATCH`
 
 ### Pistolet
 
