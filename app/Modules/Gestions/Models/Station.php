@@ -25,4 +25,9 @@ class Station extends Model
     {
         return $this->hasMany(AffectationStation::class, 'station_id');
     }
+
+    public function pompes()
+    {
+        return $this->hasMany(Pompe::class, 'station_id');
+    }
 }
