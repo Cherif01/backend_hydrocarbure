@@ -14,11 +14,13 @@ class PistoletRequest extends FormRequest
 
     public function rules(): array
     {
+        $presenceRule = $this->isMethod('PATCH') ? 'sometimes' : 'required';
+
         return [
-            'pompe_id' => ['required', 'integer', 'exists:pompes,id'],
-            'hydrocarbure_id' => ['required', 'integer', 'exists:hydrocarbures,id'],
-            'libelle' => ['required', 'string', 'max:255'],
-            'is_active' => ['nullable', 'boolean'],
+            'pompe_id' => [$presenceRule, 'integer', 'exists:pompes,id'],
+            'hydrocarbure_id' => [$presenceRule, 'integer', 'exists:hydrocarbures,id'],
+            'libelle' => [$presenceRule, 'string', 'max:255'],
+            'is_active' => ['sometimes', 'boolean'],
         ];
     }
 

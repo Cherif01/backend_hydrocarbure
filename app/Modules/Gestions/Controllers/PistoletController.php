@@ -15,6 +15,15 @@ class PistoletController extends Controller
 {
     use ApiResponses;
 
+    private const AUDIT_FIELDS = [
+        'pompe_id',
+        'hydrocarbure_id',
+        'libelle',
+        'is_active',
+        'created_by',
+        'updated_by',
+    ];
+
     public function index(Request $request)
     {
         $scope = $this->stationScope($request);
@@ -51,10 +60,11 @@ class PistoletController extends Controller
 
         $this->resolveAccessiblePompe($data['pompe_id'], $scope);
 
-        $pistolet = Pistolet::create($data)
+        $pistolet = Pistolet::create($data);
+        $pistolet->refresh()
             ->load(['pompe.station', 'hydrocarbure', 'createdBy', 'updatedBy']);
 
-        logActivity("Creation d'un pistolet", $pistolet->toArray(), $pistolet);
+        logActivity("Creation d'un pistolet", $pistolet->only(self::AUDIT_FIELDS), $pistolet);
 
         return $this->successResponse(
             new PistoletResource($pistolet),
@@ -69,16 +79,18 @@ class PistoletController extends Controller
         $data = $request->validated();
         $data['updated_by'] = Auth::id();
 
-        $this->resolveAccessiblePompe($data['pompe_id'], $scope);
+        if (array_key_exists('pompe_id', $data)) {
+            $this->resolveAccessiblePompe($data['pompe_id'], $scope);
+        }
 
-        $oldPistolet = $pistolet->replicate()->fill($pistolet->getAttributes());
+        $oldPistolet = $pistolet->only(self::AUDIT_FIELDS);
 
         $pistolet->update($data);
         $pistolet->load(['pompe.station', 'hydrocarbure', 'createdBy', 'updatedBy']);
 
         logActivity("Mise a jour d'un pistolet", [
-            'oldPistolet' => $oldPistolet->toArray(),
-            'newPistolet' => $pistolet->toArray(),
+            'oldPistolet' => $oldPistolet,
+            'newPistolet' => $pistolet->only(self::AUDIT_FIELDS),
         ], $pistolet);
 
         return $this->successResponse(

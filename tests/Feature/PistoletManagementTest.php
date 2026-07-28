@@ -151,6 +151,126 @@ class PistoletManagementTest extends TestCase
         ]);
     }
 
+    public function test_admin_can_create_pistolet_and_put_requires_a_complete_payload(): void
+    {
+        $pompe = $this->createPompe($this->createStation(), 'POM01');
+        $hydrocarbure = $this->createHydrocarbure();
+        $admin = $this->createUser('admin');
+        Sanctum::actingAs($admin);
+
+        $response = $this->postJson('/api/v1/gestions/pistolets', [
+            'pompe_id' => $pompe->id,
+            'hydrocarbure_id' => $hydrocarbure->id,
+            'libelle' => 'Pistolet admin',
+        ])->assertOk()
+            ->assertJsonPath('data.created_by.id', $admin->id)
+            ->assertJsonPath('data.is_active', true);
+
+        $pistoletId = $response->json('data.id');
+
+        $this->putJson("/api/v1/gestions/pistolets/{$pistoletId}", [
+            'libelle' => 'Mise a jour incomplete',
+        ])->assertUnprocessable()
+            ->assertJsonValidationErrors(['pompe_id', 'hydrocarbure_id']);
+
+        $this->assertDatabaseHas('pistolets', [
+            'id' => $pistoletId,
+            'pompe_id' => $pompe->id,
+            'hydrocarbure_id' => $hydrocarbure->id,
+            'libelle' => 'Pistolet admin',
+            'created_by' => $admin->id,
+            'updated_by' => null,
+        ]);
+    }
+
+    public function test_patch_is_partial_preserves_absent_fields_and_rejects_null_status(): void
+    {
+        $pompe = $this->createPompe($this->createStation(), 'POM01');
+        $hydrocarbure = $this->createHydrocarbure();
+        $pistolet = $this->createPistolet($pompe, $hydrocarbure, 'Pistolet initial');
+        $admin = $this->createUser('admin');
+        Sanctum::actingAs($admin);
+
+        $this->patchJson("/api/v1/gestions/pistolets/{$pistolet->id}", [
+            'libelle' => 'Pistolet actualise',
+        ])->assertOk()
+            ->assertJsonPath('data.pompe_id', $pompe->id)
+            ->assertJsonPath('data.hydrocarbure_id', $hydrocarbure->id)
+            ->assertJsonPath('data.libelle', 'Pistolet actualise')
+            ->assertJsonPath('data.is_active', true);
+
+        $this->patchJson("/api/v1/gestions/pistolets/{$pistolet->id}", [
+            'is_active' => false,
+        ])->assertOk()
+            ->assertJsonPath('data.libelle', 'Pistolet actualise')
+            ->assertJsonPath('data.is_active', false);
+
+        $this->patchJson("/api/v1/gestions/pistolets/{$pistolet->id}", [
+            'is_active' => null,
+        ])->assertUnprocessable()
+            ->assertJsonValidationErrors(['is_active']);
+
+        $this->assertDatabaseHas('pistolets', [
+            'id' => $pistolet->id,
+            'pompe_id' => $pompe->id,
+            'hydrocarbure_id' => $hydrocarbure->id,
+            'libelle' => 'Pistolet actualise',
+            'is_active' => false,
+            'updated_by' => $admin->id,
+        ]);
+    }
+
+    public function test_manager_can_move_pistolet_to_another_pump_in_the_same_station(): void
+    {
+        $station = $this->createStation();
+        $firstPompe = $this->createPompe($station, 'POM01');
+        $secondPompe = $this->createPompe($station, 'POM02');
+        $hydrocarbure = $this->createHydrocarbure();
+        $pistolet = $this->createPistolet($firstPompe, $hydrocarbure, 'Pistolet local');
+        $manager = $this->createManager($station);
+        Sanctum::actingAs($manager);
+
+        $this->patchJson("/api/v1/gestions/pistolets/{$pistolet->id}", [
+            'pompe_id' => $secondPompe->id,
+        ])->assertOk()
+            ->assertJsonPath('data.pompe_id', $secondPompe->id)
+            ->assertJsonPath('data.hydrocarbure_id', $hydrocarbure->id)
+            ->assertJsonPath('data.libelle', 'Pistolet local');
+
+        $this->assertDatabaseHas('pistolets', [
+            'id' => $pistolet->id,
+            'pompe_id' => $secondPompe->id,
+            'hydrocarbure_id' => $hydrocarbure->id,
+            'libelle' => 'Pistolet local',
+            'updated_by' => $manager->id,
+        ]);
+    }
+
+    public function test_manager_cannot_update_foreign_pistolet_even_with_a_local_new_pump(): void
+    {
+        $foreignStation = $this->createStation();
+        $managerStation = $this->createStation();
+        $foreignPompe = $this->createPompe($foreignStation, 'POM01');
+        $localPompe = $this->createPompe($managerStation, 'POM02');
+        $hydrocarbure = $this->createHydrocarbure();
+        $pistolet = $this->createPistolet($foreignPompe, $hydrocarbure, 'Pistolet etranger');
+        Sanctum::actingAs($this->createManager($managerStation));
+
+        $this->patchJson("/api/v1/gestions/pistolets/{$pistolet->id}", [
+            'pompe_id' => $localPompe->id,
+        ])->assertNotFound();
+
+        $this->assertDatabaseHas('pistolets', [
+            'id' => $pistolet->id,
+            'pompe_id' => $foreignPompe->id,
+            'hydrocarbure_id' => $hydrocarbure->id,
+            'libelle' => 'Pistolet etranger',
+            'is_active' => true,
+            'created_by' => null,
+            'updated_by' => null,
+        ]);
+    }
+
     public function test_foreign_keys_are_validated(): void
     {
         Sanctum::actingAs($this->createUser('admin'));

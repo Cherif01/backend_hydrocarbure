@@ -1470,7 +1470,7 @@ through `pistolet -> pompe -> station`.
 | `GET` | `/api/v1/gestions/pistolets/{pistolet}` |
 | `PUT`, `PATCH` | `/api/v1/gestions/pistolets/{pistolet}` |
 
-### Create Or Update Payload
+### Create Payload (`POST`)
 
 ```json
 {
@@ -1481,7 +1481,49 @@ through `pistolet -> pompe -> station`.
 }
 ```
 
-There is no `DELETE` route for pistolets.
+`pompe_id`, `hydrocarbure_id`, and `libelle` are required. `is_active` is
+optional and uses the database default when it is absent.
+
+### Complete Update Payload (`PUT`)
+
+```json
+{
+    "pompe_id": 2,
+    "hydrocarbure_id": 1,
+    "libelle": "Pistolet essence principal",
+    "is_active": true
+}
+```
+
+`pompe_id`, `hydrocarbure_id`, and `libelle` are also required for a complete
+update.
+
+### Partial Update Payload (`PATCH`)
+
+A partial update may contain a single field. Fields that are not sent keep
+their current values.
+
+```json
+{
+    "libelle": "Pistolet essence secondaire"
+}
+```
+
+```json
+{
+    "is_active": false
+}
+```
+
+```json
+{
+    "pompe_id": 3
+}
+```
+
+When provided, `is_active` accepts only `true` or `false`, never `null`.
+There is no `DELETE` route for pistolets; use `is_active: false` to deactivate
+a pistolet.
 
 ## Validation Summary
 
@@ -1557,10 +1599,11 @@ There is no `DELETE` route for pistolets.
 
 ### Pistolet
 
-- `pompe_id`: required, existing pump id, additionally checked against manager station scope
-- `hydrocarbure_id`: required, existing hydrocarbon id
-- `libelle`: required string, max 255
-- `is_active`: optional boolean
+- `pompe_id`: required on `POST` and `PUT`, optional on `PATCH`, existing pump id, additionally checked against manager station scope
+- `hydrocarbure_id`: required on `POST` and `PUT`, optional on `PATCH`, existing hydrocarbon id
+- `libelle`: required on `POST` and `PUT`, optional on `PATCH`, string, max 255
+- `is_active`: optional non-null boolean
+- fields absent from a `PATCH` keep their current values
 
 ## Common Frontend Notes
 
