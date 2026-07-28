@@ -9,6 +9,13 @@ This document covers the currently implemented API endpoints in the project.
 - Main API prefix: `/v1`
 - Response format: JSON
 
+Implemented API namespaces:
+
+- Administration/Auth: `/api/v1/auth`, `/api/v1/admin`
+- Gestions: `/api/v1/gestions`
+- Ressource Humaine (RH): `/api/v1/rh`
+- Comptabilite: `/api/v1/comptabilite`
+
 This documentation is written for frontend integration and follows the actual implementation flow:
 
 1. Register or log in
@@ -1525,6 +1532,453 @@ When provided, `is_active` accepts only `true` or `false`, never `null`.
 There is no `DELETE` route for pistolets; use `is_active: false` to deactivate
 a pistolet.
 
+## Affectation Pistolet Endpoints
+
+An affectation pistolet represents a working assignment of one `employee` to one
+`pistolet` (nozzle). It is considered a "shift" that can be closed by switching
+`is_active` from `true` to `false`.
+
+### Station Scope
+
+Station is resolved through:
+
+`affectation_pistolet -> pistolet -> pompe -> station`
+
+If the authenticated user is station-scoped (active `gerant_station` with an
+active station affectation), access is limited to the scoped station.
+
+### Business Rules
+
+- An employee cannot have 2 active affectations at the same time.
+- A pistolet cannot have 2 active affectations at the same time.
+- Closing transition:
+    - When updating an existing row from `is_active=true` to `is_active=false`,
+      the backend requires `index_fermeture`, `litre_retouner`, and `montant_recu`.
+
+### Available Routes
+
+| Method | URL |
+| --- | --- |
+| `GET` | `/api/v1/gestions/affectation-pistolets` |
+| `POST` | `/api/v1/gestions/affectation-pistolets` |
+| `GET` | `/api/v1/gestions/affectation-pistolets/{affectation_pistolet}` |
+| `PUT`, `PATCH` | `/api/v1/gestions/affectation-pistolets/{affectation_pistolet}` |
+| `DELETE` | `/api/v1/gestions/affectation-pistolets/{affectation_pistolet}` |
+
+### Create Payload (`POST`)
+
+```json
+{
+    "employee_id": 10,
+    "pistolet_id": 5,
+    "index_ouverture": 1200.5
+}
+```
+
+### Close Payload (`PATCH`)
+
+This closes an affectation (`is_active` transition `true -> false`).
+
+```json
+{
+    "is_active": false,
+    "index_fermeture": 1300.5,
+    "litre_retouner": 0,
+    "montant_recu": 85000,
+    "commentaire": "Fin de service"
+}
+```
+
+### Response Example
+
+The API loads `creances` and their `paiements` and returns aggregates:
+
+- `sum_total_litre` = `sum(creances.total_litre)`
+- `sum_montant_paye` = `sum(creances.paiements.montant)`
+
+```json
+{
+    "status": 1,
+    "message": "Affectation pistolet chargee avec succes.",
+    "data": {
+        "id": 1,
+        "employee_id": 10,
+        "pistolet_id": 5,
+        "index_ouverture": 1200.5,
+        "index_fermeture": 1300.5,
+        "litre_vendu": 100,
+        "prix_vente_jour": 850,
+        "litre_retouner": 0,
+        "montant_attentu": 85000,
+        "montant_recu": 85000,
+        "commentaire": "Fin de service",
+        "is_active": false,
+        "sum_total_litre": 60,
+        "sum_montant_paye": 40000,
+        "creances": [
+            {
+                "id": 3,
+                "client_id": 2,
+                "affectation_pistolet_id": 1,
+                "date_creance": "28-07-2026 19:10:00",
+                "total_litre": 60,
+                "montant": 51000,
+                "commentaire": null,
+                "paiements": [
+                    {
+                        "id": 1,
+                        "reference": "CLPAI-ABC123",
+                        "montant": 40000,
+                        "mode_paiement": "cash",
+                        "date_paiement": "28-07-2026 19:30:00",
+                        "commentaire": null
+                    }
+                ]
+            }
+        ]
+    }
+}
+```
+
+## Client Endpoints
+
+Clients can optionally be created/updated with assigned hydrocarbons in a single
+request using the `hydrocarbure` array.
+
+### Available Routes
+
+| Method | URL |
+| --- | --- |
+| `GET` | `/api/v1/gestions/clients` |
+| `POST` | `/api/v1/gestions/clients` |
+| `GET` | `/api/v1/gestions/clients/{client}` |
+| `PUT`, `PATCH` | `/api/v1/gestions/clients/{client}` |
+| `DELETE` | `/api/v1/gestions/clients/{client}` |
+
+### Create Payload (`POST`)
+
+Use `multipart/form-data` if uploading `avatar`.
+
+```json
+{
+    "name": "ETS NDOUMBE",
+    "telephone": "690000000",
+    "email": "contact@ndoumbe.com",
+    "adresse": "Bonaberi",
+    "is_active": true,
+    "hydrocarbure": [
+        {
+            "hydrocarbure_id": 1,
+            "max_litre": 2000,
+            "prix": 845
+        }
+    ]
+}
+```
+
+### Notes
+
+- `hydrocarbure.*.hydrocarbure_id` is validated as `distinct` to prevent duplicates in the payload.
+- On update, sending the `hydrocarbure` array performs an upsert per hydrocarbon and forces `is_active=true` for the provided items.
+
+### Response Example
+
+```json
+{
+    "status": 1,
+    "message": "Client cree avec succes.",
+    "data": {
+        "id": 2,
+        "name": "ETS NDOUMBE",
+        "telephone": "690000000",
+        "email": "contact@ndoumbe.com",
+        "adresse": "Bonaberi",
+        "avatar": null,
+        "avatar_url": null,
+        "is_active": true,
+        "hydrocarbures": [
+            {
+                "id": 1,
+                "client_id": 2,
+                "hydrocarbure_id": 1,
+                "max_litre": 2000,
+                "prix": 845,
+                "is_active": true,
+                "hydrocarbure": {
+                    "id": 1,
+                    "libelle": "Essence",
+                    "prix_achat": "800.00",
+                    "prix_vente": "850.00"
+                }
+            }
+        ],
+        "created_at": "28-07-2026 18:00:00",
+        "updated_at": "28-07-2026 18:00:00"
+    }
+}
+```
+
+## Client Hydrocarbure Endpoints
+
+This endpoint manages the client/hydrocarbon assignment. A client cannot have
+two active assignments for the same hydrocarbon.
+
+### Available Routes
+
+| Method | URL |
+| --- | --- |
+| `GET` | `/api/v1/gestions/client-hydrocarbures` |
+| `POST` | `/api/v1/gestions/client-hydrocarbures` |
+| `GET` | `/api/v1/gestions/client-hydrocarbures/{client_hydrocarbure}` |
+| `PUT`, `PATCH` | `/api/v1/gestions/client-hydrocarbures/{client_hydrocarbure}` |
+| `DELETE` | `/api/v1/gestions/client-hydrocarbures/{client_hydrocarbure}` |
+
+### Create Payload (`POST`)
+
+```json
+{
+    "client_id": 2,
+    "hydrocarbure_id": 1,
+    "max_litre": 2000,
+    "prix": 845,
+    "is_active": true
+}
+```
+
+### Business Error Example (duplicate active)
+
+```json
+{
+    "status": 0,
+    "message": "Ce client a deja une affectation active pour cet hydrocarbure.",
+    "error": []
+}
+```
+
+## Creance Endpoints
+
+A creance is created for a client and an affectation pistolet.
+
+### Station Scope
+
+Station is resolved through:
+
+`creance -> affectation_pistolet -> pistolet -> pompe -> station`
+
+### Business Rules
+
+- The backend returns `403` if the affectation pistolet is outside the scoped station.
+- The backend returns `422` if the affectation pistolet is closed (`is_active=false`).
+- Amount calculation:
+    - If the client has an active `ClientHydrocarbure` for the pistolet hydrocarbure,
+      then `montant = total_litre * client_hydrocarbure.prix`.
+    - Otherwise `montant = total_litre * affectation_pistolet.prix_vente_jour`.
+
+### Available Routes
+
+| Method | URL |
+| --- | --- |
+| `GET` | `/api/v1/gestions/creances` |
+| `POST` | `/api/v1/gestions/creances` |
+| `GET` | `/api/v1/gestions/creances/{creance}` |
+| `PUT`, `PATCH` | `/api/v1/gestions/creances/{creance}` |
+| `DELETE` | `/api/v1/gestions/creances/{creance}` |
+
+### Create Payload (`POST`)
+
+```json
+{
+    "client_id": 2,
+    "affectation_pistolet_id": 1,
+    "date_creance": "2026-07-28 19:10:00",
+    "total_litre": 60,
+    "commentaire": "Livraison du soir"
+}
+```
+
+### Response Example
+
+```json
+{
+    "status": 1,
+    "message": "Creance creee avec succes.",
+    "data": {
+        "id": 3,
+        "client_id": 2,
+        "affectation_pistolet_id": 1,
+        "date_creance": "28-07-2026 19:10:00",
+        "total_litre": 60,
+        "montant": 50700,
+        "commentaire": "Livraison du soir"
+    }
+}
+```
+
+## RH Endpoints
+
+### Posts
+
+| Method | URL |
+| --- | --- |
+| `GET` | `/api/v1/rh/posts` |
+| `POST` | `/api/v1/rh/posts` |
+| `GET` | `/api/v1/rh/posts/{post}` |
+| `PUT`, `PATCH` | `/api/v1/rh/posts/{post}` |
+| `DELETE` | `/api/v1/rh/posts/{post}` |
+
+Create payload:
+
+```json
+{
+    "libelle": "Pompiste",
+    "is_active": true
+}
+```
+
+### Employees
+
+Employees are station-scoped when the authenticated user has an active
+`gerant_station` module and an active station affectation.
+
+| Method | URL |
+| --- | --- |
+| `GET` | `/api/v1/rh/employees` |
+| `POST` | `/api/v1/rh/employees` |
+| `GET` | `/api/v1/rh/employees/{employee}` |
+| `PUT`, `PATCH` | `/api/v1/rh/employees/{employee}` |
+| `DELETE` | `/api/v1/rh/employees/{employee}` |
+
+Create payload:
+
+```json
+{
+    "name": "Jean Pompiste",
+    "post_id": 1,
+    "station_id": 3,
+    "telephone": "699000001",
+    "adresse": "Bonaberi",
+    "salaire_base": 120000,
+    "is_active": true
+}
+```
+
+Note: when station-scoped, the backend overrides any provided `station_id` with
+the scoped station id.
+
+## Comptabilite Endpoints
+
+All endpoints below are authenticated. Most endpoints are station-scoped through
+`UserStationScopeService`.
+
+### Type Operations
+
+| Method | URL |
+| --- | --- |
+| `GET` | `/api/v1/comptabilite/type-operations` |
+| `POST` | `/api/v1/comptabilite/type-operations` |
+| `GET` | `/api/v1/comptabilite/type-operations/{type_operation}` |
+| `PUT`, `PATCH` | `/api/v1/comptabilite/type-operations/{type_operation}` |
+| `DELETE` | `/api/v1/comptabilite/type-operations/{type_operation}` |
+
+Create payload:
+
+```json
+{
+    "libelle": "Vente carburant",
+    "description": "Recette journaliere",
+    "nature": true,
+    "is_active": true
+}
+```
+
+### Caisses
+
+| Method | URL |
+| --- | --- |
+| `GET` | `/api/v1/comptabilite/caisses` |
+| `POST` | `/api/v1/comptabilite/caisses` |
+| `GET` | `/api/v1/comptabilite/caisses/{caisse}` |
+| `PUT`, `PATCH` | `/api/v1/comptabilite/caisses/{caisse}` |
+| `DELETE` | `/api/v1/comptabilite/caisses/{caisse}` |
+
+Create payload:
+
+```json
+{
+    "station_id": 3,
+    "reference": "CAISSE-01",
+    "libelle": "Caisse principale",
+    "solde_initial": 0,
+    "is_active": true
+}
+```
+
+Note: when station-scoped, the backend forces `station_id` to the scoped station.
+If not station-scoped, `station_id` is required.
+
+### Operations
+
+| Method | URL |
+| --- | --- |
+| `GET` | `/api/v1/comptabilite/operations` |
+| `POST` | `/api/v1/comptabilite/operations` |
+| `GET` | `/api/v1/comptabilite/operations/{operation}` |
+| `PUT`, `PATCH` | `/api/v1/comptabilite/operations/{operation}` |
+| `DELETE` | `/api/v1/comptabilite/operations/{operation}` |
+
+Create payload:
+
+```json
+{
+    "type_operation_id": 1,
+    "station_id": 3,
+    "caisse_id": 1,
+    "montant": 50000,
+    "commentaire": "Cloture caisse",
+    "date_operation": "2026-07-28 20:00:00"
+}
+```
+
+Notes:
+
+- Station can be forced from user scope.
+- If `caisse_id` is provided and `station_id` is missing, station is inferred from the caisse.
+- If both are provided, caisse must belong to the station (otherwise `422`).
+
+### Paiement Creances
+
+Station is resolved through:
+
+`paiement -> creance -> affectation_pistolet -> pistolet -> pompe -> station`
+
+| Method | URL |
+| --- | --- |
+| `GET` | `/api/v1/comptabilite/paiement-creances` |
+| `POST` | `/api/v1/comptabilite/paiement-creances` |
+| `GET` | `/api/v1/comptabilite/paiement-creances/{paiement_creance}` |
+| `PUT`, `PATCH` | `/api/v1/comptabilite/paiement-creances/{paiement_creance}` |
+| `DELETE` | `/api/v1/comptabilite/paiement-creances/{paiement_creance}` |
+
+Create payload:
+
+```json
+{
+    "client_id": 2,
+    "creance_id": 3,
+    "montant": 40000,
+    "mode_paiement": "cash",
+    "date_paiement": "2026-07-28 19:30:00",
+    "commentaire": null
+}
+```
+
+Notes:
+
+- `reference` is auto-generated when omitted.
+- The creance must be linked to a client, and `client_id` must match `creance.client_id`.
+- Overpayment is not allowed: total paid (excluding soft-deleted payments) cannot exceed `creance.montant` (`422`).
+- If the authenticated user has the active module `comptabilite`, index is not station-filtered and actions are allowed globally.
+
 ## Validation Summary
 
 ### Register
@@ -1604,6 +2058,90 @@ a pistolet.
 - `libelle`: required on `POST` and `PUT`, optional on `PATCH`, string, max 255
 - `is_active`: optional non-null boolean
 - fields absent from a `PATCH` keep their current values
+
+### Affectation Pistolet
+
+- `employee_id`: required on `POST`, sometimes on `PATCH`, existing employee id
+- `pistolet_id`: required on `POST`, sometimes on `PATCH`, existing pistolet id
+- `index_ouverture`: required on `POST`, sometimes on `PATCH`, numeric, min 0
+- `closing (true -> false)`: requires `index_fermeture`, `litre_retouner`, `montant_recu`
+- `is_active`: optional boolean; closing is performed by setting `is_active=false` on an active record
+
+### Client
+
+- `name`: required string
+- `telephone`: required unique
+- `email`: optional unique email
+- `adresse`: optional string
+- `avatar`: optional image (`png`, `jpg`, `jpeg`), max 2048 KB
+- `hydrocarbure`: required array on create, sometimes on update
+- `hydrocarbure.*.hydrocarbure_id`: required (create), distinct, exists
+- `hydrocarbure.*.max_litre`: optional numeric min 0
+- `hydrocarbure.*.prix`: optional numeric min 0
+
+### Client Hydrocarbure
+
+- `client_id`: required exists
+- `hydrocarbure_id`: required exists
+- `max_litre`: optional numeric min 0
+- `prix`: optional numeric min 0
+- `is_active`: optional boolean
+- Business rule: cannot have 2 active rows for the same `(client_id, hydrocarbure_id)`
+
+### Creance
+
+- `client_id`: required exists
+- `affectation_pistolet_id`: required exists and must be accessible by station scope
+- `date_creance`: required date
+- `total_litre`: required integer min 0
+- Business rule: cannot create/update on a closed affectation pistolet (`is_active=false`)
+
+### RH Post
+
+- `libelle`: required unique
+- `is_active`: optional boolean
+
+### RH Employee
+
+- `name`: required string
+- `post_id`: optional exists
+- `station_id`: optional exists (forced to scope station for station-scoped users)
+- `telephone`: required unique
+- `adresse`: optional
+- `salaire_base`: optional numeric min 0
+- `avatar`: optional image
+
+### Type Operation
+
+- `libelle`: required unique
+- `description`: optional string
+- `nature`: required boolean (`true` => entree, `false` => sortie)
+- `is_active`: optional boolean
+
+### Caisse
+
+- `station_id`: required only when the user is not station-scoped
+- `reference`: required unique string
+- `libelle`: required string
+- `solde_initial`: optional numeric min 0
+- `is_active`: optional boolean
+
+### Operation
+
+- `type_operation_id`: required exists
+- `station_id`: optional exists (forced from scope or inferred from caisse)
+- `caisse_id`: optional exists (must belong to station when station is defined)
+- `montant`: required numeric min 0
+- `date_operation`: required date
+
+### Paiement Creance
+
+- `reference`: optional unique (auto-generated when absent)
+- `client_id`: required exists and must match `creance.client_id`
+- `creance_id`: required exists and must be accessible by station scope (unless module `comptabilite` bypass)
+- `montant`: required numeric min 0 and cannot cause overpayment (`422`)
+- `mode_paiement`: optional string
+- `date_paiement`: optional date
 
 ## Common Frontend Notes
 
