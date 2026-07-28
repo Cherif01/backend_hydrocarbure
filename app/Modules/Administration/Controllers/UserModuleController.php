@@ -6,7 +6,9 @@ use App\Events\SendMessageEvent;
 use App\Http\Controllers\Controller;
 use App\Modules\Administration\Models\UserModule;
 use App\Modules\Administration\Requests\UserModuleRequest;
+use App\Services\UserStationScopeService;
 use App\Traits\ApiResponses;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -93,7 +95,7 @@ class UserModuleController extends Controller
         return $this->successResponse($user_module, "Mise à jour de l'affectation du module aux utilisateurs");
     }
 
-    public function verifyAccessCode(Request $request)
+    public function verifyAccessCode(Request $request, UserStationScopeService $stationScopeService)
     {
         $data = $request->validate([
             'code_acces' => 'required|string',
@@ -112,21 +114,14 @@ class UserModuleController extends Controller
             return $this->errorResponse("Votre affectation a été désactivée");
         }
 
-        $hasGerantStationModule = $request->user()->userModules()
-            ->where('is_active', true)
-            ->whereHas('module', fn($q) => $q->where('name', 'gerant_station')->where('is_active', true))
-            ->exists();
-
-        if ($hasGerantStationModule) {
-            $affectation = $request->user()->affectations()->where('is_active', true)->first();
-
-            if (!$affectation) {
-                return $this->errorResponse("Vous n'avez pas été affecté à une station");
+        if ($user_module->module?->name === 'gerant_station') {
+            try {
+                $scope = $stationScopeService->resolve($request->user());
+            } catch (AuthorizationException $exception) {
+                return $this->errorResponse($exception->getMessage(), 403);
             }
 
-            Cache::put("user:{$request->user()->id}:station_id", $affectation->station_id, now()->addHours(8));
-            // ailleurs
-            // $stationId = Cache::get("user:{$request->user()->id}:station_id");
+            Cache::put("user:{$request->user()->id}:station_id", $scope['station_id'], now()->addHours(8));
         }
 
         logActivity("Vérification de code d'accès", $user_module->toArray(), $user_module);
