@@ -58,6 +58,10 @@ class AuthController extends Controller
             return $this->errorResponse("Information invalide");
         }
 
+        if (!$user->is_active) {
+            return $this->errorResponse("Votre compte est désactivé");
+        }
+
         $token = $user->createToken('user-token')->plainTextToken;
 
         $action = "Connection de " . $user->name;
