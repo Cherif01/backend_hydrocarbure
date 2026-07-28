@@ -6,14 +6,15 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
+        if (Schema::hasTable('caisses')) {
+            return;
+        }
+
         Schema::create('caisses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('station_id')->constrained('stations')->cascadeOnDelete();
+            $table->foreignId('station_id')->constrained('stations');
             $table->string('reference')->unique();
             $table->string('libelle');
             $table->decimal('solde_initial', 15, 2)->default(0);
@@ -24,9 +25,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('caisses');
