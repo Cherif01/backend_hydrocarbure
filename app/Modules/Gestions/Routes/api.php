@@ -5,6 +5,8 @@ use App\Modules\Gestions\Controllers\AffectationPistoletController;
 use App\Modules\Gestions\Controllers\ClientController;
 use App\Modules\Gestions\Controllers\ClientHydrocarbureController;
 use App\Modules\Gestions\Controllers\CreanceController;
+use App\Modules\Gestions\Controllers\CuveController;
+use App\Modules\Gestions\Controllers\CuveJaugeageController;
 use App\Modules\Gestions\Controllers\HydrocarbureController;
 use App\Modules\Gestions\Controllers\PistoletController;
 use App\Modules\Gestions\Controllers\PompeController;
@@ -16,6 +18,8 @@ Route::middleware('auth:sanctum')->prefix('v1/gestions')->group(function () {
     Route::apiResource('client-hydrocarbures', ClientHydrocarbureController::class);
     Route::apiResource('creances', CreanceController::class);
     Route::apiResource('affectation-pistolets', AffectationPistoletController::class);
+    Route::apiResource('cuves', CuveController::class);
+    Route::apiResource('cuve-jaugeages', CuveJaugeageController::class)->parameters(['cuve-jaugeages' => 'cuve_jaugeage']);
 
     Route::patch('affectation-stations/{affectation_station}/switch-status', [AffectationStationController::class, 'switchStatus']);
     Route::apiResource('affectation-stations', AffectationStationController::class);

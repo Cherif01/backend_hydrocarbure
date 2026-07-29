@@ -35,6 +35,8 @@ class AuthController extends Controller
             'password' => Hash::make($data['password']),
         ]);
 
+        $user->loadMissing(['userModules.module', 'affectations.station']);
+
         $token = $user->createToken('user-token')->plainTextToken;
 
         $action = "Inscription de " . $user->name;
@@ -61,6 +63,8 @@ class AuthController extends Controller
         if (!$user->is_active) {
             return $this->errorResponse("Votre compte est désactivé");
         }
+
+        $user->loadMissing(['userModules.module', 'affectations.station']);
 
         $token = $user->createToken('user-token')->plainTextToken;
 
@@ -94,6 +98,8 @@ class AuthController extends Controller
         $user->is_active = !$user->is_active;
         $user->save();
 
+        $user->loadMissing(['userModules.module', 'affectations.station']);
+
         $action = "Changement d'état de l'utilisateur " . $user->name;
         logActivity($action, $user->toArray(), $user);
 
@@ -116,6 +122,8 @@ class AuthController extends Controller
         }
 
         $user->update($data);
+
+        $user->loadMissing(['userModules.module', 'affectations.station']);
 
         $action = "Mise à jour du profil " . $user->name;
         logActivity(
@@ -142,6 +150,8 @@ class AuthController extends Controller
         $user->password = Hash::make($data['new_password']);
         $user->save();
 
+        $user->loadMissing(['userModules.module', 'affectations.station']);
+
         $action = "Mise à jour du mot de passe de " . $user->name;
         logActivity($action, $data, $user);
 
@@ -153,15 +163,17 @@ class AuthController extends Controller
 
     public function me(Request $request)
     {
+        $user = $request->user()->loadMissing(['userModules.module', 'affectations.station']);
+
         return $this->successResponse(
-            new UserResource($request->user()),
+            new UserResource($user),
             "Utilisateur récupéré avec succès."
         );
     }
 
     public function users(Request $request)
     {
-        $users = User::with('userModules')->orderBy('created_at', 'desc')->get();
+        $users = User::with(['userModules.module', 'affectations.station'])->orderBy('created_at', 'desc')->get();
 
         return $this->successResponse(
             UserResource::collection($users),

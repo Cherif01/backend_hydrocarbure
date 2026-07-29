@@ -39,4 +39,9 @@ class Hydrocarbure extends Model
     {
         return $this->hasMany(ClientHydrocarbure::class, 'hydrocarbure_id');
     }
+
+    public function cuves()
+    {
+        return $this->hasMany(Cuve::class, 'hydrocarbure_id');
+    }
 }

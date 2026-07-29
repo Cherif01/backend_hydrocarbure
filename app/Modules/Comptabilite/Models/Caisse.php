@@ -36,4 +36,9 @@ class Caisse extends Model
     {
         return $this->hasMany(Operation::class, 'caisse_id');
     }
+
+    public function versements()
+    {
+        return $this->hasMany(Versement::class, 'caisse_id');
+    }
 }

@@ -30,4 +30,9 @@ class Station extends Model
     {
         return $this->hasMany(Pompe::class, 'station_id');
     }
+
+    public function cuves()
+    {
+        return $this->hasMany(Cuve::class, 'station_id');
+    }
 }
