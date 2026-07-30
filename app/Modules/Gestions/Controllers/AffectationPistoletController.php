@@ -10,6 +10,7 @@ use App\Modules\Gestions\Resources\AffectationPistoletResource;
 use App\Modules\ResourceHumaine\Models\Employee;
 use App\Services\UserStationScopeService;
 use App\Traits\ApiResponses;
+use Carbon\Carbon;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -52,12 +53,32 @@ class AffectationPistoletController extends Controller
             return $this->errorResponse($exception->getMessage(), 403);
         }
 
+        $dateDebutInput = $request->query('date_debut');
+        $dateFinInput = $request->query('date_fin');
+
+        if ($dateDebutInput === null && $dateFinInput === null) {
+            $dateDebutInput = Carbon::today()->toDateString();
+            $dateFinInput = $dateDebutInput;
+        } elseif ($dateDebutInput !== null && $dateFinInput === null) {
+            $dateFinInput = $dateDebutInput;
+        } elseif ($dateDebutInput === null && $dateFinInput !== null) {
+            $dateDebutInput = $dateFinInput;
+        }
+
+        try {
+            $dateDebut = Carbon::parse((string) $dateDebutInput)->startOfDay();
+            $dateFin = Carbon::parse((string) $dateFinInput)->endOfDay();
+        } catch (\Throwable $e) {
+            return $this->errorResponse("Les dates fournies sont invalides.", 422);
+        }
+
         $affectations = AffectationPistolet::with($this->relations)
             ->when($scope['is_station_scoped'], function ($query) use ($scope) {
                 $query->whereHas('pistolet.pompe', function ($pompeQuery) use ($scope) {
                     $pompeQuery->where('station_id', $scope['station_id']);
                 });
             })
+            ->whereBetween('created_at', [$dateDebut, $dateFin])
             ->orderBy('created_at', 'desc')
             ->get();
 
