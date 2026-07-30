@@ -17,6 +17,9 @@ class PistoletResource extends JsonResource
             'hydrocarbure_id' => $this->hydrocarbure_id,
             'libelle' => $this->libelle,
             'is_active' => (bool) $this->is_active,
+            'latest_index' => $this->relationLoaded('latestAffectationPistolet')
+                ? ($this->latestAffectationPistolet?->index_fermeture !== null ? (float) $this->latestAffectationPistolet?->index_fermeture : 0)
+                : 0,
             'pompe' => $this->whenLoaded('pompe', function () {
                 return [
                     'id' => $this->pompe?->id,

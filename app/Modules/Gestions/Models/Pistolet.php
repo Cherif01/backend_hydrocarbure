@@ -42,4 +42,11 @@ class Pistolet extends Model
     {
         return $this->hasMany(AffectationPistolet::class, 'pistolet_id');
     }
+
+    public function latestAffectationPistolet()
+    {
+        return $this->hasOne(AffectationPistolet::class, 'pistolet_id')->ofMany(['id' => 'max'], function ($query) {
+            $query->where('is_active', false);
+        });
+    }
 }

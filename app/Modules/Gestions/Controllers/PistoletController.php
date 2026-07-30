@@ -34,7 +34,7 @@ class PistoletController extends Controller
             return $this->errorResponse($exception->getMessage(), 403);
         }
 
-        $pistolets = Pistolet::with(['pompe.station', 'hydrocarbure', 'createdBy', 'updatedBy'])
+        $pistolets = Pistolet::with(['pompe.station', 'hydrocarbure', 'latestAffectationPistolet', 'createdBy', 'updatedBy'])
             ->when($scope['is_station_scoped'], function ($query) use ($scope) {
                 $query->whereHas('pompe', function ($pompeQuery) use ($scope) {
                     $pompeQuery->where('station_id', $scope['station_id']);
@@ -80,7 +80,7 @@ class PistoletController extends Controller
 
         $pistolet = Pistolet::create($data);
         $pistolet->refresh()
-            ->load(['pompe.station', 'hydrocarbure', 'createdBy', 'updatedBy']);
+            ->load(['pompe.station', 'hydrocarbure', 'latestAffectationPistolet', 'createdBy', 'updatedBy']);
 
         logActivity("Creation d'un pistolet", $pistolet->only(self::AUDIT_FIELDS), $pistolet);
 
@@ -109,7 +109,7 @@ class PistoletController extends Controller
         $oldPistolet = $pistolet->only(self::AUDIT_FIELDS);
 
         $pistolet->update($data);
-        $pistolet->load(['pompe.station', 'hydrocarbure', 'createdBy', 'updatedBy']);
+        $pistolet->load(['pompe.station', 'hydrocarbure', 'latestAffectationPistolet', 'createdBy', 'updatedBy']);
 
         logActivity("Mise a jour d'un pistolet", [
             'oldPistolet' => $oldPistolet,
@@ -124,7 +124,7 @@ class PistoletController extends Controller
 
     private function resolveAccessiblePistolet(int $pistoletId, array $scope): Pistolet
     {
-        return Pistolet::with(['pompe.station', 'hydrocarbure', 'createdBy', 'updatedBy'])
+        return Pistolet::with(['pompe.station', 'hydrocarbure', 'latestAffectationPistolet', 'createdBy', 'updatedBy'])
             ->when($scope['is_station_scoped'], function ($query) use ($scope) {
                 $query->whereHas('pompe', function ($pompeQuery) use ($scope) {
                     $pompeQuery->where('station_id', $scope['station_id']);
