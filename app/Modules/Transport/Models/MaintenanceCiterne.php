@@ -24,7 +24,7 @@ use Illuminate\Database\Eloquent\Model;
 ])]
 class MaintenanceCiterne extends Model
 {
-    protected $table = 'maintenances_citerne';
+    protected $table = 'citerne_maintenances';
 
     protected $casts = [
         'date_prevue' => 'date',
