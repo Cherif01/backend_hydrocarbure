@@ -4,6 +4,7 @@ namespace App\Modules\Administration\Controllers;
 
 use App\Events\SendMessageEvent;
 use App\Http\Controllers\Controller;
+use App\Modules\Administration\Models\User;
 use App\Modules\Administration\Models\UserModule;
 use App\Modules\Administration\Requests\UserModuleRequest;
 use App\Services\UserStationScopeService;
@@ -42,7 +43,12 @@ class UserModuleController extends Controller
     public function sendAccessCode(UserModule $user_module)
     {
         $code_acces = $user_module->code_acces;
-        $telephone = $user_module->user->telephone;
+        $user = User::find($user_module->user_id);
+        $telephone = $user?->telephone ?? '';
+
+        if (empty($telephone)) {
+            return $this->errorResponse("L'utilisateur n'a pas de numéro de téléphone");
+        }
 
         $message = "Votre code d'acces au module {$user_module->module->name} est {$code_acces}";
 
