@@ -106,8 +106,8 @@ class AffectationPistoletController extends Controller
             return $this->errorResponse("Vous n'avez pas la permission d'effectuer cette operation.", 403);
         }
 
-        if ($this->hasActiveAffectationForEmployee((int) $employee->id)) {
-            return $this->errorResponse("Cet employe a deja une affectation active.", 422);
+        if ($this->hasActiveAffectationForEmployeeAndPistolet((int) $employee->id, (int) $pistolet->id)) {
+            return $this->errorResponse("Cet employe a deja une affectation active pour ce pistolet.", 422);
         }
 
         if ($this->hasActiveAffectationForPistolet((int) $pistolet->id)) {
@@ -157,8 +157,8 @@ class AffectationPistoletController extends Controller
             return $this->errorResponse("Vous n'avez pas la permission d'effectuer cette operation.", 403);
         }
 
-        if ($isActive && $this->hasActiveAffectationForEmployee($employeeId, (int) $affectation->id)) {
-            return $this->errorResponse("Cet employe a deja une affectation active.", 422);
+        if ($isActive && $this->hasActiveAffectationForEmployeeAndPistolet($employeeId, $pistoletId, (int) $affectation->id)) {
+            return $this->errorResponse("Cet employe a deja une affectation active pour ce pistolet.", 422);
         }
 
         if ($isActive && $this->hasActiveAffectationForPistolet($pistoletId, (int) $affectation->id)) {
@@ -234,10 +234,11 @@ class AffectationPistoletController extends Controller
             ->find($pistoletId);
     }
 
-    private function hasActiveAffectationForEmployee(int $employeeId, ?int $excludeId = null): bool
+    private function hasActiveAffectationForEmployeeAndPistolet(int $employeeId, int $pistoletId, ?int $excludeId = null): bool
     {
         return AffectationPistolet::query()
             ->where('employee_id', $employeeId)
+            ->where('pistolet_id', $pistoletId)
             ->where('is_active', true)
             ->when($excludeId, function ($query) use ($excludeId) {
                 $query->where('id', '!=', $excludeId);

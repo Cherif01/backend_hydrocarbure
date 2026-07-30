@@ -18,7 +18,13 @@ class ClientController extends Controller
 {
     use ApiResponses, CloudflareUpload;
 
-    private array $relations = ['createdBy', 'updatedBy', 'hydrocarbures.hydrocarbure'];
+    private array $relations = [
+        'createdBy',
+        'updatedBy',
+        'hydrocarbures.hydrocarbure',
+        'creances.paiementsCreances',
+        'paiementsCreances',
+    ];
 
     public function index()
     {

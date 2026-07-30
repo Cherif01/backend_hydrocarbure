@@ -41,6 +41,45 @@ class ClientResource extends JsonResource
                     ];
                 });
             }),
+            'creances' => $this->whenLoaded('creances', function () {
+                return $this->creances?->map(function ($creance) {
+                    return [
+                        'id' => $creance->id,
+                        'client_id' => $creance->client_id,
+                        'affectation_pistolet_id' => $creance->affectation_pistolet_id,
+                        'date_creance' => $creance->date_creance?->format('d-m-Y H:i:s'),
+                        'total_litre' => $creance->total_litre !== null ? (float) $creance->total_litre : null,
+                        'montant' => $creance->montant !== null ? (float) $creance->montant : null,
+                        'commentaire' => $creance->commentaire,
+                        'paiements' => $creance->relationLoaded('paiementsCreances')
+                            ? $creance->paiementsCreances?->map(function ($paiement) {
+                                return [
+                                    'id' => $paiement->id,
+                                    'reference' => $paiement->reference,
+                                    'montant' => $paiement->montant !== null ? (float) $paiement->montant : null,
+                                    'mode_paiement' => $paiement->mode_paiement,
+                                    'date_paiement' => $paiement->date_paiement?->format('d-m-Y H:i:s'),
+                                    'commentaire' => $paiement->commentaire,
+                                ];
+                            }) ?? []
+                            : [],
+                    ];
+                }) ?? [];
+            }),
+            'paiements_creances' => $this->whenLoaded('paiementsCreances', function () {
+                return $this->paiementsCreances?->map(function ($paiement) {
+                    return [
+                        'id' => $paiement->id,
+                        'reference' => $paiement->reference,
+                        'client_id' => $paiement->client_id,
+                        'creance_id' => $paiement->creance_id,
+                        'montant' => $paiement->montant !== null ? (float) $paiement->montant : null,
+                        'mode_paiement' => $paiement->mode_paiement,
+                        'date_paiement' => $paiement->date_paiement?->format('d-m-Y H:i:s'),
+                        'commentaire' => $paiement->commentaire,
+                    ];
+                }) ?? [];
+            }),
             'created_by' => $this->whenLoaded('createdBy', function () {
                 return [
                     'id' => $this->createdBy?->id,
