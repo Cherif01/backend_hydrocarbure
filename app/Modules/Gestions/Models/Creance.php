@@ -7,11 +7,16 @@ use App\Modules\Comptabilite\Models\PaiementCreance;
 use App\Modules\ResourceHumaine\Models\Client;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
+use Override;
 
 #[Fillable(['client_id', 'affectation_pistolet_id', 'date_creance', 'total_litre', 'montant', 'commentaire', 'created_by', 'updated_by'])]
 class Creance extends Model
 {
     protected $table = 'creances';
+
+    protected $casts = [
+        'date_creance' => 'datetime',
+    ];
 
     public function client()
     {
