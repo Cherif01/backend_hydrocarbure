@@ -35,7 +35,7 @@ class VersementRequest extends FormRequest
             'montant' => [$presenceRule, 'numeric', 'min:0'],
             'date_versement' => [$presenceRule, 'date'],
             'commentaire' => ['nullable', 'string'],
-            'status' => ['sometimes', Rule::in(['en_cours', 'rejeter', 'annuler', 'confirmer'])],
+            'status' => ['sometimes', Rule::in(['en_cours', 'rejeter', 'annuler', 'recu', 'confirmer'])],
         ];
     }
 
@@ -71,4 +71,3 @@ class VersementRequest extends FormRequest
         ];
     }
 }
-

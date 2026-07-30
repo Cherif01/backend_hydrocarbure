@@ -19,6 +19,7 @@ class VersementResource extends JsonResource
             'user_id' => $this->user_id,
             'montant' => $this->montant !== null ? (float) $this->montant : null,
             'date_versement' => $this->date_versement?->format('d-m-Y H:i:s'),
+            'date_reception' => $this->date_reception?->format('d-m-Y H:i:s'),
             'commentaire' => $this->commentaire,
             'status' => $this->status,
 
@@ -73,4 +74,3 @@ class VersementResource extends JsonResource
         ];
     }
 }
-

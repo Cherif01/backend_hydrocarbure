@@ -52,8 +52,10 @@ class VersementController extends Controller
 
         $versements = Versement::with($this->relations)
             ->when($scope['is_station_scoped'], function ($query) use ($scope) {
-                $query->whereHas('caisse', function ($caisseQuery) use ($scope) {
-                    $caisseQuery->where('station_id', $scope['station_id']);
+                $query->where(function ($scopedQuery) use ($scope) {
+                    $scopedQuery->whereHas('caisse', function ($caisseQuery) use ($scope) {
+                        $caisseQuery->where('station_id', $scope['station_id']);
+                    })->orWhere('user_id', Auth::id());
                 });
             })
             ->orderBy('created_at', 'desc')
@@ -105,33 +107,44 @@ class VersementController extends Controller
         $isAdmin = $this->isAdmin($user);
         $hasComptabilite = $this->hasActiveModule($user, 'comptabilite');
         $hasGerantStation = $this->hasActiveModule($user, 'gerant_station');
+        $isIntermediary = (int) $versement->user_id === (int) $user?->id;
 
-        if (! $isAdmin && ! $hasComptabilite && ! $hasGerantStation) {
+        if (! $isAdmin && ! $hasComptabilite && ! $hasGerantStation && ! $isIntermediary) {
             return $this->errorResponse("Vous n'avez pas la permission d'effectuer cette operation.", 403);
         }
 
-        if ($hasGerantStation && ! $isAdmin) {
+        if ($hasGerantStation && ! $isAdmin && ! $isIntermediary) {
             return $this->errorResponse("Vous n'avez pas la permission d'effectuer cette operation.", 403);
         }
 
         $data = $request->validate([
-            'status' => ['required', Rule::in(['en_cours', 'rejeter', 'annuler', 'confirmer'])],
+            'status' => ['required', Rule::in(['en_cours', 'rejeter', 'annuler', 'recu', 'confirmer'])],
         ]);
 
         $currentStatus = $versement->status;
         $nextStatus = $data['status'];
 
-        $isAllowed =
-            ($currentStatus === 'en_cours' && in_array($nextStatus, ['rejeter', 'annuler', 'confirmer'], true))
-            || ($currentStatus === 'rejeter' && $nextStatus === 'confirmer');
+        if ($isIntermediary && ! $isAdmin && ! $hasComptabilite) {
+            if ($nextStatus === 'confirmer') {
+                return $this->errorResponse("Vous n'avez pas la permission d'effectuer cette operation.", 403);
+            }
+        } else {
+            $isAllowed =
+                ($currentStatus === 'en_cours' && in_array($nextStatus, ['rejeter', 'annuler', 'recu', 'confirmer'], true))
+                || ($currentStatus === 'rejeter' && $nextStatus === 'confirmer')
+                || ($currentStatus === 'recu' && $nextStatus === 'confirmer');
 
-        if (! $isAllowed) {
-            return $this->errorResponse("Ce versement ne peut plus changer de statut.", 422);
+            if (! $isAllowed) {
+                return $this->errorResponse("Ce versement ne peut plus changer de statut.", 422);
+            }
         }
 
         $oldVersement = $versement->replicate()->fill($versement->getAttributes());
 
         $versement->status = $nextStatus;
+        if ($nextStatus === 'recu' && $versement->date_reception === null) {
+            $versement->date_reception = now();
+        }
         $versement->updated_by = Auth::id();
         $versement->save();
         $versement->load($this->relations);

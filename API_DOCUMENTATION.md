@@ -2585,9 +2585,17 @@ Response example:
 Access (enforced):
 
 - index/show/store/update/destroy: `super_admin`/`admin` OR active module `comptabilite` OR active module `gerant_station`
-- switch-status: `super_admin`/`admin` OR active module `comptabilite`
+- switch-status: `super_admin`/`admin` OR active module `comptabilite` OR intermediary user (`versement.user_id == auth_user.id`, but cannot set `confirmer`)
 
-Station scope: when user is `gerant_station` (and not admin/comptabilite), versements are limited to the scoped station via `caisse.station_id`.
+Status values:
+
+- `en_cours`
+- `rejeter`
+- `annuler`
+- `recu` (means the intermediary user has received the money; `date_reception` is set when switching to `recu`)
+- `confirmer`
+
+Station scope: when user is `gerant_station` (and not admin/comptabilite), versements are limited to the scoped station via `caisse.station_id`, plus any versements where `user_id == auth_user.id`.
 
 ### GET `/api/v1/comptabilite/versements`
 
@@ -2606,7 +2614,8 @@ Response example:
       "user_id": null,
       "montant": 250000,
       "date_versement": "29-07-2026 00:00:00",
-      "status": "en_attente"
+      "date_reception": null,
+      "status": "en_cours"
     }
   ]
 }
@@ -2640,7 +2649,8 @@ Response example:
     "type": "direct",
     "montant": 250000,
     "date_versement": "29-07-2026 00:00:00",
-    "status": "en_attente"
+    "date_reception": null,
+    "status": "en_cours"
   }
 }
 ```
@@ -2659,7 +2669,8 @@ Response example:
     "caisse_id": 1,
     "type": "direct",
     "montant": 250000,
-    "status": "en_attente"
+    "date_reception": null,
+    "status": "en_cours"
   }
 }
 ```
@@ -2693,7 +2704,7 @@ Request example:
 
 ```json
 {
-  "status": "confirmer"
+  "status": "recu"
 }
 ```
 
@@ -2705,7 +2716,8 @@ Response example:
   "message": "Statut du versement change avec succes.",
   "data": {
     "id": 1,
-    "status": "confirmer"
+    "date_reception": "30-07-2026 10:00:00",
+    "status": "recu"
   }
 }
 ```
@@ -3776,4 +3788,3 @@ Response example:
   "message": "Jauge supprimee avec succes."
 }
 ```
-
