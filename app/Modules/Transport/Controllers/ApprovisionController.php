@@ -94,10 +94,8 @@ class ApprovisionController extends Controller
             $approvision = DB::transaction(function () use ($data, $jauges, $hasAutomaticReference) {
                 $approvision = $this->createWithReferenceRetry($data, $hasAutomaticReference);
 
-                $num = 1;
                 foreach ($jauges as $jauge) {
                     $jauge['created_by'] = Auth::id();
-                    $jauge['num_compartiment'] = $num++;
                     $approvision->compartimentJauges()->create($jauge);
                 }
 

@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
     'num_compartiment',
     'valeur_jauge',
     'volume_reel',
-    'volueme_theorique',
+    'volume_theorique',
     'created_by',
     'updated_by',
 ])]
@@ -24,7 +24,7 @@ class ApproCompartimentJauge extends Model
     protected $casts = [
         'valeur_jauge' => 'decimal:2',
         'volume_reel' => 'decimal:2',
-        'volueme_theorique' => 'decimal:2',
+        'volume_theorique' => 'decimal:2',
     ];
 
     public function approvision()
@@ -47,4 +47,3 @@ class ApproCompartimentJauge extends Model
         return $this->belongsTo(User::class, 'updated_by');
     }
 }
-

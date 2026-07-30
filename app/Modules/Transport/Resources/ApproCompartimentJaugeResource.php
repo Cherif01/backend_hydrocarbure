@@ -11,7 +11,7 @@ class ApproCompartimentJaugeResource extends JsonResource
     #[Override]
     public function toArray(Request $request): array
     {
-        $volumeTheorique = $this->volueme_theorique !== null ? (float) $this->volueme_theorique : 0.0;
+        $volumeTheorique = $this->volume_theorique !== null ? (float) $this->volume_theorique : 0.0;
         $volumeReel = $this->volume_reel !== null ? (float) $this->volume_reel : 0.0;
 
         return [
@@ -21,7 +21,7 @@ class ApproCompartimentJaugeResource extends JsonResource
             'num_compartiment' => $this->num_compartiment,
             'valeur_jauge' => $this->valeur_jauge !== null ? (float) $this->valeur_jauge : null,
             'volume_reel' => $this->volume_reel !== null ? (float) $this->volume_reel : null,
-            'volume_theorique' => $this->volueme_theorique !== null ? (float) $this->volueme_theorique : null,
+            'volume_theorique' => $this->volume_theorique !== null ? (float) $this->volume_theorique : null,
             'ecart' => $volumeTheorique - $volumeReel,
 
             'hydrocarbure' => $this->whenLoaded('hydrocarbure', function () {
@@ -53,4 +53,3 @@ class ApproCompartimentJaugeResource extends JsonResource
         ];
     }
 }
-

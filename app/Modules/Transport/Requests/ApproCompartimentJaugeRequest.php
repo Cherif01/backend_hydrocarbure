@@ -31,10 +31,10 @@ class ApproCompartimentJaugeRequest extends FormRequest
     {
         $validated = parent::validated($key, $default);
 
-        if (array_key_exists('volume_theorique', $validated) && ! array_key_exists('volueme_theorique', $validated)) {
-            $validated['volueme_theorique'] = $validated['volume_theorique'];
+        if (array_key_exists('volueme_theorique', $validated) && ! array_key_exists('volume_theorique', $validated)) {
+            $validated['volume_theorique'] = $validated['volueme_theorique'];
         }
-        unset($validated['volume_theorique']);
+        unset($validated['volueme_theorique']);
 
         return $validated;
     }
@@ -54,4 +54,3 @@ class ApproCompartimentJaugeRequest extends FormRequest
         ];
     }
 }
-

@@ -77,8 +77,8 @@ class ApprovisionRequest extends FormRequest
 
         if (array_key_exists('appro_compartiment_jauges', $validated) && is_array($validated['appro_compartiment_jauges'])) {
             $validated['appro_compartiment_jauges'] = array_map(function (array $item): array {
-                if (array_key_exists('volume_theorique', $item) && ! array_key_exists('volueme_theorique', $item)) {
-                    $item['volueme_theorique'] = $item['volume_theorique'];
+                if (array_key_exists('volume_theorique', $item) && ! array_key_exists('volume_theorique', $item)) {
+                    $item['volume_theorique'] = $item['volume_theorique'];
                 }
                 unset($item['volume_theorique']);
                 return $item;
@@ -114,4 +114,3 @@ class ApprovisionRequest extends FormRequest
         ];
     }
 }
-
