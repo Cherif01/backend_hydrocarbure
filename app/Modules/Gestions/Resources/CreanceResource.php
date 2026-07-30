@@ -54,6 +54,18 @@ class CreanceResource extends JsonResource
                     ] : null,
                 ];
             }),
+            'paiements' => $this->whenLoaded('paiementsCreances', function () {
+                return $this->paiementsCreances?->map(function ($paiement) {
+                    return [
+                        'id' => $paiement->id,
+                        'reference' => $paiement->reference,
+                        'montant' => $paiement->montant !== null ? (float) $paiement->montant : null,
+                        'mode_paiement' => $paiement->mode_paiement,
+                        'date_paiement' => $paiement->date_paiement?->format('d-m-Y H:i:s'),
+                        'commentaire' => $paiement->commentaire,
+                    ];
+                }) ?? [];
+            }),
             'created_by' => $this->whenLoaded('createdBy', function () {
                 return [
                     'id' => $this->createdBy?->id,

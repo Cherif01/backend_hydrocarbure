@@ -21,6 +21,7 @@ class CreanceController extends Controller
     private array $relations = [
         'client',
         'affectationPistolet.pistolet.pompe.station',
+        'paiementsCreances',
         'createdBy',
         'updatedBy',
     ];
