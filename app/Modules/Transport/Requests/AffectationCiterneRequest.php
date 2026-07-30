@@ -18,6 +18,7 @@ class AffectationCiterneRequest extends FormRequest
         $presenceRule = $this->isMethod('PATCH') ? 'sometimes' : 'required';
 
         return [
+            'station_id' => [$presenceRule, 'integer', 'exists:stations,id'],
             'employee_id' => [$presenceRule, 'integer', 'exists:employees,id'],
             'citerne_id' => [$presenceRule, 'integer', 'exists:citernes,id'],
             'date_affectation' => [$presenceRule, 'date'],
@@ -41,6 +42,10 @@ class AffectationCiterneRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'station_id.required' => "La station est obligatoire.",
+            'station_id.integer' => "La station selectionnee est invalide.",
+            'station_id.exists' => "La station selectionnee n'existe pas.",
+
             'employee_id.required' => "Le chauffeur est obligatoire.",
             'employee_id.integer' => "Le chauffeur selectionne est invalide.",
             'employee_id.exists' => "Le chauffeur selectionne n'existe pas.",
@@ -64,4 +69,3 @@ class AffectationCiterneRequest extends FormRequest
         ];
     }
 }
-

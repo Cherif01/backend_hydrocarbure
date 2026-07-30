@@ -3,11 +3,13 @@
 namespace App\Modules\Transport\Models;
 
 use App\Modules\Administration\Models\User;
+use App\Modules\Gestions\Models\Station;
 use App\Modules\ResourceHumaine\Models\Employee;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 
 #[Fillable([
+    'station_id',
     'employee_id',
     'citerne_id',
     'date_affectation',
@@ -55,6 +57,11 @@ class AffectationCiterne extends Model
         return $this->belongsTo(Citerne::class, 'citerne_id');
     }
 
+    public function station()
+    {
+        return $this->belongsTo(Station::class, 'station_id');
+    }
+
     public function depenses()
     {
         return $this->hasMany(AffectationCiterneDepense::class, 'affectation_citerne_id');
@@ -70,4 +77,3 @@ class AffectationCiterne extends Model
         return $this->belongsTo(User::class, 'updated_by');
     }
 }
-

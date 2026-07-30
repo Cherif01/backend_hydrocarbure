@@ -30,6 +30,18 @@ class AffectationCiterneResource extends JsonResource
             'latitude_destination' => $this->latitude_destination !== null ? (float) $this->latitude_destination : null,
             'status' => $this->status,
 
+            'station_id' => $this->station_id,
+            'station' => $this->whenLoaded('station', function () {
+                return [
+                    'id' => $this->station?->id,
+                    'reference' => $this->station?->reference,
+                    'libelle' => $this->station?->libelle,
+                    'description' => $this->station?->description,
+                    'ville' => $this->station?->ville,
+                    'adresse' => $this->station?->adresse,
+                ];
+            }),
+
             'employee' => $this->whenLoaded('employee', function () {
                 return [
                     'id' => $this->employee?->id,
@@ -74,4 +86,3 @@ class AffectationCiterneResource extends JsonResource
         ];
     }
 }
-

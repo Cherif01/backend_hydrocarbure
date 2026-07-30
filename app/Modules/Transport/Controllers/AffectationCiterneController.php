@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Modules\Transport\Models\AffectationCiterne;
 use App\Modules\Transport\Requests\AffectationCiterneRequest;
 use App\Modules\Transport\Resources\AffectationCiterneResource;
+use App\Services\UserStationScopeService;
 use App\Traits\ApiResponses;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AffectationCiterneController extends Controller
@@ -16,14 +19,26 @@ class AffectationCiterneController extends Controller
     private array $relations = [
         'employee',
         'citerne',
+        'station',
         'depenses',
         'createdBy',
         'updatedBy',
     ];
 
-    public function index()
+    public function index(Request $request, UserStationScopeService $stationScopeService)
     {
+        try {
+            $scope = $this->isAdmin($request->user())
+                ? ['is_station_scoped' => false, 'station_id' => null]
+                : $stationScopeService->resolve($request->user());
+        } catch (AuthorizationException $exception) {
+            return $this->errorResponse($exception->getMessage(), 403);
+        }
+
         $affectations = AffectationCiterne::with($this->relations)
+            ->when($scope['is_station_scoped'], function ($query) use ($scope) {
+                $query->where('station_id', $scope['station_id']);
+            })
             ->orderBy('created_at', 'desc')
             ->get();
 
@@ -83,7 +98,8 @@ class AffectationCiterneController extends Controller
         $nextEmployeeId = (int) ($data['employee_id'] ?? $affectation_citerne->employee_id);
         $nextCiterneId = (int) ($data['citerne_id'] ?? $affectation_citerne->citerne_id);
 
-        if ($nextStatus === 'en_cours'
+        if (
+            $nextStatus === 'en_cours'
             && $this->employeeHasActiveAffectation($nextEmployeeId, $affectation_citerne->id)
         ) {
             return $this->errorResponse(
@@ -92,7 +108,8 @@ class AffectationCiterneController extends Controller
             );
         }
 
-        if ($nextStatus === 'en_cours'
+        if (
+            $nextStatus === 'en_cours'
             && $this->citerneHasActiveAffectation($nextCiterneId, $affectation_citerne->id)
         ) {
             return $this->errorResponse(
@@ -147,5 +164,9 @@ class AffectationCiterneController extends Controller
             })
             ->exists();
     }
-}
 
+    private function isAdmin($user): bool
+    {
+        return in_array($user?->role, ['super_admin', 'admin'], true);
+    }
+}
