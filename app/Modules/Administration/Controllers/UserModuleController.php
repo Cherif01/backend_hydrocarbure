@@ -13,6 +13,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class UserModuleController extends Controller
 {
@@ -45,6 +46,7 @@ class UserModuleController extends Controller
         $code_acces = $user_module->code_acces;
         $user = User::find($user_module->user_id);
         $telephone = $user?->telephone ?? '';
+        Log::info(['Telephone:' => $telephone]);
 
         if (empty($telephone)) {
             return $this->errorResponse("L'utilisateur n'a pas de numéro de téléphone");
