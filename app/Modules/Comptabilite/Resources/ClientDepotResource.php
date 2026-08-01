@@ -2,32 +2,30 @@
 
 namespace App\Modules\Comptabilite\Resources;
 
-use App\Traits\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Override;
 
-class CaisseResource extends JsonResource
+class ClientDepotResource extends JsonResource
 {
-    use Helper;
-
     #[Override]
     public function toArray(Request $request): array
     {
         return [
             'id' => $this->id,
-            'station_id' => $this->station_id,
+            'client_id' => $this->client_id,
             'reference' => $this->reference,
             'libelle' => $this->libelle,
-            'solde_initial' => $this->solde_initial !== null ? (float) $this->solde_initial : null,
-            'solde' => $this->soldeCaisse($this->resource),
-            'is_active' => (bool) $this->is_active,
+            'commentaire' => $this->commentaire,
+            'date_depot' => $this->date_depot?->format('d-m-Y H:i:s'),
+            'montant' => $this->montant !== null ? (float) $this->montant : null,
 
-            'station' => $this->whenLoaded('station', function () {
+            'client' => $this->whenLoaded('client', function () {
                 return [
-                    'id' => $this->station?->id,
-                    'reference' => $this->station?->reference,
-                    'libelle' => $this->station?->libelle,
+                    'id' => $this->client?->id,
+                    'name' => $this->client?->name,
+                    'telephone' => $this->client?->telephone,
+                    'email' => $this->client?->email,
                 ];
             }),
 
@@ -51,3 +49,4 @@ class CaisseResource extends JsonResource
         ];
     }
 }
+

@@ -3,12 +3,14 @@
 namespace App\Modules\Gestions\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Modules\Comptabilite\Models\Caisse;
 use App\Modules\Gestions\Models\Station;
 use App\Modules\Gestions\Requests\StationRequest;
 use App\Modules\Gestions\Resources\StationResource;
 use App\Traits\ApiResponses;
 use App\Traits\CloudflareUpload;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class StationController extends Controller
@@ -45,7 +47,21 @@ class StationController extends Controller
             $data['image'] = $this->uploadImage($request->file('image'), 'stations');
         }
 
-        $station = Station::create($data)->load(['createdBy', 'updatedBy']);
+        $station = DB::transaction(function () use ($data) {
+            $station = Station::create($data);
+
+            Caisse::create([
+                'station_id' => $station->id,
+                'reference' => "CAI-" . rand(1000, 9999) . '-' . rand(1000, 9999),
+                'libelle' => "CAISSE" . ' ' . $station->libelle,
+                'solde_initial' => 0,
+                'is_active' => true,
+            ]);
+
+            return $station;
+        });
+
+        $station->load(['createdBy', 'updatedBy']);
 
         logActivity("Creation d'une nouvelle station", $station->toArray(), $station);
 

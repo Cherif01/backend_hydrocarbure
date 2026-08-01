@@ -13,6 +13,8 @@ class CompteController extends Controller
 {
     use ApiResponses;
 
+    private const COMPTE_CREDIT_STATUSES = ['confirmer'];
+
     private array $relations = [
         'createdBy',
         'updatedBy',
@@ -26,6 +28,15 @@ class CompteController extends Controller
     public function index()
     {
         $comptes = Compte::with($this->relations)
+            ->withSum(['versements as versements_confirmed_sum' => function ($query) {
+                $query->whereIn('status', self::COMPTE_CREDIT_STATUSES);
+            }], 'montant')
+            ->withSum(['incomingTransactions as transactions_in_sum' => function ($query) {
+                $query->whereNull('deleted_at');
+            }], 'montant')
+            ->withSum(['outgoingTransactions as transactions_out_sum' => function ($query) {
+                $query->whereNull('deleted_at');
+            }], 'montant')
             ->orderBy('created_at', 'desc')
             ->get();
 
@@ -38,6 +49,15 @@ class CompteController extends Controller
     public function show(Compte $compte)
     {
         $compte->load($this->relations);
+        $compte->loadSum(['versements as versements_confirmed_sum' => function ($query) {
+            $query->whereIn('status', self::COMPTE_CREDIT_STATUSES);
+        }], 'montant');
+        $compte->loadSum(['incomingTransactions as transactions_in_sum' => function ($query) {
+            $query->whereNull('deleted_at');
+        }], 'montant');
+        $compte->loadSum(['outgoingTransactions as transactions_out_sum' => function ($query) {
+            $query->whereNull('deleted_at');
+        }], 'montant');
 
         return $this->successResponse(
             new CompteResource($compte),
@@ -51,6 +71,15 @@ class CompteController extends Controller
         $data['created_by'] = Auth::id();
 
         $compte = Compte::create($data)->load($this->relations);
+        $compte->loadSum(['versements as versements_confirmed_sum' => function ($query) {
+            $query->whereIn('status', self::COMPTE_CREDIT_STATUSES);
+        }], 'montant');
+        $compte->loadSum(['incomingTransactions as transactions_in_sum' => function ($query) {
+            $query->whereNull('deleted_at');
+        }], 'montant');
+        $compte->loadSum(['outgoingTransactions as transactions_out_sum' => function ($query) {
+            $query->whereNull('deleted_at');
+        }], 'montant');
 
         logActivity("Creation d'un compte", $compte->toArray(), $compte);
 
@@ -69,6 +98,15 @@ class CompteController extends Controller
 
         $compte->update($data);
         $compte->load($this->relations);
+        $compte->loadSum(['versements as versements_confirmed_sum' => function ($query) {
+            $query->whereIn('status', self::COMPTE_CREDIT_STATUSES);
+        }], 'montant');
+        $compte->loadSum(['incomingTransactions as transactions_in_sum' => function ($query) {
+            $query->whereNull('deleted_at');
+        }], 'montant');
+        $compte->loadSum(['outgoingTransactions as transactions_out_sum' => function ($query) {
+            $query->whereNull('deleted_at');
+        }], 'montant');
 
         logActivity("Mise a jour d'un compte", [
             'oldCompte' => $oldCompte->toArray(),

@@ -3,6 +3,7 @@
 namespace App\Modules\Gestions\Models;
 
 use App\Modules\Administration\Models\User;
+use App\Modules\Comptabilite\Models\Caisse;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 
@@ -34,5 +35,10 @@ class Station extends Model
     public function cuves()
     {
         return $this->hasMany(Cuve::class, 'station_id');
+    }
+
+    public function caisses()
+    {
+        return $this->hasMany(Caisse::class, 'station_id');
     }
 }

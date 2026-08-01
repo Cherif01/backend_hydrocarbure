@@ -3,13 +3,14 @@
 namespace App\Modules\Gestions\Resources;
 
 use App\Traits\CloudflareUpload;
+use App\Traits\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Override;
 
 class ClientResource extends JsonResource
 {
-    use CloudflareUpload;
+    use CloudflareUpload, Helper;
 
     #[Override]
     public function toArray(Request $request): array
@@ -23,6 +24,9 @@ class ClientResource extends JsonResource
             'avatar' => $this->avatar,
             'avatar_url' => $this->avatar ? $this->getImageUrl($this->avatar, 'clients') : null,
             'is_active' => (bool) $this->is_active,
+
+            'solde_client' => $this->soldeClient($this->id),
+
             'hydrocarbures' => $this->whenLoaded('hydrocarbures', function () {
                 return $this->hydrocarbures->map(function ($item) {
                     return [

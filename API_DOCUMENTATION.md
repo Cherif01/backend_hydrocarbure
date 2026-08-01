@@ -15,9 +15,9 @@ All controllers use the same envelope defined in `App\Traits\ApiResponses`.
 
 ```json
 {
-  "status": 1,
-  "message": "Operation successful",
-  "data": {}
+    "status": 1,
+    "message": "Operation successful",
+    "data": {}
 }
 ```
 
@@ -25,10 +25,10 @@ All controllers use the same envelope defined in `App\Traits\ApiResponses`.
 
 ```json
 {
-  "status": 1,
-  "data": {},
-  "token": "1|plain-text-token",
-  "message": "Authentication successful"
+    "status": 1,
+    "data": {},
+    "token": "1|plain-text-token",
+    "message": "Authentication successful"
 }
 ```
 
@@ -36,9 +36,9 @@ All controllers use the same envelope defined in `App\Traits\ApiResponses`.
 
 ```json
 {
-  "status": 0,
-  "message": "Something went wrong",
-  "error": []
+    "status": 0,
+    "message": "Something went wrong",
+    "error": []
 }
 ```
 
@@ -46,8 +46,8 @@ All controllers use the same envelope defined in `App\Traits\ApiResponses`.
 
 ```json
 {
-  "status": 1,
-  "message": "Operation successful"
+    "status": 1,
+    "message": "Operation successful"
 }
 ```
 
@@ -108,9 +108,9 @@ Important notes for frontend:
 
 ```json
 {
-  "id": 1,
-  "name": "John Doe",
-  "email": "john@example.com"
+    "id": 1,
+    "name": "John Doe",
+    "email": "john@example.com"
 }
 ```
 
@@ -128,12 +128,12 @@ Request example:
 
 ```json
 {
-  "name": "John Doe",
-  "telephone": "070000000",
-  "email": "john@example.com",
-  "role": "user",
-  "password": "secret12",
-  "password_confirmation": "secret12"
+    "name": "John Doe",
+    "telephone": "070000000",
+    "email": "john@example.com",
+    "role": "user",
+    "password": "secret12",
+    "password_confirmation": "secret12"
 }
 ```
 
@@ -141,21 +141,21 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "data": {
-    "id": 1,
-    "name": "John Doe",
-    "telephone": "070000000",
-    "email": "john@example.com",
-    "avatar_url": null,
-    "role": "user",
-    "user_modules": [],
-    "affectations": [],
-    "created_at": "29-07-2026 10:00:00",
-    "updated_at": "29-07-2026 10:00:00"
-  },
-  "token": "1|plain-text-token",
-  "message": "Utilisateur créé avec succès."
+    "status": 1,
+    "data": {
+        "id": 1,
+        "name": "John Doe",
+        "telephone": "070000000",
+        "email": "john@example.com",
+        "avatar_url": null,
+        "role": "user",
+        "user_modules": [],
+        "affectations": [],
+        "created_at": "29-07-2026 10:00:00",
+        "updated_at": "29-07-2026 10:00:00"
+    },
+    "token": "1|plain-text-token",
+    "message": "Utilisateur créé avec succès."
 }
 ```
 
@@ -167,8 +167,8 @@ Request example:
 
 ```json
 {
-  "telephone": "070000000",
-  "password": "secret12"
+    "telephone": "070000000",
+    "password": "secret12"
 }
 ```
 
@@ -176,21 +176,21 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "data": {
-    "id": 1,
-    "name": "John Doe",
-    "telephone": "070000000",
-    "email": "john@example.com",
-    "avatar_url": null,
-    "role": "user",
-    "user_modules": [],
-    "affectations": [],
-    "created_at": "29-07-2026 10:00:00",
-    "updated_at": "29-07-2026 10:00:00"
-  },
-  "token": "1|plain-text-token",
-  "message": "Utilisateur connecté avec succès."
+    "status": 1,
+    "data": {
+        "id": 1,
+        "name": "John Doe",
+        "telephone": "070000000",
+        "email": "john@example.com",
+        "avatar_url": null,
+        "role": "user",
+        "user_modules": [],
+        "affectations": [],
+        "created_at": "29-07-2026 10:00:00",
+        "updated_at": "29-07-2026 10:00:00"
+    },
+    "token": "1|plain-text-token",
+    "message": "Utilisateur connecté avec succès."
 }
 ```
 
@@ -202,8 +202,8 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Utilisateur deconnecté avec succès."
+    "status": 1,
+    "message": "Utilisateur deconnecté avec succès."
 }
 ```
 
@@ -215,42 +215,42 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Utilisateur récupéré avec succès.",
-  "data": {
-    "id": 1,
-    "name": "John Doe",
-    "telephone": "070000000",
-    "email": "john@example.com",
-    "avatar_url": null,
-    "role": "user",
-    "user_modules": [
-      {
-        "id": 10,
-        "module_id": 2,
-        "name": "gerant_station",
-        "description": null,
-        "code_acces": "1234",
-        "is_active": true
-      }
-    ],
-    "affectations": [
-      {
-        "id": 5,
-        "station_id": 3,
-        "is_active": true,
-        "station": {
-          "reference": "STAABC123",
-          "libelle": "Station A",
-          "description": null,
-          "addresse": "Rue 1",
-          "ville": "Abidjan"
-        }
-      }
-    ],
-    "created_at": "29-07-2026 10:00:00",
-    "updated_at": "29-07-2026 10:00:00"
-  }
+    "status": 1,
+    "message": "Utilisateur récupéré avec succès.",
+    "data": {
+        "id": 1,
+        "name": "John Doe",
+        "telephone": "070000000",
+        "email": "john@example.com",
+        "avatar_url": null,
+        "role": "user",
+        "user_modules": [
+            {
+                "id": 10,
+                "module_id": 2,
+                "name": "gerant_station",
+                "description": null,
+                "code_acces": "1234",
+                "is_active": true
+            }
+        ],
+        "affectations": [
+            {
+                "id": 5,
+                "station_id": 3,
+                "is_active": true,
+                "station": {
+                    "reference": "STAABC123",
+                    "libelle": "Station A",
+                    "description": null,
+                    "addresse": "Rue 1",
+                    "ville": "Abidjan"
+                }
+            }
+        ],
+        "created_at": "29-07-2026 10:00:00",
+        "updated_at": "29-07-2026 10:00:00"
+    }
 }
 ```
 
@@ -264,9 +264,9 @@ Request example:
 
 ```json
 {
-  "name": "John Updated",
-  "telephone": "070000001",
-  "email": "john.updated@example.com"
+    "name": "John Updated",
+    "telephone": "070000001",
+    "email": "john.updated@example.com"
 }
 ```
 
@@ -274,20 +274,20 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Profil mis à jour avec succès.",
-  "data": {
-    "id": 1,
-    "name": "John Updated",
-    "telephone": "070000001",
-    "email": "john.updated@example.com",
-    "avatar_url": null,
-    "role": "user",
-    "user_modules": [],
-    "affectations": [],
-    "created_at": "29-07-2026 10:00:00",
-    "updated_at": "29-07-2026 10:10:00"
-  }
+    "status": 1,
+    "message": "Profil mis à jour avec succès.",
+    "data": {
+        "id": 1,
+        "name": "John Updated",
+        "telephone": "070000001",
+        "email": "john.updated@example.com",
+        "avatar_url": null,
+        "role": "user",
+        "user_modules": [],
+        "affectations": [],
+        "created_at": "29-07-2026 10:00:00",
+        "updated_at": "29-07-2026 10:10:00"
+    }
 }
 ```
 
@@ -299,9 +299,9 @@ Request example:
 
 ```json
 {
-  "current_password": "old-secret",
-  "new_password": "new-secret",
-  "new_password_confirmation": "new-secret"
+    "current_password": "old-secret",
+    "new_password": "new-secret",
+    "new_password_confirmation": "new-secret"
 }
 ```
 
@@ -309,20 +309,20 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Mot de passe mis à jour avec succès.",
-  "data": {
-    "id": 1,
-    "name": "John Updated",
-    "telephone": "070000001",
-    "email": "john.updated@example.com",
-    "avatar_url": null,
-    "role": "user",
-    "user_modules": [],
-    "affectations": [],
-    "created_at": "29-07-2026 10:00:00",
-    "updated_at": "29-07-2026 10:12:00"
-  }
+    "status": 1,
+    "message": "Mot de passe mis à jour avec succès.",
+    "data": {
+        "id": 1,
+        "name": "John Updated",
+        "telephone": "070000001",
+        "email": "john.updated@example.com",
+        "avatar_url": null,
+        "role": "user",
+        "user_modules": [],
+        "affectations": [],
+        "created_at": "29-07-2026 10:00:00",
+        "updated_at": "29-07-2026 10:12:00"
+    }
 }
 ```
 
@@ -336,22 +336,22 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Utilisateurs récupérés avec succès.",
-  "data": [
-    {
-      "id": 7,
-      "name": "Gerant Station",
-      "telephone": "0712345678",
-      "email": "gerant@example.com",
-      "avatar_url": null,
-      "role": "user",
-      "user_modules": [],
-      "affectations": [],
-      "created_at": "29-07-2026 10:00:00",
-      "updated_at": "29-07-2026 10:00:00"
-    }
-  ]
+    "status": 1,
+    "message": "Utilisateurs récupérés avec succès.",
+    "data": [
+        {
+            "id": 7,
+            "name": "Gerant Station",
+            "telephone": "0712345678",
+            "email": "gerant@example.com",
+            "avatar_url": null,
+            "role": "user",
+            "user_modules": [],
+            "affectations": [],
+            "created_at": "29-07-2026 10:00:00",
+            "updated_at": "29-07-2026 10:00:00"
+        }
+    ]
 }
 ```
 
@@ -365,20 +365,20 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Statut de l'utilisateur changé avec succès.",
-  "data": {
-    "id": 7,
-    "name": "Gerant Station",
-    "telephone": "0712345678",
-    "email": "gerant@example.com",
-    "avatar_url": null,
-    "role": "user",
-    "user_modules": [],
-    "affectations": [],
-    "created_at": "29-07-2026 10:00:00",
-    "updated_at": "29-07-2026 10:20:00"
-  }
+    "status": 1,
+    "message": "Statut de l'utilisateur changé avec succès.",
+    "data": {
+        "id": 7,
+        "name": "Gerant Station",
+        "telephone": "0712345678",
+        "email": "gerant@example.com",
+        "avatar_url": null,
+        "role": "user",
+        "user_modules": [],
+        "affectations": [],
+        "created_at": "29-07-2026 10:00:00",
+        "updated_at": "29-07-2026 10:20:00"
+    }
 }
 ```
 
@@ -390,18 +390,18 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Liste des modules chargée avec succès",
-  "data": [
-    {
-      "id": 2,
-      "name": "gerant_station",
-      "description": "Gestion des stations",
-      "is_active": true,
-      "created_at": "29-07-2026 10:00:00",
-      "updated_at": "29-07-2026 10:00:00"
-    }
-  ]
+    "status": 1,
+    "message": "Liste des modules chargée avec succès",
+    "data": [
+        {
+            "id": 2,
+            "name": "gerant_station",
+            "description": "Gestion des stations",
+            "is_active": true,
+            "created_at": "29-07-2026 10:00:00",
+            "updated_at": "29-07-2026 10:00:00"
+        }
+    ]
 }
 ```
 
@@ -411,8 +411,8 @@ Request example:
 
 ```json
 {
-  "name": "comptabilite",
-  "description": "Module comptabilite"
+    "name": "comptabilite",
+    "description": "Module comptabilite"
 }
 ```
 
@@ -420,16 +420,16 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Module créé avec succès",
-  "data": {
-    "id": 3,
-    "name": "comptabilite",
-    "description": "Module comptabilite",
-    "is_active": true,
-    "created_at": "29-07-2026 10:00:00",
-    "updated_at": "29-07-2026 10:00:00"
-  }
+    "status": 1,
+    "message": "Module créé avec succès",
+    "data": {
+        "id": 3,
+        "name": "comptabilite",
+        "description": "Module comptabilite",
+        "is_active": true,
+        "created_at": "29-07-2026 10:00:00",
+        "updated_at": "29-07-2026 10:00:00"
+    }
 }
 ```
 
@@ -439,16 +439,16 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Module chargé avec succès",
-  "data": {
-    "id": 3,
-    "name": "comptabilite",
-    "description": "Module comptabilite",
-    "is_active": true,
-    "created_at": "29-07-2026 10:00:00",
-    "updated_at": "29-07-2026 10:00:00"
-  }
+    "status": 1,
+    "message": "Module chargé avec succès",
+    "data": {
+        "id": 3,
+        "name": "comptabilite",
+        "description": "Module comptabilite",
+        "is_active": true,
+        "created_at": "29-07-2026 10:00:00",
+        "updated_at": "29-07-2026 10:00:00"
+    }
 }
 ```
 
@@ -458,7 +458,7 @@ Request example:
 
 ```json
 {
-  "description": "Module comptabilite (updated)"
+    "description": "Module comptabilite (updated)"
 }
 ```
 
@@ -466,16 +466,16 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Module mis à jour avec succès",
-  "data": {
-    "id": 3,
-    "name": "comptabilite",
-    "description": "Module comptabilite (updated)",
-    "is_active": true,
-    "created_at": "29-07-2026 10:00:00",
-    "updated_at": "29-07-2026 10:05:00"
-  }
+    "status": 1,
+    "message": "Module mis à jour avec succès",
+    "data": {
+        "id": 3,
+        "name": "comptabilite",
+        "description": "Module comptabilite (updated)",
+        "is_active": true,
+        "created_at": "29-07-2026 10:00:00",
+        "updated_at": "29-07-2026 10:05:00"
+    }
 }
 ```
 
@@ -485,8 +485,8 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Module supprimé avec succès"
+    "status": 1,
+    "message": "Module supprimé avec succès"
 }
 ```
 
@@ -498,17 +498,17 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Listes des affectations des modules aux utilisateurs",
-  "data": [
-    {
-      "id": 10,
-      "user_id": 7,
-      "module_id": 2,
-      "code_acces": "1234",
-      "is_active": true
-    }
-  ]
+    "status": 1,
+    "message": "Listes des affectations des modules aux utilisateurs",
+    "data": [
+        {
+            "id": 10,
+            "user_id": 7,
+            "module_id": 2,
+            "code_acces": "1234",
+            "is_active": true
+        }
+    ]
 }
 ```
 
@@ -518,8 +518,8 @@ Request example:
 
 ```json
 {
-  "module_id": 2,
-  "user_id": 7
+    "module_id": 2,
+    "user_id": 7
 }
 ```
 
@@ -527,15 +527,15 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Affectation du module aux utilisateurs",
-  "data": {
-    "id": 10,
-    "module_id": 2,
-    "user_id": 7,
-    "code_acces": "1234",
-    "is_active": true
-  }
+    "status": 1,
+    "message": "Affectation du module aux utilisateurs",
+    "data": {
+        "id": 10,
+        "module_id": 2,
+        "user_id": 7,
+        "code_acces": "1234",
+        "is_active": true
+    }
 }
 ```
 
@@ -545,15 +545,15 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Affectation chargée avec succès",
-  "data": {
-    "id": 10,
-    "module_id": 2,
-    "user_id": 7,
-    "code_acces": "1234",
-    "is_active": true
-  }
+    "status": 1,
+    "message": "Affectation chargée avec succès",
+    "data": {
+        "id": 10,
+        "module_id": 2,
+        "user_id": 7,
+        "code_acces": "1234",
+        "is_active": true
+    }
 }
 ```
 
@@ -563,7 +563,7 @@ Request example:
 
 ```json
 {
-  "is_active": false
+    "is_active": false
 }
 ```
 
@@ -571,15 +571,15 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Affectation mise à jour avec succès",
-  "data": {
-    "id": 10,
-    "module_id": 2,
-    "user_id": 7,
-    "code_acces": "1234",
-    "is_active": false
-  }
+    "status": 1,
+    "message": "Affectation mise à jour avec succès",
+    "data": {
+        "id": 10,
+        "module_id": 2,
+        "user_id": 7,
+        "code_acces": "1234",
+        "is_active": false
+    }
 }
 ```
 
@@ -589,8 +589,8 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Suppression de l'affectation du module aux utilisateurs"
+    "status": 1,
+    "message": "Suppression de l'affectation du module aux utilisateurs"
 }
 ```
 
@@ -600,12 +600,12 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Changement de statut de l'affectation du module aux utilisateurs",
-  "data": {
-    "id": 10,
-    "is_active": false
-  }
+    "status": 1,
+    "message": "Changement de statut de l'affectation du module aux utilisateurs",
+    "data": {
+        "id": 10,
+        "is_active": false
+    }
 }
 ```
 
@@ -615,12 +615,12 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Envoi de code d'accès",
-  "data": {
-    "id": 10,
-    "code_acces": "1234"
-  }
+    "status": 1,
+    "message": "Envoi de code d'accès",
+    "data": {
+        "id": 10,
+        "code_acces": "1234"
+    }
 }
 ```
 
@@ -630,7 +630,7 @@ Request example:
 
 ```json
 {
-  "code_acces": "1234"
+    "code_acces": "1234"
 }
 ```
 
@@ -638,21 +638,21 @@ Success response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Vérification de code réussie",
-  "data": {
-    "id": 10,
-    "user_id": 7,
-    "module_id": 2,
-    "code_acces": "1234",
-    "is_active": true,
-    "module": {
-      "id": 2,
-      "name": "gerant_station",
-      "description": null,
-      "is_active": true
+    "status": 1,
+    "message": "Vérification de code réussie",
+    "data": {
+        "id": 10,
+        "user_id": 7,
+        "module_id": 2,
+        "code_acces": "1234",
+        "is_active": true,
+        "module": {
+            "id": 2,
+            "name": "gerant_station",
+            "description": null,
+            "is_active": true
+        }
     }
-  }
 }
 ```
 
@@ -660,9 +660,9 @@ Error response example (no station affectation while verifying `gerant_station`)
 
 ```json
 {
-  "status": 0,
-  "message": "Vous n'avez pas été affecté à une station",
-  "error": []
+    "status": 0,
+    "message": "Vous n'avez pas été affecté à une station",
+    "error": []
 }
 ```
 
@@ -680,20 +680,20 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Liste des stations chargee avec succes.",
-  "data": [
-    {
-      "id": 3,
-      "reference": "STAABC123",
-      "libelle": "Station A",
-      "adresse": "Rue 1",
-      "ville": "Abidjan",
-      "is_active": true,
-      "created_at": "29-07-2026 10:00:00",
-      "updated_at": "29-07-2026 10:00:00"
-    }
-  ]
+    "status": 1,
+    "message": "Liste des stations chargee avec succes.",
+    "data": [
+        {
+            "id": 3,
+            "reference": "STAABC123",
+            "libelle": "Station A",
+            "adresse": "Rue 1",
+            "ville": "Abidjan",
+            "is_active": true,
+            "created_at": "29-07-2026 10:00:00",
+            "updated_at": "29-07-2026 10:00:00"
+        }
+    ]
 }
 ```
 
@@ -706,12 +706,12 @@ Request example:
 
 ```json
 {
-  "libelle": "Station A",
-  "ville": "Abidjan",
-  "adresse": "Rue 1",
-  "longitude": -4.01,
-  "latitude": 5.32,
-  "is_active": true
+    "libelle": "Station A",
+    "ville": "Abidjan",
+    "adresse": "Rue 1",
+    "longitude": -4.01,
+    "latitude": 5.32,
+    "is_active": true
 }
 ```
 
@@ -719,18 +719,18 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Station creee avec succes.",
-  "data": {
-    "id": 3,
-    "reference": "STAABC123",
-    "libelle": "Station A",
-    "adresse": "Rue 1",
-    "ville": "Abidjan",
-    "is_active": true,
-    "created_at": "29-07-2026 10:00:00",
-    "updated_at": "29-07-2026 10:00:00"
-  }
+    "status": 1,
+    "message": "Station creee avec succes.",
+    "data": {
+        "id": 3,
+        "reference": "STAABC123",
+        "libelle": "Station A",
+        "adresse": "Rue 1",
+        "ville": "Abidjan",
+        "is_active": true,
+        "created_at": "29-07-2026 10:00:00",
+        "updated_at": "29-07-2026 10:00:00"
+    }
 }
 ```
 
@@ -740,16 +740,16 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Station chargee avec succes.",
-  "data": {
-    "id": 3,
-    "reference": "STAABC123",
-    "libelle": "Station A",
-    "adresse": "Rue 1",
-    "ville": "Abidjan",
-    "is_active": true
-  }
+    "status": 1,
+    "message": "Station chargee avec succes.",
+    "data": {
+        "id": 3,
+        "reference": "STAABC123",
+        "libelle": "Station A",
+        "adresse": "Rue 1",
+        "ville": "Abidjan",
+        "is_active": true
+    }
 }
 ```
 
@@ -759,8 +759,8 @@ Request example:
 
 ```json
 {
-  "libelle": "Station A (updated)",
-  "is_active": true
+    "libelle": "Station A (updated)",
+    "is_active": true
 }
 ```
 
@@ -768,14 +768,14 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Station mise a jour avec succes.",
-  "data": {
-    "id": 3,
-    "reference": "STAABC123",
-    "libelle": "Station A (updated)",
-    "is_active": true
-  }
+    "status": 1,
+    "message": "Station mise a jour avec succes.",
+    "data": {
+        "id": 3,
+        "reference": "STAABC123",
+        "libelle": "Station A (updated)",
+        "is_active": true
+    }
 }
 ```
 
@@ -785,12 +785,12 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Statut de la station change avec succes.",
-  "data": {
-    "id": 3,
-    "is_active": false
-  }
+    "status": 1,
+    "message": "Statut de la station change avec succes.",
+    "data": {
+        "id": 3,
+        "is_active": false
+    }
 }
 ```
 
@@ -800,8 +800,8 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Station supprimee avec succes."
+    "status": 1,
+    "message": "Station supprimee avec succes."
 }
 ```
 
@@ -815,18 +815,18 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Liste des affectations de stations chargee avec succes.",
-  "data": [
-    {
-      "id": 5,
-      "station_id": 3,
-      "user_id": 7,
-      "is_active": true,
-      "created_at": "29-07-2026 10:00:00",
-      "updated_at": "29-07-2026 10:00:00"
-    }
-  ]
+    "status": 1,
+    "message": "Liste des affectations de stations chargee avec succes.",
+    "data": [
+        {
+            "id": 5,
+            "station_id": 3,
+            "user_id": 7,
+            "is_active": true,
+            "created_at": "29-07-2026 10:00:00",
+            "updated_at": "29-07-2026 10:00:00"
+        }
+    ]
 }
 ```
 
@@ -836,8 +836,8 @@ Request example:
 
 ```json
 {
-  "station_id": 3,
-  "user_id": 7
+    "station_id": 3,
+    "user_id": 7
 }
 ```
 
@@ -845,14 +845,14 @@ Success response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Affectation de station creee avec succes.",
-  "data": {
-    "id": 5,
-    "station_id": 3,
-    "user_id": 7,
-    "is_active": true
-  }
+    "status": 1,
+    "message": "Affectation de station creee avec succes.",
+    "data": {
+        "id": 5,
+        "station_id": 3,
+        "user_id": 7,
+        "is_active": true
+    }
 }
 ```
 
@@ -860,9 +860,9 @@ Business error example (duplicate active affectation):
 
 ```json
 {
-  "status": 0,
-  "message": "Cet utilisateur a deja une affectation de station active.",
-  "error": []
+    "status": 0,
+    "message": "Cet utilisateur a deja une affectation de station active.",
+    "error": []
 }
 ```
 
@@ -872,14 +872,14 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Affectation chargee avec succes.",
-  "data": {
-    "id": 5,
-    "station_id": 3,
-    "user_id": 7,
-    "is_active": true
-  }
+    "status": 1,
+    "message": "Affectation chargee avec succes.",
+    "data": {
+        "id": 5,
+        "station_id": 3,
+        "user_id": 7,
+        "is_active": true
+    }
 }
 ```
 
@@ -889,7 +889,7 @@ Request example:
 
 ```json
 {
-  "station_id": 4
+    "station_id": 4
 }
 ```
 
@@ -897,14 +897,14 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Affectation de station mise a jour avec succes.",
-  "data": {
-    "id": 5,
-    "station_id": 4,
-    "user_id": 7,
-    "is_active": true
-  }
+    "status": 1,
+    "message": "Affectation de station mise a jour avec succes.",
+    "data": {
+        "id": 5,
+        "station_id": 4,
+        "user_id": 7,
+        "is_active": true
+    }
 }
 ```
 
@@ -914,12 +914,12 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Statut de l'affectation de station change avec succes.",
-  "data": {
-    "id": 5,
-    "is_active": false
-  }
+    "status": 1,
+    "message": "Statut de l'affectation de station change avec succes.",
+    "data": {
+        "id": 5,
+        "is_active": false
+    }
 }
 ```
 
@@ -929,8 +929,8 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Affectation de station supprimee avec succes."
+    "status": 1,
+    "message": "Affectation de station supprimee avec succes."
 }
 ```
 
@@ -944,18 +944,18 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Liste des hydrocarbures chargee avec succes.",
-  "data": [
-    {
-      "id": 1,
-      "libelle": "Essence",
-      "prix_achat": "800.00",
-      "prix_vente": "850.00",
-      "created_at": "29-07-2026 10:00:00",
-      "updated_at": "29-07-2026 10:00:00"
-    }
-  ]
+    "status": 1,
+    "message": "Liste des hydrocarbures chargee avec succes.",
+    "data": [
+        {
+            "id": 1,
+            "libelle": "Essence",
+            "prix_achat": "800.00",
+            "prix_vente": "850.00",
+            "created_at": "29-07-2026 10:00:00",
+            "updated_at": "29-07-2026 10:00:00"
+        }
+    ]
 }
 ```
 
@@ -965,9 +965,9 @@ Request example:
 
 ```json
 {
-  "libelle": "Essence",
-  "prix_achat": 800,
-  "prix_vente": 850
+    "libelle": "Essence",
+    "prix_achat": 800,
+    "prix_vente": 850
 }
 ```
 
@@ -975,14 +975,14 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Hydrocarbure cree avec succes.",
-  "data": {
-    "id": 1,
-    "libelle": "Essence",
-    "prix_achat": "800.00",
-    "prix_vente": "850.00"
-  }
+    "status": 1,
+    "message": "Hydrocarbure cree avec succes.",
+    "data": {
+        "id": 1,
+        "libelle": "Essence",
+        "prix_achat": "800.00",
+        "prix_vente": "850.00"
+    }
 }
 ```
 
@@ -992,14 +992,14 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Hydrocarbure charge avec succes.",
-  "data": {
-    "id": 1,
-    "libelle": "Essence",
-    "prix_achat": "800.00",
-    "prix_vente": "850.00"
-  }
+    "status": 1,
+    "message": "Hydrocarbure charge avec succes.",
+    "data": {
+        "id": 1,
+        "libelle": "Essence",
+        "prix_achat": "800.00",
+        "prix_vente": "850.00"
+    }
 }
 ```
 
@@ -1009,7 +1009,7 @@ Request example:
 
 ```json
 {
-  "prix_vente": 860
+    "prix_vente": 860
 }
 ```
 
@@ -1017,14 +1017,14 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Hydrocarbure mis a jour avec succes.",
-  "data": {
-    "id": 1,
-    "libelle": "Essence",
-    "prix_achat": "800.00",
-    "prix_vente": "860.00"
-  }
+    "status": 1,
+    "message": "Hydrocarbure mis a jour avec succes.",
+    "data": {
+        "id": 1,
+        "libelle": "Essence",
+        "prix_achat": "800.00",
+        "prix_vente": "860.00"
+    }
 }
 ```
 
@@ -1038,17 +1038,17 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Liste des pompes chargee avec succes.",
-  "data": [
-    {
-      "id": 1,
-      "reference": "POM01",
-      "station_id": 3,
-      "libelle": "Pompe principale",
-      "is_active": true
-    }
-  ]
+    "status": 1,
+    "message": "Liste des pompes chargee avec succes.",
+    "data": [
+        {
+            "id": 1,
+            "reference": "POM01",
+            "station_id": 3,
+            "libelle": "Pompe principale",
+            "is_active": true
+        }
+    ]
 }
 ```
 
@@ -1058,10 +1058,10 @@ Request example:
 
 ```json
 {
-  "station_id": 3,
-  "libelle": "Pompe principale",
-  "description": "Pompe piste 1",
-  "is_active": true
+    "station_id": 3,
+    "libelle": "Pompe principale",
+    "description": "Pompe piste 1",
+    "is_active": true
 }
 ```
 
@@ -1069,16 +1069,16 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Pompe creee avec succes.",
-  "data": {
-    "id": 1,
-    "reference": "POM01",
-    "station_id": 3,
-    "libelle": "Pompe principale",
-    "description": "Pompe piste 1",
-    "is_active": true
-  }
+    "status": 1,
+    "message": "Pompe creee avec succes.",
+    "data": {
+        "id": 1,
+        "reference": "POM01",
+        "station_id": 3,
+        "libelle": "Pompe principale",
+        "description": "Pompe piste 1",
+        "is_active": true
+    }
 }
 ```
 
@@ -1088,15 +1088,15 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Pompe chargee avec succes.",
-  "data": {
-    "id": 1,
-    "reference": "POM01",
-    "station_id": 3,
-    "libelle": "Pompe principale",
-    "is_active": true
-  }
+    "status": 1,
+    "message": "Pompe chargee avec succes.",
+    "data": {
+        "id": 1,
+        "reference": "POM01",
+        "station_id": 3,
+        "libelle": "Pompe principale",
+        "is_active": true
+    }
 }
 ```
 
@@ -1106,7 +1106,7 @@ Request example:
 
 ```json
 {
-  "libelle": "Pompe principale (updated)"
+    "libelle": "Pompe principale (updated)"
 }
 ```
 
@@ -1114,15 +1114,15 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Pompe mise a jour avec succes.",
-  "data": {
-    "id": 1,
-    "reference": "POM01",
-    "station_id": 3,
-    "libelle": "Pompe principale (updated)",
-    "is_active": true
-  }
+    "status": 1,
+    "message": "Pompe mise a jour avec succes.",
+    "data": {
+        "id": 1,
+        "reference": "POM01",
+        "station_id": 3,
+        "libelle": "Pompe principale (updated)",
+        "is_active": true
+    }
 }
 ```
 
@@ -1136,17 +1136,17 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Liste des pistolets chargee avec succes.",
-  "data": [
-    {
-      "id": 1,
-      "pompe_id": 1,
-      "hydrocarbure_id": 1,
-      "libelle": "Pistolet essence 1",
-      "is_active": true
-    }
-  ]
+    "status": 1,
+    "message": "Liste des pistolets chargee avec succes.",
+    "data": [
+        {
+            "id": 1,
+            "pompe_id": 1,
+            "hydrocarbure_id": 1,
+            "libelle": "Pistolet essence 1",
+            "is_active": true
+        }
+    ]
 }
 ```
 
@@ -1156,10 +1156,10 @@ Request example:
 
 ```json
 {
-  "pompe_id": 1,
-  "hydrocarbure_id": 1,
-  "libelle": "Pistolet essence 1",
-  "is_active": true
+    "pompe_id": 1,
+    "hydrocarbure_id": 1,
+    "libelle": "Pistolet essence 1",
+    "is_active": true
 }
 ```
 
@@ -1167,15 +1167,15 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Pistolet cree avec succes.",
-  "data": {
-    "id": 1,
-    "pompe_id": 1,
-    "hydrocarbure_id": 1,
-    "libelle": "Pistolet essence 1",
-    "is_active": true
-  }
+    "status": 1,
+    "message": "Pistolet cree avec succes.",
+    "data": {
+        "id": 1,
+        "pompe_id": 1,
+        "hydrocarbure_id": 1,
+        "libelle": "Pistolet essence 1",
+        "is_active": true
+    }
 }
 ```
 
@@ -1185,15 +1185,15 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Pistolet charge avec succes.",
-  "data": {
-    "id": 1,
-    "pompe_id": 1,
-    "hydrocarbure_id": 1,
-    "libelle": "Pistolet essence 1",
-    "is_active": true
-  }
+    "status": 1,
+    "message": "Pistolet charge avec succes.",
+    "data": {
+        "id": 1,
+        "pompe_id": 1,
+        "hydrocarbure_id": 1,
+        "libelle": "Pistolet essence 1",
+        "is_active": true
+    }
 }
 ```
 
@@ -1203,7 +1203,7 @@ Request example:
 
 ```json
 {
-  "is_active": false
+    "is_active": false
 }
 ```
 
@@ -1211,12 +1211,12 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Pistolet mis a jour avec succes.",
-  "data": {
-    "id": 1,
-    "is_active": false
-  }
+    "status": 1,
+    "message": "Pistolet mis a jour avec succes.",
+    "data": {
+        "id": 1,
+        "is_active": false
+    }
 }
 ```
 
@@ -1236,17 +1236,17 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Liste des affectations pistolets chargee avec succes.",
-  "data": [
-    {
-      "id": 12,
-      "employee_id": 10,
-      "pistolet_id": 5,
-      "index_ouverture": 1200.5,
-      "is_active": true
-    }
-  ]
+    "status": 1,
+    "message": "Liste des affectations pistolets chargee avec succes.",
+    "data": [
+        {
+            "id": 12,
+            "employee_id": 10,
+            "pistolet_id": 5,
+            "index_ouverture": 1200.5,
+            "is_active": true
+        }
+    ]
 }
 ```
 
@@ -1256,9 +1256,9 @@ Request example:
 
 ```json
 {
-  "employee_id": 10,
-  "pistolet_id": 5,
-  "index_ouverture": 1200.5
+    "employee_id": 10,
+    "pistolet_id": 5,
+    "index_ouverture": 1200.5
 }
 ```
 
@@ -1266,15 +1266,15 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Affectation pistolet creee avec succes.",
-  "data": {
-    "id": 12,
-    "employee_id": 10,
-    "pistolet_id": 5,
-    "index_ouverture": 1200.5,
-    "is_active": true
-  }
+    "status": 1,
+    "message": "Affectation pistolet creee avec succes.",
+    "data": {
+        "id": 12,
+        "employee_id": 10,
+        "pistolet_id": 5,
+        "index_ouverture": 1200.5,
+        "is_active": true
+    }
 }
 ```
 
@@ -1284,17 +1284,17 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Affectation pistolet chargee avec succes.",
-  "data": {
-    "id": 12,
-    "employee_id": 10,
-    "pistolet_id": 5,
-    "index_ouverture": 1200.5,
-    "is_active": true,
-    "sum_total_litre": 0,
-    "sum_montant_paye": 0
-  }
+    "status": 1,
+    "message": "Affectation pistolet chargee avec succes.",
+    "data": {
+        "id": 12,
+        "employee_id": 10,
+        "pistolet_id": 5,
+        "index_ouverture": 1200.5,
+        "is_active": true,
+        "sum_total_litre": 0,
+        "sum_montant_paye": 0
+    }
 }
 ```
 
@@ -1304,11 +1304,11 @@ Request example (close transition):
 
 ```json
 {
-  "is_active": false,
-  "index_fermeture": 1300.5,
-  "litre_retouner": 0,
-  "montant_recu": 85000,
-  "commentaire": "Fin de service"
+    "is_active": false,
+    "index_fermeture": 1300.5,
+    "litre_retouner": 0,
+    "montant_recu": 85000,
+    "commentaire": "Fin de service"
 }
 ```
 
@@ -1316,14 +1316,14 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Affectation pistolet mise a jour avec succes.",
-  "data": {
-    "id": 12,
-    "is_active": false,
-    "index_fermeture": 1300.5,
-    "montant_recu": 85000
-  }
+    "status": 1,
+    "message": "Affectation pistolet mise a jour avec succes.",
+    "data": {
+        "id": 12,
+        "is_active": false,
+        "index_fermeture": 1300.5,
+        "montant_recu": 85000
+    }
 }
 ```
 
@@ -1333,8 +1333,8 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Affectation pistolet supprimee avec succes."
+    "status": 1,
+    "message": "Affectation pistolet supprimee avec succes."
 }
 ```
 
@@ -1350,17 +1350,17 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Liste des clients chargee avec succes.",
-  "data": [
-    {
-      "id": 9,
-      "name": "Company X",
-      "telephone": "070003333",
-      "email": "x@corp.com",
-      "is_active": true
-    }
-  ]
+    "status": 1,
+    "message": "Liste des clients chargee avec succes.",
+    "data": [
+        {
+            "id": 9,
+            "name": "Company X",
+            "telephone": "070003333",
+            "email": "x@corp.com",
+            "is_active": true
+        }
+    ]
 }
 ```
 
@@ -1372,18 +1372,18 @@ Request example:
 
 ```json
 {
-  "name": "Company X",
-  "telephone": "070003333",
-  "email": "x@corp.com",
-  "adresse": "Zone indus",
-  "is_active": true,
-  "hydrocarbure": [
-    {
-      "hydrocarbure_id": 1,
-      "max_litre": 5000,
-      "prix": 650
-    }
-  ]
+    "name": "Company X",
+    "telephone": "070003333",
+    "email": "x@corp.com",
+    "adresse": "Zone indus",
+    "is_active": true,
+    "hydrocarbure": [
+        {
+            "hydrocarbure_id": 1,
+            "max_litre": 5000,
+            "prix": 650
+        }
+    ]
 }
 ```
 
@@ -1391,16 +1391,16 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Client cree avec succes.",
-  "data": {
-    "id": 9,
-    "name": "Company X",
-    "telephone": "070003333",
-    "email": "x@corp.com",
-    "adresse": "Zone indus",
-    "is_active": true
-  }
+    "status": 1,
+    "message": "Client cree avec succes.",
+    "data": {
+        "id": 9,
+        "name": "Company X",
+        "telephone": "070003333",
+        "email": "x@corp.com",
+        "adresse": "Zone indus",
+        "is_active": true
+    }
 }
 ```
 
@@ -1410,15 +1410,15 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Client charge avec succes.",
-  "data": {
-    "id": 9,
-    "name": "Company X",
-    "telephone": "070003333",
-    "email": "x@corp.com",
-    "is_active": true
-  }
+    "status": 1,
+    "message": "Client charge avec succes.",
+    "data": {
+        "id": 9,
+        "name": "Company X",
+        "telephone": "070003333",
+        "email": "x@corp.com",
+        "is_active": true
+    }
 }
 ```
 
@@ -1428,14 +1428,14 @@ Request example:
 
 ```json
 {
-  "adresse": "Zone indus (updated)",
-  "hydrocarbure": [
-    {
-      "hydrocarbure_id": 1,
-      "max_litre": 8000,
-      "prix": 645
-    }
-  ]
+    "adresse": "Zone indus (updated)",
+    "hydrocarbure": [
+        {
+            "hydrocarbure_id": 1,
+            "max_litre": 8000,
+            "prix": 645
+        }
+    ]
 }
 ```
 
@@ -1443,12 +1443,12 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Client mis a jour avec succes.",
-  "data": {
-    "id": 9,
-    "adresse": "Zone indus (updated)"
-  }
+    "status": 1,
+    "message": "Client mis a jour avec succes.",
+    "data": {
+        "id": 9,
+        "adresse": "Zone indus (updated)"
+    }
 }
 ```
 
@@ -1458,8 +1458,8 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Client supprime avec succes."
+    "status": 1,
+    "message": "Client supprime avec succes."
 }
 ```
 
@@ -1473,18 +1473,18 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Liste des clients hydrocarbures chargee avec succes.",
-  "data": [
-    {
-      "id": 1,
-      "client_id": 9,
-      "hydrocarbure_id": 1,
-      "max_litre": 5000,
-      "prix": 650,
-      "is_active": true
-    }
-  ]
+    "status": 1,
+    "message": "Liste des clients hydrocarbures chargee avec succes.",
+    "data": [
+        {
+            "id": 1,
+            "client_id": 9,
+            "hydrocarbure_id": 1,
+            "max_litre": 5000,
+            "prix": 650,
+            "is_active": true
+        }
+    ]
 }
 ```
 
@@ -1494,11 +1494,11 @@ Request example:
 
 ```json
 {
-  "client_id": 9,
-  "hydrocarbure_id": 1,
-  "max_litre": 5000,
-  "prix": 650,
-  "is_active": true
+    "client_id": 9,
+    "hydrocarbure_id": 1,
+    "max_litre": 5000,
+    "prix": 650,
+    "is_active": true
 }
 ```
 
@@ -1506,16 +1506,16 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Client hydrocarbure cree avec succes.",
-  "data": {
-    "id": 1,
-    "client_id": 9,
-    "hydrocarbure_id": 1,
-    "max_litre": 5000,
-    "prix": 650,
-    "is_active": true
-  }
+    "status": 1,
+    "message": "Client hydrocarbure cree avec succes.",
+    "data": {
+        "id": 1,
+        "client_id": 9,
+        "hydrocarbure_id": 1,
+        "max_litre": 5000,
+        "prix": 650,
+        "is_active": true
+    }
 }
 ```
 
@@ -1525,16 +1525,16 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Client hydrocarbure charge avec succes.",
-  "data": {
-    "id": 1,
-    "client_id": 9,
-    "hydrocarbure_id": 1,
-    "max_litre": 5000,
-    "prix": 650,
-    "is_active": true
-  }
+    "status": 1,
+    "message": "Client hydrocarbure charge avec succes.",
+    "data": {
+        "id": 1,
+        "client_id": 9,
+        "hydrocarbure_id": 1,
+        "max_litre": 5000,
+        "prix": 650,
+        "is_active": true
+    }
 }
 ```
 
@@ -1544,7 +1544,7 @@ Request example:
 
 ```json
 {
-  "prix": 645
+    "prix": 645
 }
 ```
 
@@ -1552,12 +1552,12 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Client hydrocarbure mis a jour avec succes.",
-  "data": {
-    "id": 1,
-    "prix": 645
-  }
+    "status": 1,
+    "message": "Client hydrocarbure mis a jour avec succes.",
+    "data": {
+        "id": 1,
+        "prix": 645
+    }
 }
 ```
 
@@ -1567,8 +1567,8 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Client hydrocarbure supprime avec succes."
+    "status": 1,
+    "message": "Client hydrocarbure supprime avec succes."
 }
 ```
 
@@ -1588,18 +1588,18 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Liste des creances chargee avec succes.",
-  "data": [
-    {
-      "id": 4,
-      "client_id": 9,
-      "affectation_pistolet_id": 12,
-      "date_creance": "29-07-2026 00:00:00",
-      "total_litre": 120,
-      "montant": 78000
-    }
-  ]
+    "status": 1,
+    "message": "Liste des creances chargee avec succes.",
+    "data": [
+        {
+            "id": 4,
+            "client_id": 9,
+            "affectation_pistolet_id": 12,
+            "date_creance": "29-07-2026 00:00:00",
+            "total_litre": 120,
+            "montant": 78000
+        }
+    ]
 }
 ```
 
@@ -1609,11 +1609,11 @@ Request example:
 
 ```json
 {
-  "client_id": 9,
-  "affectation_pistolet_id": 12,
-  "date_creance": "2026-07-29",
-  "total_litre": 120,
-  "commentaire": "Monthly credit"
+    "client_id": 9,
+    "affectation_pistolet_id": 12,
+    "date_creance": "2026-07-29",
+    "total_litre": 120,
+    "commentaire": "Monthly credit"
 }
 ```
 
@@ -1621,17 +1621,17 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Creance creee avec succes.",
-  "data": {
-    "id": 4,
-    "client_id": 9,
-    "affectation_pistolet_id": 12,
-    "date_creance": "29-07-2026 00:00:00",
-    "total_litre": 120,
-    "montant": 78000,
-    "commentaire": "Monthly credit"
-  }
+    "status": 1,
+    "message": "Creance creee avec succes.",
+    "data": {
+        "id": 4,
+        "client_id": 9,
+        "affectation_pistolet_id": 12,
+        "date_creance": "29-07-2026 00:00:00",
+        "total_litre": 120,
+        "montant": 78000,
+        "commentaire": "Monthly credit"
+    }
 }
 ```
 
@@ -1641,14 +1641,14 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Creance chargee avec succes.",
-  "data": {
-    "id": 4,
-    "client_id": 9,
-    "total_litre": 120,
-    "montant": 78000
-  }
+    "status": 1,
+    "message": "Creance chargee avec succes.",
+    "data": {
+        "id": 4,
+        "client_id": 9,
+        "total_litre": 120,
+        "montant": 78000
+    }
 }
 ```
 
@@ -1658,8 +1658,8 @@ Request example:
 
 ```json
 {
-  "total_litre": 130,
-  "commentaire": "Adjusted"
+    "total_litre": 130,
+    "commentaire": "Adjusted"
 }
 ```
 
@@ -1667,14 +1667,14 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Creance mise a jour avec succes.",
-  "data": {
-    "id": 4,
-    "total_litre": 130,
-    "montant": 84500,
-    "commentaire": "Adjusted"
-  }
+    "status": 1,
+    "message": "Creance mise a jour avec succes.",
+    "data": {
+        "id": 4,
+        "total_litre": 130,
+        "montant": 84500,
+        "commentaire": "Adjusted"
+    }
 }
 ```
 
@@ -1684,8 +1684,8 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Creance supprimee avec succes."
+    "status": 1,
+    "message": "Creance supprimee avec succes."
 }
 ```
 
@@ -1702,19 +1702,19 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Liste des cuves chargee avec succes.",
-  "data": [
-    {
-      "id": 6,
-      "station_id": 3,
-      "hydrocarbure_id": 1,
-      "reference": "CU-01",
-      "libelle": "Cuve SP95",
-      "capacite": 30000,
-      "is_active": true
-    }
-  ]
+    "status": 1,
+    "message": "Liste des cuves chargee avec succes.",
+    "data": [
+        {
+            "id": 6,
+            "station_id": 3,
+            "hydrocarbure_id": 1,
+            "reference": "CU-01",
+            "libelle": "Cuve SP95",
+            "capacite": 30000,
+            "is_active": true
+        }
+    ]
 }
 ```
 
@@ -1724,12 +1724,12 @@ Request example:
 
 ```json
 {
-  "station_id": 3,
-  "hydrocarbure_id": 1,
-  "reference": "CU-01",
-  "libelle": "Cuve SP95",
-  "capacite": 30000,
-  "is_active": true
+    "station_id": 3,
+    "hydrocarbure_id": 1,
+    "reference": "CU-01",
+    "libelle": "Cuve SP95",
+    "capacite": 30000,
+    "is_active": true
 }
 ```
 
@@ -1737,17 +1737,17 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Cuve creee avec succes.",
-  "data": {
-    "id": 6,
-    "station_id": 3,
-    "hydrocarbure_id": 1,
-    "reference": "CU-01",
-    "libelle": "Cuve SP95",
-    "capacite": 30000,
-    "is_active": true
-  }
+    "status": 1,
+    "message": "Cuve creee avec succes.",
+    "data": {
+        "id": 6,
+        "station_id": 3,
+        "hydrocarbure_id": 1,
+        "reference": "CU-01",
+        "libelle": "Cuve SP95",
+        "capacite": 30000,
+        "is_active": true
+    }
 }
 ```
 
@@ -1757,17 +1757,17 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Cuve chargee avec succes.",
-  "data": {
-    "id": 6,
-    "station_id": 3,
-    "hydrocarbure_id": 1,
-    "reference": "CU-01",
-    "libelle": "Cuve SP95",
-    "capacite": 30000,
-    "is_active": true
-  }
+    "status": 1,
+    "message": "Cuve chargee avec succes.",
+    "data": {
+        "id": 6,
+        "station_id": 3,
+        "hydrocarbure_id": 1,
+        "reference": "CU-01",
+        "libelle": "Cuve SP95",
+        "capacite": 30000,
+        "is_active": true
+    }
 }
 ```
 
@@ -1777,7 +1777,7 @@ Request example:
 
 ```json
 {
-  "capacite": 32000
+    "capacite": 32000
 }
 ```
 
@@ -1785,12 +1785,12 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Cuve mise a jour avec succes.",
-  "data": {
-    "id": 6,
-    "capacite": 32000
-  }
+    "status": 1,
+    "message": "Cuve mise a jour avec succes.",
+    "data": {
+        "id": 6,
+        "capacite": 32000
+    }
 }
 ```
 
@@ -1800,8 +1800,8 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Cuve supprimee avec succes."
+    "status": 1,
+    "message": "Cuve supprimee avec succes."
 }
 ```
 
@@ -1817,18 +1817,18 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Liste des jaugeages chargee avec succes.",
-  "data": [
-    {
-      "id": 1,
-      "cuve_id": 6,
-      "date_jauge": "2026-07-29",
-      "volume_reel": 12000,
-      "volume_theorique": 12100,
-      "ecart": 100
-    }
-  ]
+    "status": 1,
+    "message": "Liste des jaugeages chargee avec succes.",
+    "data": [
+        {
+            "id": 1,
+            "cuve_id": 6,
+            "date_jauge": "2026-07-29",
+            "volume_reel": 12000,
+            "volume_theorique": 12100,
+            "ecart": 100
+        }
+    ]
 }
 ```
 
@@ -1838,12 +1838,12 @@ Request example:
 
 ```json
 {
-  "cuve_id": 6,
-  "date_jauge": "2026-07-29",
-  "valeur_jauge": 1.25,
-  "volume_reel": 12000,
-  "volume_theorique": 12100,
-  "commentaire": "Daily gauge"
+    "cuve_id": 6,
+    "date_jauge": "2026-07-29",
+    "valeur_jauge": 1.25,
+    "volume_reel": 12000,
+    "volume_theorique": 12100,
+    "commentaire": "Daily gauge"
 }
 ```
 
@@ -1851,16 +1851,16 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Jaugeage cree avec succes.",
-  "data": {
-    "id": 1,
-    "cuve_id": 6,
-    "date_jauge": "2026-07-29",
-    "volume_reel": 12000,
-    "volume_theorique": 12100,
-    "ecart": 100
-  }
+    "status": 1,
+    "message": "Jaugeage cree avec succes.",
+    "data": {
+        "id": 1,
+        "cuve_id": 6,
+        "date_jauge": "2026-07-29",
+        "volume_reel": 12000,
+        "volume_theorique": 12100,
+        "ecart": 100
+    }
 }
 ```
 
@@ -1870,16 +1870,16 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Jaugeage charge avec succes.",
-  "data": {
-    "id": 1,
-    "cuve_id": 6,
-    "date_jauge": "2026-07-29",
-    "volume_reel": 12000,
-    "volume_theorique": 12100,
-    "ecart": 100
-  }
+    "status": 1,
+    "message": "Jaugeage charge avec succes.",
+    "data": {
+        "id": 1,
+        "cuve_id": 6,
+        "date_jauge": "2026-07-29",
+        "volume_reel": 12000,
+        "volume_theorique": 12100,
+        "ecart": 100
+    }
 }
 ```
 
@@ -1889,8 +1889,8 @@ Request example:
 
 ```json
 {
-  "volume_reel": 11950,
-  "commentaire": "Adjusted after recount"
+    "volume_reel": 11950,
+    "commentaire": "Adjusted after recount"
 }
 ```
 
@@ -1898,13 +1898,13 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Jaugeage mis a jour avec succes.",
-  "data": {
-    "id": 1,
-    "volume_reel": 11950,
-    "ecart": 150
-  }
+    "status": 1,
+    "message": "Jaugeage mis a jour avec succes.",
+    "data": {
+        "id": 1,
+        "volume_reel": 11950,
+        "ecart": 150
+    }
 }
 ```
 
@@ -1914,8 +1914,8 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Jaugeage supprime avec succes."
+    "status": 1,
+    "message": "Jaugeage supprime avec succes."
 }
 ```
 
@@ -1931,15 +1931,15 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Liste des postes chargee avec succes.",
-  "data": [
-    {
-      "id": 2,
-      "libelle": "Caissier",
-      "is_active": true
-    }
-  ]
+    "status": 1,
+    "message": "Liste des postes chargee avec succes.",
+    "data": [
+        {
+            "id": 2,
+            "libelle": "Caissier",
+            "is_active": true
+        }
+    ]
 }
 ```
 
@@ -1949,8 +1949,8 @@ Request example:
 
 ```json
 {
-  "libelle": "Caissier",
-  "is_active": true
+    "libelle": "Caissier",
+    "is_active": true
 }
 ```
 
@@ -1958,13 +1958,13 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Poste cree avec succes.",
-  "data": {
-    "id": 2,
-    "libelle": "Caissier",
-    "is_active": true
-  }
+    "status": 1,
+    "message": "Poste cree avec succes.",
+    "data": {
+        "id": 2,
+        "libelle": "Caissier",
+        "is_active": true
+    }
 }
 ```
 
@@ -1974,13 +1974,13 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Poste charge avec succes.",
-  "data": {
-    "id": 2,
-    "libelle": "Caissier",
-    "is_active": true
-  }
+    "status": 1,
+    "message": "Poste charge avec succes.",
+    "data": {
+        "id": 2,
+        "libelle": "Caissier",
+        "is_active": true
+    }
 }
 ```
 
@@ -1990,7 +1990,7 @@ Request example:
 
 ```json
 {
-  "libelle": "Caissier (updated)"
+    "libelle": "Caissier (updated)"
 }
 ```
 
@@ -1998,13 +1998,13 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Poste mis a jour avec succes.",
-  "data": {
-    "id": 2,
-    "libelle": "Caissier (updated)",
-    "is_active": true
-  }
+    "status": 1,
+    "message": "Poste mis a jour avec succes.",
+    "data": {
+        "id": 2,
+        "libelle": "Caissier (updated)",
+        "is_active": true
+    }
 }
 ```
 
@@ -2014,8 +2014,8 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Poste supprime avec succes."
+    "status": 1,
+    "message": "Poste supprime avec succes."
 }
 ```
 
@@ -2029,18 +2029,18 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Liste des employes chargee avec succes.",
-  "data": [
-    {
-      "id": 10,
-      "name": "Cashier 1",
-      "telephone": "070002222",
-      "post_id": 2,
-      "station_id": 3,
-      "is_active": true
-    }
-  ]
+    "status": 1,
+    "message": "Liste des employes chargee avec succes.",
+    "data": [
+        {
+            "id": 10,
+            "name": "Cashier 1",
+            "telephone": "070002222",
+            "post_id": 2,
+            "station_id": 3,
+            "is_active": true
+        }
+    ]
 }
 ```
 
@@ -2052,13 +2052,13 @@ Request example:
 
 ```json
 {
-  "name": "Cashier 1",
-  "telephone": "070002222",
-  "post_id": 2,
-  "station_id": 3,
-  "adresse": "Rue 1",
-  "salaire_base": 150000,
-  "is_active": true
+    "name": "Cashier 1",
+    "telephone": "070002222",
+    "post_id": 2,
+    "station_id": 3,
+    "adresse": "Rue 1",
+    "salaire_base": 150000,
+    "is_active": true
 }
 ```
 
@@ -2066,16 +2066,16 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Employe cree avec succes.",
-  "data": {
-    "id": 10,
-    "name": "Cashier 1",
-    "telephone": "070002222",
-    "post_id": 2,
-    "station_id": 3,
-    "is_active": true
-  }
+    "status": 1,
+    "message": "Employe cree avec succes.",
+    "data": {
+        "id": 10,
+        "name": "Cashier 1",
+        "telephone": "070002222",
+        "post_id": 2,
+        "station_id": 3,
+        "is_active": true
+    }
 }
 ```
 
@@ -2085,16 +2085,16 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Employe charge avec succes.",
-  "data": {
-    "id": 10,
-    "name": "Cashier 1",
-    "telephone": "070002222",
-    "post_id": 2,
-    "station_id": 3,
-    "is_active": true
-  }
+    "status": 1,
+    "message": "Employe charge avec succes.",
+    "data": {
+        "id": 10,
+        "name": "Cashier 1",
+        "telephone": "070002222",
+        "post_id": 2,
+        "station_id": 3,
+        "is_active": true
+    }
 }
 ```
 
@@ -2104,8 +2104,8 @@ Request example:
 
 ```json
 {
-  "adresse": "Rue 1 (updated)",
-  "salaire_base": 160000
+    "adresse": "Rue 1 (updated)",
+    "salaire_base": 160000
 }
 ```
 
@@ -2113,13 +2113,13 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Employe mis a jour avec succes.",
-  "data": {
-    "id": 10,
-    "adresse": "Rue 1 (updated)",
-    "salaire_base": 160000
-  }
+    "status": 1,
+    "message": "Employe mis a jour avec succes.",
+    "data": {
+        "id": 10,
+        "adresse": "Rue 1 (updated)",
+        "salaire_base": 160000
+    }
 }
 ```
 
@@ -2129,8 +2129,8 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Employe supprime avec succes."
+    "status": 1,
+    "message": "Employe supprime avec succes."
 }
 ```
 
@@ -2148,18 +2148,18 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Liste des types d'operation chargee avec succes.",
-  "data": [
-    {
-      "id": 1,
-      "libelle": "Vente carburant",
-      "description": "Recette journaliere",
-      "nature": true,
-      "nature_libelle": "entree",
-      "is_active": true
-    }
-  ]
+    "status": 1,
+    "message": "Liste des types d'operation chargee avec succes.",
+    "data": [
+        {
+            "id": 1,
+            "libelle": "Vente carburant",
+            "description": "Recette journaliere",
+            "nature": true,
+            "nature_libelle": "entree",
+            "is_active": true
+        }
+    ]
 }
 ```
 
@@ -2169,10 +2169,10 @@ Request example:
 
 ```json
 {
-  "libelle": "Vente carburant",
-  "description": "Recette journaliere",
-  "nature": true,
-  "is_active": true
+    "libelle": "Vente carburant",
+    "description": "Recette journaliere",
+    "nature": true,
+    "is_active": true
 }
 ```
 
@@ -2180,15 +2180,15 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Type d'operation cree avec succes.",
-  "data": {
-    "id": 1,
-    "libelle": "Vente carburant",
-    "nature": true,
-    "nature_libelle": "entree",
-    "is_active": true
-  }
+    "status": 1,
+    "message": "Type d'operation cree avec succes.",
+    "data": {
+        "id": 1,
+        "libelle": "Vente carburant",
+        "nature": true,
+        "nature_libelle": "entree",
+        "is_active": true
+    }
 }
 ```
 
@@ -2198,15 +2198,15 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Type d'operation charge avec succes.",
-  "data": {
-    "id": 1,
-    "libelle": "Vente carburant",
-    "nature": true,
-    "nature_libelle": "entree",
-    "is_active": true
-  }
+    "status": 1,
+    "message": "Type d'operation charge avec succes.",
+    "data": {
+        "id": 1,
+        "libelle": "Vente carburant",
+        "nature": true,
+        "nature_libelle": "entree",
+        "is_active": true
+    }
 }
 ```
 
@@ -2216,7 +2216,7 @@ Request example:
 
 ```json
 {
-  "description": "Recette journaliere (updated)"
+    "description": "Recette journaliere (updated)"
 }
 ```
 
@@ -2224,12 +2224,12 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Type d'operation mis a jour avec succes.",
-  "data": {
-    "id": 1,
-    "description": "Recette journaliere (updated)"
-  }
+    "status": 1,
+    "message": "Type d'operation mis a jour avec succes.",
+    "data": {
+        "id": 1,
+        "description": "Recette journaliere (updated)"
+    }
 }
 ```
 
@@ -2239,8 +2239,8 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Type d'operation supprime avec succes."
+    "status": 1,
+    "message": "Type d'operation supprime avec succes."
 }
 ```
 
@@ -2254,18 +2254,19 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Liste des comptes chargee avec succes.",
-  "data": [
-    {
-      "id": 1,
-      "numero_compte": "CI-001-0001",
-      "libelle": "Main Bank",
-      "solde_initial": 1000000,
-      "devise": "XOF",
-      "is_active": true
-    }
-  ]
+    "status": 1,
+    "message": "Liste des comptes chargee avec succes.",
+    "data": [
+        {
+            "id": 1,
+            "numero_compte": "CI-001-0001",
+            "libelle": "Main Bank",
+            "solde_initial": 1000000,
+            "solde": 1000000,
+            "devise": "XOF",
+            "is_active": true
+        }
+    ]
 }
 ```
 
@@ -2275,11 +2276,11 @@ Request example:
 
 ```json
 {
-  "numero_compte": "CI-001-0001",
-  "libelle": "Main Bank",
-  "solde_initial": 1000000,
-  "devise": "XOF",
-  "is_active": true
+    "numero_compte": "CI-001-0001",
+    "libelle": "Main Bank",
+    "solde_initial": 1000000,
+    "devise": "XOF",
+    "is_active": true
 }
 ```
 
@@ -2287,16 +2288,17 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Compte cree avec succes.",
-  "data": {
-    "id": 1,
-    "numero_compte": "CI-001-0001",
-    "libelle": "Main Bank",
-    "solde_initial": 1000000,
-    "devise": "XOF",
-    "is_active": true
-  }
+    "status": 1,
+    "message": "Compte cree avec succes.",
+    "data": {
+        "id": 1,
+        "numero_compte": "CI-001-0001",
+        "libelle": "Main Bank",
+        "solde_initial": 1000000,
+        "solde": 1000000,
+        "devise": "XOF",
+        "is_active": true
+    }
 }
 ```
 
@@ -2306,16 +2308,17 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Compte charge avec succes.",
-  "data": {
-    "id": 1,
-    "numero_compte": "CI-001-0001",
-    "libelle": "Main Bank",
-    "solde_initial": 1000000,
-    "devise": "XOF",
-    "is_active": true
-  }
+    "status": 1,
+    "message": "Compte charge avec succes.",
+    "data": {
+        "id": 1,
+        "numero_compte": "CI-001-0001",
+        "libelle": "Main Bank",
+        "solde_initial": 1000000,
+        "solde": 1000000,
+        "devise": "XOF",
+        "is_active": true
+    }
 }
 ```
 
@@ -2325,7 +2328,7 @@ Request example:
 
 ```json
 {
-  "libelle": "Main Bank (updated)"
+    "libelle": "Main Bank (updated)"
 }
 ```
 
@@ -2333,12 +2336,12 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Compte mis a jour avec succes.",
-  "data": {
-    "id": 1,
-    "libelle": "Main Bank (updated)"
-  }
+    "status": 1,
+    "message": "Compte mis a jour avec succes.",
+    "data": {
+        "id": 1,
+        "libelle": "Main Bank (updated)"
+    }
 }
 ```
 
@@ -2348,8 +2351,8 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Compte supprime avec succes."
+    "status": 1,
+    "message": "Compte supprime avec succes."
 }
 ```
 
@@ -2357,24 +2360,35 @@ Response example:
 
 Station scope: if station-scoped, list/show/update/delete are filtered by station and `station_id` is forced. On create, if not station-scoped, `station_id` is required (422 if missing).
 
+Solde calculation:
+
+- `solde_initial`
+- `+ SUM(operations.montant)` where `type_operations.nature = true` (entree)
+- `- SUM(operations.montant)` where `type_operations.nature = false` (sortie)
+- `- SUM(versements.montant)` where `status IN ('recu','confirmer')`
+- Only for the primary (auto-created) caisse of a station (MIN(caisse.id)):
+    - `+ SUM(affectation_pistolets.montant_recu)` (closed affectations only)
+    - `+ SUM(paiement_creances.montant)` (excluding soft-deleted)
+
 ### GET `/api/v1/comptabilite/caisses`
 
 Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Liste des caisses chargee avec succes.",
-  "data": [
-    {
-      "id": 1,
-      "station_id": 3,
-      "reference": "CAISSE-01",
-      "libelle": "Caisse principale",
-      "solde_initial": 0,
-      "is_active": true
-    }
-  ]
+    "status": 1,
+    "message": "Liste des caisses chargee avec succes.",
+    "data": [
+        {
+            "id": 1,
+            "station_id": 3,
+            "reference": "CAISSE-01",
+            "libelle": "Caisse principale",
+            "solde_initial": 0,
+            "solde": 0,
+            "is_active": true
+        }
+    ]
 }
 ```
 
@@ -2384,11 +2398,11 @@ Request example:
 
 ```json
 {
-  "station_id": 3,
-  "reference": "CAISSE-01",
-  "libelle": "Caisse principale",
-  "solde_initial": 0,
-  "is_active": true
+    "station_id": 3,
+    "reference": "CAISSE-01",
+    "libelle": "Caisse principale",
+    "solde_initial": 0,
+    "is_active": true
 }
 ```
 
@@ -2396,16 +2410,17 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Caisse creee avec succes.",
-  "data": {
-    "id": 1,
-    "station_id": 3,
-    "reference": "CAISSE-01",
-    "libelle": "Caisse principale",
-    "solde_initial": 0,
-    "is_active": true
-  }
+    "status": 1,
+    "message": "Caisse creee avec succes.",
+    "data": {
+        "id": 1,
+        "station_id": 3,
+        "reference": "CAISSE-01",
+        "libelle": "Caisse principale",
+        "solde_initial": 0,
+        "solde": 0,
+        "is_active": true
+    }
 }
 ```
 
@@ -2415,16 +2430,17 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Caisse chargee avec succes.",
-  "data": {
-    "id": 1,
-    "station_id": 3,
-    "reference": "CAISSE-01",
-    "libelle": "Caisse principale",
-    "solde_initial": 0,
-    "is_active": true
-  }
+    "status": 1,
+    "message": "Caisse chargee avec succes.",
+    "data": {
+        "id": 1,
+        "station_id": 3,
+        "reference": "CAISSE-01",
+        "libelle": "Caisse principale",
+        "solde_initial": 0,
+        "solde": 0,
+        "is_active": true
+    }
 }
 ```
 
@@ -2434,7 +2450,7 @@ Request example:
 
 ```json
 {
-  "libelle": "Caisse principale (updated)"
+    "libelle": "Caisse principale (updated)"
 }
 ```
 
@@ -2442,12 +2458,12 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Caisse mise a jour avec succes.",
-  "data": {
-    "id": 1,
-    "libelle": "Caisse principale (updated)"
-  }
+    "status": 1,
+    "message": "Caisse mise a jour avec succes.",
+    "data": {
+        "id": 1,
+        "libelle": "Caisse principale (updated)"
+    }
 }
 ```
 
@@ -2457,8 +2473,8 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Caisse supprimee avec succes."
+    "status": 1,
+    "message": "Caisse supprimee avec succes."
 }
 ```
 
@@ -2471,24 +2487,28 @@ Caisse/station consistency:
 - If `caisse_id` is present and `station_id` is also present, the caisse must belong to that station (422 otherwise).
 - If `caisse_id` is present and `station_id` is missing, station is inferred from the caisse.
 
+Business rule:
+
+- If the operation is a `sortie` (type_operation.nature = false), the operation is rejected if it would make the caisse balance negative.
+
 ### GET `/api/v1/comptabilite/operations`
 
 Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Liste des operations chargee avec succes.",
-  "data": [
-    {
-      "id": 1,
-      "type_operation_id": 1,
-      "station_id": 3,
-      "caisse_id": 1,
-      "montant": 50000,
-      "date_operation": "29-07-2026 20:00:00"
-    }
-  ]
+    "status": 1,
+    "message": "Liste des operations chargee avec succes.",
+    "data": [
+        {
+            "id": 1,
+            "type_operation_id": 1,
+            "station_id": 3,
+            "caisse_id": 1,
+            "montant": 50000,
+            "date_operation": "29-07-2026 20:00:00"
+        }
+    ]
 }
 ```
 
@@ -2498,12 +2518,12 @@ Request example:
 
 ```json
 {
-  "type_operation_id": 1,
-  "station_id": 3,
-  "caisse_id": 1,
-  "montant": 50000,
-  "commentaire": "Cloture caisse",
-  "date_operation": "2026-07-29"
+    "type_operation_id": 1,
+    "station_id": 3,
+    "caisse_id": 1,
+    "montant": 50000,
+    "commentaire": "Cloture caisse",
+    "date_operation": "2026-07-29"
 }
 ```
 
@@ -2511,17 +2531,17 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Operation creee avec succes.",
-  "data": {
-    "id": 1,
-    "type_operation_id": 1,
-    "station_id": 3,
-    "caisse_id": 1,
-    "montant": 50000,
-    "commentaire": "Cloture caisse",
-    "date_operation": "29-07-2026 00:00:00"
-  }
+    "status": 1,
+    "message": "Operation creee avec succes.",
+    "data": {
+        "id": 1,
+        "type_operation_id": 1,
+        "station_id": 3,
+        "caisse_id": 1,
+        "montant": 50000,
+        "commentaire": "Cloture caisse",
+        "date_operation": "29-07-2026 00:00:00"
+    }
 }
 ```
 
@@ -2531,16 +2551,16 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Operation chargee avec succes.",
-  "data": {
-    "id": 1,
-    "type_operation_id": 1,
-    "station_id": 3,
-    "caisse_id": 1,
-    "montant": 50000,
-    "date_operation": "29-07-2026 00:00:00"
-  }
+    "status": 1,
+    "message": "Operation chargee avec succes.",
+    "data": {
+        "id": 1,
+        "type_operation_id": 1,
+        "station_id": 3,
+        "caisse_id": 1,
+        "montant": 50000,
+        "date_operation": "29-07-2026 00:00:00"
+    }
 }
 ```
 
@@ -2550,8 +2570,8 @@ Request example:
 
 ```json
 {
-  "montant": 52000,
-  "commentaire": "Correction"
+    "montant": 52000,
+    "commentaire": "Correction"
 }
 ```
 
@@ -2559,13 +2579,13 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Operation mise a jour avec succes.",
-  "data": {
-    "id": 1,
-    "montant": 52000,
-    "commentaire": "Correction"
-  }
+    "status": 1,
+    "message": "Operation mise a jour avec succes.",
+    "data": {
+        "id": 1,
+        "montant": 52000,
+        "commentaire": "Correction"
+    }
 }
 ```
 
@@ -2575,8 +2595,8 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Operation supprimee avec succes."
+    "status": 1,
+    "message": "Operation supprimee avec succes."
 }
 ```
 
@@ -2597,27 +2617,32 @@ Status values:
 
 Station scope: when user is `gerant_station` (and not admin/comptabilite), versements are limited to the scoped station via `caisse.station_id`, plus any versements where `user_id == auth_user.id`.
 
+Business rule:
+
+- When a versement is in status `recu` or `confirmer`, it is considered debited from the caisse.
+- Operations that would make the caisse balance negative are rejected on create/update/switch-status.
+
 ### GET `/api/v1/comptabilite/versements`
 
 Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Liste des versements chargee avec succes.",
-  "data": [
-    {
-      "id": 1,
-      "caisse_id": 1,
-      "compte_id": 1,
-      "type": "direct",
-      "user_id": null,
-      "montant": 250000,
-      "date_versement": "29-07-2026 00:00:00",
-      "date_reception": null,
-      "status": "en_cours"
-    }
-  ]
+    "status": 1,
+    "message": "Liste des versements chargee avec succes.",
+    "data": [
+        {
+            "id": 1,
+            "caisse_id": 1,
+            "compte_id": 1,
+            "type": "direct",
+            "user_id": null,
+            "montant": 250000,
+            "date_versement": "29-07-2026 00:00:00",
+            "date_reception": null,
+            "status": "en_cours"
+        }
+    ]
 }
 ```
 
@@ -2627,12 +2652,12 @@ Request example:
 
 ```json
 {
-  "compte_id": 1,
-  "caisse_id": 1,
-  "type": "direct",
-  "montant": 250000,
-  "date_versement": "2026-07-29",
-  "commentaire": "Deposit"
+    "compte_id": 1,
+    "caisse_id": 1,
+    "type": "direct",
+    "montant": 250000,
+    "date_versement": "2026-07-29",
+    "commentaire": "Deposit"
 }
 ```
 
@@ -2640,18 +2665,18 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Versement cree avec succes.",
-  "data": {
-    "id": 1,
-    "compte_id": 1,
-    "caisse_id": 1,
-    "type": "direct",
-    "montant": 250000,
-    "date_versement": "29-07-2026 00:00:00",
-    "date_reception": null,
-    "status": "en_cours"
-  }
+    "status": 1,
+    "message": "Versement cree avec succes.",
+    "data": {
+        "id": 1,
+        "compte_id": 1,
+        "caisse_id": 1,
+        "type": "direct",
+        "montant": 250000,
+        "date_versement": "29-07-2026 00:00:00",
+        "date_reception": null,
+        "status": "en_cours"
+    }
 }
 ```
 
@@ -2661,17 +2686,17 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Versement charge avec succes.",
-  "data": {
-    "id": 1,
-    "compte_id": 1,
-    "caisse_id": 1,
-    "type": "direct",
-    "montant": 250000,
-    "date_reception": null,
-    "status": "en_cours"
-  }
+    "status": 1,
+    "message": "Versement charge avec succes.",
+    "data": {
+        "id": 1,
+        "compte_id": 1,
+        "caisse_id": 1,
+        "type": "direct",
+        "montant": 250000,
+        "date_reception": null,
+        "status": "en_cours"
+    }
 }
 ```
 
@@ -2681,7 +2706,7 @@ Request example:
 
 ```json
 {
-  "commentaire": "Deposit (updated)"
+    "commentaire": "Deposit (updated)"
 }
 ```
 
@@ -2689,12 +2714,12 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Versement mis a jour avec succes.",
-  "data": {
-    "id": 1,
-    "commentaire": "Deposit (updated)"
-  }
+    "status": 1,
+    "message": "Versement mis a jour avec succes.",
+    "data": {
+        "id": 1,
+        "commentaire": "Deposit (updated)"
+    }
 }
 ```
 
@@ -2704,7 +2729,7 @@ Request example:
 
 ```json
 {
-  "status": "recu"
+    "status": "recu"
 }
 ```
 
@@ -2712,13 +2737,13 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Statut du versement change avec succes.",
-  "data": {
-    "id": 1,
-    "date_reception": "30-07-2026 10:00:00",
-    "status": "recu"
-  }
+    "status": 1,
+    "message": "Statut du versement change avec succes.",
+    "data": {
+        "id": 1,
+        "date_reception": "30-07-2026 10:00:00",
+        "status": "recu"
+    }
 }
 ```
 
@@ -2728,8 +2753,8 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Versement supprime avec succes."
+    "status": 1,
+    "message": "Versement supprime avec succes."
 }
 ```
 
@@ -2751,19 +2776,19 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Liste des paiements chargee avec succes.",
-  "data": [
-    {
-      "id": 1,
-      "reference": "PC-2026-001",
-      "client_id": 9,
-      "creance_id": 4,
-      "montant": 50000,
-      "mode_paiement": "cash",
-      "date_paiement": "29-07-2026 00:00:00"
-    }
-  ]
+    "status": 1,
+    "message": "Liste des paiements chargee avec succes.",
+    "data": [
+        {
+            "id": 1,
+            "reference": "PC-2026-001",
+            "client_id": 9,
+            "creance_id": 4,
+            "montant": 50000,
+            "mode_paiement": "cash",
+            "date_paiement": "29-07-2026 00:00:00"
+        }
+    ]
 }
 ```
 
@@ -2773,13 +2798,13 @@ Request example:
 
 ```json
 {
-  "reference": "PC-2026-001",
-  "client_id": 9,
-  "creance_id": 4,
-  "montant": 50000,
-  "mode_paiement": "cash",
-  "date_paiement": "2026-07-29",
-  "commentaire": "Partial payment"
+    "reference": "PC-2026-001",
+    "client_id": 9,
+    "creance_id": 4,
+    "montant": 50000,
+    "mode_paiement": "cash",
+    "date_paiement": "2026-07-29",
+    "commentaire": "Partial payment"
 }
 ```
 
@@ -2787,17 +2812,17 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Paiement cree avec succes.",
-  "data": {
-    "id": 1,
-    "reference": "PC-2026-001",
-    "client_id": 9,
-    "creance_id": 4,
-    "montant": 50000,
-    "mode_paiement": "cash",
-    "date_paiement": "29-07-2026 00:00:00"
-  }
+    "status": 1,
+    "message": "Paiement cree avec succes.",
+    "data": {
+        "id": 1,
+        "reference": "PC-2026-001",
+        "client_id": 9,
+        "creance_id": 4,
+        "montant": 50000,
+        "mode_paiement": "cash",
+        "date_paiement": "29-07-2026 00:00:00"
+    }
 }
 ```
 
@@ -2807,15 +2832,15 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Paiement charge avec succes.",
-  "data": {
-    "id": 1,
-    "reference": "PC-2026-001",
-    "client_id": 9,
-    "creance_id": 4,
-    "montant": 50000
-  }
+    "status": 1,
+    "message": "Paiement charge avec succes.",
+    "data": {
+        "id": 1,
+        "reference": "PC-2026-001",
+        "client_id": 9,
+        "creance_id": 4,
+        "montant": 50000
+    }
 }
 ```
 
@@ -2825,7 +2850,7 @@ Request example:
 
 ```json
 {
-  "montant": 55000
+    "montant": 55000
 }
 ```
 
@@ -2833,12 +2858,12 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Paiement mis a jour avec succes.",
-  "data": {
-    "id": 1,
-    "montant": 55000
-  }
+    "status": 1,
+    "message": "Paiement mis a jour avec succes.",
+    "data": {
+        "id": 1,
+        "montant": 55000
+    }
 }
 ```
 
@@ -2848,8 +2873,238 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Paiement supprime avec succes."
+    "status": 1,
+    "message": "Paiement supprime avec succes."
+}
+```
+
+## 4.7 Client Depots
+
+Base: `/api/v1/comptabilite/client-depots`
+
+Access (current enforcement): any authenticated user.
+
+### GET `/api/v1/comptabilite/client-depots`
+
+Response example:
+
+```json
+{
+    "status": 1,
+    "message": "Liste des depots clients chargee avec succes.",
+    "data": [
+        {
+            "id": 1,
+            "client_id": 1,
+            "reference": "CLDEP-ABC123",
+            "libelle": "Depot client",
+            "commentaire": null,
+            "date_depot": "01-08-2026 10:00:00",
+            "montant": 100000
+        }
+    ]
+}
+```
+
+### POST `/api/v1/comptabilite/client-depots`
+
+Request example:
+
+```json
+{
+    "client_id": 1,
+    "libelle": "Depot client",
+    "commentaire": "Depot du matin",
+    "date_depot": "2026-08-01",
+    "montant": 100000
+}
+```
+
+Response example:
+
+```json
+{
+    "status": 1,
+    "message": "Depot client cree avec succes.",
+    "data": {
+        "id": 1,
+        "client_id": 1,
+        "reference": "CLDEP-ABC123",
+        "libelle": "Depot client",
+        "commentaire": "Depot du matin",
+        "date_depot": "01-08-2026 00:00:00",
+        "montant": 100000
+    }
+}
+```
+
+### GET `/api/v1/comptabilite/client-depots/{client_depot}`
+
+Response example:
+
+```json
+{
+    "status": 1,
+    "message": "Depot client charge avec succes.",
+    "data": {
+        "id": 1,
+        "client_id": 1,
+        "reference": "CLDEP-ABC123",
+        "libelle": "Depot client",
+        "montant": 100000
+    }
+}
+```
+
+### PUT/PATCH `/api/v1/comptabilite/client-depots/{client_depot}`
+
+Request example:
+
+```json
+{
+    "commentaire": "Depot du matin (modifie)"
+}
+```
+
+Response example:
+
+```json
+{
+    "status": 1,
+    "message": "Depot client mis a jour avec succes.",
+    "data": {
+        "id": 1,
+        "commentaire": "Depot du matin (modifie)"
+    }
+}
+```
+
+### DELETE `/api/v1/comptabilite/client-depots/{client_depot}`
+
+Response example:
+
+```json
+{
+    "status": 1,
+    "message": "Depot client supprime avec succes."
+}
+```
+
+## 4.8 Compte Transactions
+
+Base: `/api/v1/comptabilite/compte-transactions`
+
+Access (enforced):
+
+- `super_admin` / `admin` OR active module `comptabilite`
+
+Business rule:
+
+- A transaction from `compte_source_id` to `compte_destination_id` is rejected if the source account does not have enough balance.
+
+### GET `/api/v1/comptabilite/compte-transactions`
+
+Response example:
+
+```json
+{
+    "status": 1,
+    "message": "Liste des transactions de comptes chargee avec succes.",
+    "data": [
+        {
+            "id": 1,
+            "reference": "CPTR-ABC123",
+            "compte_source_id": 1,
+            "compte_destination_id": 2,
+            "montant": 50000,
+            "libelle": "Transfert",
+            "commentaire": null,
+            "date_transaction": "01-08-2026 10:00:00"
+        }
+    ]
+}
+```
+
+### POST `/api/v1/comptabilite/compte-transactions`
+
+Request example:
+
+```json
+{
+    "compte_source_id": 1,
+    "compte_destination_id": 2,
+    "montant": 50000,
+    "libelle": "Transfert",
+    "commentaire": "Transfert interne",
+    "date_transaction": "2026-08-01"
+}
+```
+
+Response example:
+
+```json
+{
+    "status": 1,
+    "message": "Transaction de compte creee avec succes.",
+    "data": {
+        "id": 1,
+        "reference": "CPTR-ABC123",
+        "compte_source_id": 1,
+        "compte_destination_id": 2,
+        "montant": 50000,
+        "libelle": "Transfert",
+        "date_transaction": "01-08-2026 00:00:00"
+    }
+}
+```
+
+### GET `/api/v1/comptabilite/compte-transactions/{compte_transaction}`
+
+Response example:
+
+```json
+{
+    "status": 1,
+    "message": "Transaction de compte chargee avec succes.",
+    "data": {
+        "id": 1,
+        "reference": "CPTR-ABC123",
+        "montant": 50000
+    }
+}
+```
+
+### PUT/PATCH `/api/v1/comptabilite/compte-transactions/{compte_transaction}`
+
+Request example:
+
+```json
+{
+    "commentaire": "Transfert interne (modifie)"
+}
+```
+
+Response example:
+
+```json
+{
+    "status": 1,
+    "message": "Transaction de compte mise a jour avec succes.",
+    "data": {
+        "id": 1,
+        "commentaire": "Transfert interne (modifie)"
+    }
+}
+```
+
+### DELETE `/api/v1/comptabilite/compte-transactions/{compte_transaction}`
+
+Response example:
+
+```json
+{
+    "status": 1,
+    "message": "Transaction de compte supprimee avec succes."
 }
 ```
 
@@ -2867,19 +3122,19 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Liste des citernes chargee avec succes.",
-  "data": [
-    {
-      "id": 1,
-      "immatriculation": "AB-123-CD",
-      "type_citerne": "camion_citerne",
-      "statut": "disponible",
-      "etat": "interne",
-      "capacite_nominale_litres": 30000,
-      "is_active": true
-    }
-  ]
+    "status": 1,
+    "message": "Liste des citernes chargee avec succes.",
+    "data": [
+        {
+            "id": 1,
+            "immatriculation": "AB-123-CD",
+            "type_citerne": "camion_citerne",
+            "statut": "disponible",
+            "etat": "interne",
+            "capacite_nominale_litres": 30000,
+            "is_active": true
+        }
+    ]
 }
 ```
 
@@ -2889,16 +3144,16 @@ Request example:
 
 ```json
 {
-  "immatriculation": "AB-123-CD",
-  "type_citerne": "camion_citerne",
-  "marque": "Mercedes",
-  "modele": "Actros",
-  "statut": "disponible",
-  "etat": "interne",
-  "annee_fabrication": 2018,
-  "capacite_nominale_litres": 30000,
-  "capacite_utile_litres": 29500,
-  "is_active": true
+    "immatriculation": "AB-123-CD",
+    "type_citerne": "camion_citerne",
+    "marque": "Mercedes",
+    "modele": "Actros",
+    "statut": "disponible",
+    "etat": "interne",
+    "annee_fabrication": 2018,
+    "capacite_nominale_litres": 30000,
+    "capacite_utile_litres": 29500,
+    "is_active": true
 }
 ```
 
@@ -2906,18 +3161,18 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Citerne creee avec succes.",
-  "data": {
-    "id": 1,
-    "immatriculation": "AB-123-CD",
-    "type_citerne": "camion_citerne",
-    "statut": "disponible",
-    "etat": "interne",
-    "capacite_nominale_litres": 30000,
-    "capacite_utile_litres": 29500,
-    "is_active": true
-  }
+    "status": 1,
+    "message": "Citerne creee avec succes.",
+    "data": {
+        "id": 1,
+        "immatriculation": "AB-123-CD",
+        "type_citerne": "camion_citerne",
+        "statut": "disponible",
+        "etat": "interne",
+        "capacite_nominale_litres": 30000,
+        "capacite_utile_litres": 29500,
+        "is_active": true
+    }
 }
 ```
 
@@ -2927,17 +3182,17 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Citerne chargee avec succes.",
-  "data": {
-    "id": 1,
-    "immatriculation": "AB-123-CD",
-    "type_citerne": "camion_citerne",
-    "statut": "disponible",
-    "etat": "interne",
-    "capacite_nominale_litres": 30000,
-    "is_active": true
-  }
+    "status": 1,
+    "message": "Citerne chargee avec succes.",
+    "data": {
+        "id": 1,
+        "immatriculation": "AB-123-CD",
+        "type_citerne": "camion_citerne",
+        "statut": "disponible",
+        "etat": "interne",
+        "capacite_nominale_litres": 30000,
+        "is_active": true
+    }
 }
 ```
 
@@ -2947,7 +3202,7 @@ Request example:
 
 ```json
 {
-  "statut": "en_maintenance"
+    "statut": "en_maintenance"
 }
 ```
 
@@ -2955,12 +3210,12 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Citerne mise a jour avec succes.",
-  "data": {
-    "id": 1,
-    "statut": "en_maintenance"
-  }
+    "status": 1,
+    "message": "Citerne mise a jour avec succes.",
+    "data": {
+        "id": 1,
+        "statut": "en_maintenance"
+    }
 }
 ```
 
@@ -2970,8 +3225,8 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Citerne supprimee avec succes."
+    "status": 1,
+    "message": "Citerne supprimee avec succes."
 }
 ```
 
@@ -2985,17 +3240,17 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Liste des compartiments chargee avec succes.",
-  "data": [
-    {
-      "id": 1,
-      "citerne_id": 1,
-      "hydrocarbure_id": 1,
-      "numero_compartiment": 1,
-      "capacite_litres": 15000
-    }
-  ]
+    "status": 1,
+    "message": "Liste des compartiments chargee avec succes.",
+    "data": [
+        {
+            "id": 1,
+            "citerne_id": 1,
+            "hydrocarbure_id": 1,
+            "numero_compartiment": 1,
+            "capacite_litres": 15000
+        }
+    ]
 }
 ```
 
@@ -3005,10 +3260,10 @@ Request example:
 
 ```json
 {
-  "citerne_id": 1,
-  "hydrocarbure_id": 1,
-  "numero_compartiment": 1,
-  "capacite_litres": 15000
+    "citerne_id": 1,
+    "hydrocarbure_id": 1,
+    "numero_compartiment": 1,
+    "capacite_litres": 15000
 }
 ```
 
@@ -3016,15 +3271,15 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Compartiment cree avec succes.",
-  "data": {
-    "id": 1,
-    "citerne_id": 1,
-    "hydrocarbure_id": 1,
-    "numero_compartiment": 1,
-    "capacite_litres": 15000
-  }
+    "status": 1,
+    "message": "Compartiment cree avec succes.",
+    "data": {
+        "id": 1,
+        "citerne_id": 1,
+        "hydrocarbure_id": 1,
+        "numero_compartiment": 1,
+        "capacite_litres": 15000
+    }
 }
 ```
 
@@ -3034,15 +3289,15 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Compartiment charge avec succes.",
-  "data": {
-    "id": 1,
-    "citerne_id": 1,
-    "hydrocarbure_id": 1,
-    "numero_compartiment": 1,
-    "capacite_litres": 15000
-  }
+    "status": 1,
+    "message": "Compartiment charge avec succes.",
+    "data": {
+        "id": 1,
+        "citerne_id": 1,
+        "hydrocarbure_id": 1,
+        "numero_compartiment": 1,
+        "capacite_litres": 15000
+    }
 }
 ```
 
@@ -3052,7 +3307,7 @@ Request example:
 
 ```json
 {
-  "capacite_litres": 15500
+    "capacite_litres": 15500
 }
 ```
 
@@ -3060,12 +3315,12 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Compartiment mis a jour avec succes.",
-  "data": {
-    "id": 1,
-    "capacite_litres": 15500
-  }
+    "status": 1,
+    "message": "Compartiment mis a jour avec succes.",
+    "data": {
+        "id": 1,
+        "capacite_litres": 15500
+    }
 }
 ```
 
@@ -3075,8 +3330,8 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Compartiment supprime avec succes."
+    "status": 1,
+    "message": "Compartiment supprime avec succes."
 }
 ```
 
@@ -3090,19 +3345,19 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Liste des documents chargee avec succes.",
-  "data": [
-    {
-      "id": 1,
-      "citerne_id": 1,
-      "type_document": "assurance",
-      "numero_document": "ASS-2026-001",
-      "date_emission": "2026-07-01",
-      "date_expiration": "2027-07-01",
-      "fichier_scan": null
-    }
-  ]
+    "status": 1,
+    "message": "Liste des documents chargee avec succes.",
+    "data": [
+        {
+            "id": 1,
+            "citerne_id": 1,
+            "type_document": "assurance",
+            "numero_document": "ASS-2026-001",
+            "date_emission": "2026-07-01",
+            "date_expiration": "2027-07-01",
+            "fichier_scan": null
+        }
+    ]
 }
 ```
 
@@ -3114,11 +3369,11 @@ Request example:
 
 ```json
 {
-  "citerne_id": 1,
-  "type_document": "assurance",
-  "numero_document": "ASS-2026-001",
-  "date_emission": "2026-07-01",
-  "date_expiration": "2027-07-01"
+    "citerne_id": 1,
+    "type_document": "assurance",
+    "numero_document": "ASS-2026-001",
+    "date_emission": "2026-07-01",
+    "date_expiration": "2027-07-01"
 }
 ```
 
@@ -3126,17 +3381,17 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Document cree avec succes.",
-  "data": {
-    "id": 1,
-    "citerne_id": 1,
-    "type_document": "assurance",
-    "numero_document": "ASS-2026-001",
-    "date_emission": "2026-07-01",
-    "date_expiration": "2027-07-01",
-    "fichier_scan": null
-  }
+    "status": 1,
+    "message": "Document cree avec succes.",
+    "data": {
+        "id": 1,
+        "citerne_id": 1,
+        "type_document": "assurance",
+        "numero_document": "ASS-2026-001",
+        "date_emission": "2026-07-01",
+        "date_expiration": "2027-07-01",
+        "fichier_scan": null
+    }
 }
 ```
 
@@ -3146,16 +3401,16 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Document charge avec succes.",
-  "data": {
-    "id": 1,
-    "citerne_id": 1,
-    "type_document": "assurance",
-    "numero_document": "ASS-2026-001",
-    "date_emission": "2026-07-01",
-    "date_expiration": "2027-07-01"
-  }
+    "status": 1,
+    "message": "Document charge avec succes.",
+    "data": {
+        "id": 1,
+        "citerne_id": 1,
+        "type_document": "assurance",
+        "numero_document": "ASS-2026-001",
+        "date_emission": "2026-07-01",
+        "date_expiration": "2027-07-01"
+    }
 }
 ```
 
@@ -3165,7 +3420,7 @@ Request example:
 
 ```json
 {
-  "numero_document": "ASS-2026-002"
+    "numero_document": "ASS-2026-002"
 }
 ```
 
@@ -3173,12 +3428,12 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Document mis a jour avec succes.",
-  "data": {
-    "id": 1,
-    "numero_document": "ASS-2026-002"
-  }
+    "status": 1,
+    "message": "Document mis a jour avec succes.",
+    "data": {
+        "id": 1,
+        "numero_document": "ASS-2026-002"
+    }
 }
 ```
 
@@ -3188,8 +3443,8 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Document supprime avec succes."
+    "status": 1,
+    "message": "Document supprime avec succes."
 }
 ```
 
@@ -3203,19 +3458,19 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Liste des maintenances chargee avec succes.",
-  "data": [
-    {
-      "id": 1,
-      "citerne_id": 1,
-      "type_maintenance": "preventive",
-      "nature": "Vidange",
-      "date_prevue": "2026-08-01",
-      "cout": 250000,
-      "status": "planifiee"
-    }
-  ]
+    "status": 1,
+    "message": "Liste des maintenances chargee avec succes.",
+    "data": [
+        {
+            "id": 1,
+            "citerne_id": 1,
+            "type_maintenance": "preventive",
+            "nature": "Vidange",
+            "date_prevue": "2026-08-01",
+            "cout": 250000,
+            "status": "planifiee"
+        }
+    ]
 }
 ```
 
@@ -3227,14 +3482,14 @@ Request example:
 
 ```json
 {
-  "citerne_id": 1,
-  "type_maintenance": "preventive",
-  "nature": "Vidange",
-  "description": "Entretien general",
-  "date_prevue": "2026-08-01",
-  "cout": 250000,
-  "prestataire": "Garage X",
-  "status": "planifiee"
+    "citerne_id": 1,
+    "type_maintenance": "preventive",
+    "nature": "Vidange",
+    "description": "Entretien general",
+    "date_prevue": "2026-08-01",
+    "cout": 250000,
+    "prestataire": "Garage X",
+    "status": "planifiee"
 }
 ```
 
@@ -3242,17 +3497,17 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Maintenance creee avec succes.",
-  "data": {
-    "id": 1,
-    "citerne_id": 1,
-    "type_maintenance": "preventive",
-    "nature": "Vidange",
-    "date_prevue": "2026-08-01",
-    "cout": 250000,
-    "status": "planifiee"
-  }
+    "status": 1,
+    "message": "Maintenance creee avec succes.",
+    "data": {
+        "id": 1,
+        "citerne_id": 1,
+        "type_maintenance": "preventive",
+        "nature": "Vidange",
+        "date_prevue": "2026-08-01",
+        "cout": 250000,
+        "status": "planifiee"
+    }
 }
 ```
 
@@ -3262,15 +3517,15 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Maintenance chargee avec succes.",
-  "data": {
-    "id": 1,
-    "citerne_id": 1,
-    "type_maintenance": "preventive",
-    "nature": "Vidange",
-    "status": "planifiee"
-  }
+    "status": 1,
+    "message": "Maintenance chargee avec succes.",
+    "data": {
+        "id": 1,
+        "citerne_id": 1,
+        "type_maintenance": "preventive",
+        "nature": "Vidange",
+        "status": "planifiee"
+    }
 }
 ```
 
@@ -3280,8 +3535,8 @@ Request example:
 
 ```json
 {
-  "status": "terminee",
-  "date_fin": "2026-08-05"
+    "status": "terminee",
+    "date_fin": "2026-08-05"
 }
 ```
 
@@ -3289,13 +3544,13 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Maintenance mise a jour avec succes.",
-  "data": {
-    "id": 1,
-    "status": "terminee",
-    "date_fin": "2026-08-05"
-  }
+    "status": 1,
+    "message": "Maintenance mise a jour avec succes.",
+    "data": {
+        "id": 1,
+        "status": "terminee",
+        "date_fin": "2026-08-05"
+    }
 }
 ```
 
@@ -3305,8 +3560,8 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Maintenance supprimee avec succes."
+    "status": 1,
+    "message": "Maintenance supprimee avec succes."
 }
 ```
 
@@ -3323,19 +3578,19 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Liste des affectations de citerne chargee avec succes.",
-  "data": [
-    {
-      "id": 2,
-      "employee_id": 10,
-      "citerne_id": 1,
-      "date_affectation": "2026-07-29",
-      "ville_depart": "Abidjan",
-      "ville_destination": "Yamoussoukro",
-      "status": "en_cours"
-    }
-  ]
+    "status": 1,
+    "message": "Liste des affectations de citerne chargee avec succes.",
+    "data": [
+        {
+            "id": 2,
+            "employee_id": 10,
+            "citerne_id": 1,
+            "date_affectation": "2026-07-29",
+            "ville_depart": "Abidjan",
+            "ville_destination": "Yamoussoukro",
+            "status": "en_cours"
+        }
+    ]
 }
 ```
 
@@ -3345,12 +3600,12 @@ Request example:
 
 ```json
 {
-  "employee_id": 10,
-  "citerne_id": 1,
-  "date_affectation": "2026-07-29",
-  "ville_depart": "Abidjan",
-  "ville_destination": "Yamoussoukro",
-  "status": "en_cours"
+    "employee_id": 10,
+    "citerne_id": 1,
+    "date_affectation": "2026-07-29",
+    "ville_depart": "Abidjan",
+    "ville_destination": "Yamoussoukro",
+    "status": "en_cours"
 }
 ```
 
@@ -3358,17 +3613,17 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Affectation de citerne creee avec succes.",
-  "data": {
-    "id": 2,
-    "employee_id": 10,
-    "citerne_id": 1,
-    "date_affectation": "2026-07-29",
-    "ville_depart": "Abidjan",
-    "ville_destination": "Yamoussoukro",
-    "status": "en_cours"
-  }
+    "status": 1,
+    "message": "Affectation de citerne creee avec succes.",
+    "data": {
+        "id": 2,
+        "employee_id": 10,
+        "citerne_id": 1,
+        "date_affectation": "2026-07-29",
+        "ville_depart": "Abidjan",
+        "ville_destination": "Yamoussoukro",
+        "status": "en_cours"
+    }
 }
 ```
 
@@ -3378,15 +3633,15 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Affectation de citerne chargee avec succes.",
-  "data": {
-    "id": 2,
-    "employee_id": 10,
-    "citerne_id": 1,
-    "date_affectation": "2026-07-29",
-    "status": "en_cours"
-  }
+    "status": 1,
+    "message": "Affectation de citerne chargee avec succes.",
+    "data": {
+        "id": 2,
+        "employee_id": 10,
+        "citerne_id": 1,
+        "date_affectation": "2026-07-29",
+        "status": "en_cours"
+    }
 }
 ```
 
@@ -3396,8 +3651,8 @@ Request example:
 
 ```json
 {
-  "status": "terminer",
-  "date_retour_reel": "2026-08-01"
+    "status": "terminer",
+    "date_retour_reel": "2026-08-01"
 }
 ```
 
@@ -3405,13 +3660,13 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Affectation de citerne mise a jour avec succes.",
-  "data": {
-    "id": 2,
-    "status": "terminer",
-    "date_retour_reel": "2026-08-01"
-  }
+    "status": 1,
+    "message": "Affectation de citerne mise a jour avec succes.",
+    "data": {
+        "id": 2,
+        "status": "terminer",
+        "date_retour_reel": "2026-08-01"
+    }
 }
 ```
 
@@ -3421,8 +3676,8 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Affectation de citerne supprimee avec succes."
+    "status": 1,
+    "message": "Affectation de citerne supprimee avec succes."
 }
 ```
 
@@ -3436,18 +3691,18 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Liste des depenses chargee avec succes.",
-  "data": [
-    {
-      "id": 1,
-      "affectation_citerne_id": 2,
-      "libelle": "Peage",
-      "montant": 5000,
-      "date_depense": "2026-07-29",
-      "facture": null
-    }
-  ]
+    "status": 1,
+    "message": "Liste des depenses chargee avec succes.",
+    "data": [
+        {
+            "id": 1,
+            "affectation_citerne_id": 2,
+            "libelle": "Peage",
+            "montant": 5000,
+            "date_depense": "2026-07-29",
+            "facture": null
+        }
+    ]
 }
 ```
 
@@ -3459,11 +3714,11 @@ Request example:
 
 ```json
 {
-  "affectation_citerne_id": 2,
-  "libelle": "Peage",
-  "description": "Peage autoroute",
-  "montant": 5000,
-  "date_depense": "2026-07-29"
+    "affectation_citerne_id": 2,
+    "libelle": "Peage",
+    "description": "Peage autoroute",
+    "montant": 5000,
+    "date_depense": "2026-07-29"
 }
 ```
 
@@ -3471,16 +3726,16 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Depense creee avec succes.",
-  "data": {
-    "id": 1,
-    "affectation_citerne_id": 2,
-    "libelle": "Peage",
-    "montant": 5000,
-    "date_depense": "2026-07-29",
-    "facture": null
-  }
+    "status": 1,
+    "message": "Depense creee avec succes.",
+    "data": {
+        "id": 1,
+        "affectation_citerne_id": 2,
+        "libelle": "Peage",
+        "montant": 5000,
+        "date_depense": "2026-07-29",
+        "facture": null
+    }
 }
 ```
 
@@ -3490,15 +3745,15 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Depense chargee avec succes.",
-  "data": {
-    "id": 1,
-    "affectation_citerne_id": 2,
-    "libelle": "Peage",
-    "montant": 5000,
-    "date_depense": "2026-07-29"
-  }
+    "status": 1,
+    "message": "Depense chargee avec succes.",
+    "data": {
+        "id": 1,
+        "affectation_citerne_id": 2,
+        "libelle": "Peage",
+        "montant": 5000,
+        "date_depense": "2026-07-29"
+    }
 }
 ```
 
@@ -3508,7 +3763,7 @@ Request example:
 
 ```json
 {
-  "montant": 6000
+    "montant": 6000
 }
 ```
 
@@ -3516,12 +3771,12 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Depense mise a jour avec succes.",
-  "data": {
-    "id": 1,
-    "montant": 6000
-  }
+    "status": 1,
+    "message": "Depense mise a jour avec succes.",
+    "data": {
+        "id": 1,
+        "montant": 6000
+    }
 }
 ```
 
@@ -3531,8 +3786,8 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Depense supprimee avec succes."
+    "status": 1,
+    "message": "Depense supprimee avec succes."
 }
 ```
 
@@ -3556,20 +3811,20 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Liste des approvisions chargee avec succes.",
-  "data": [
-    {
-      "id": 1,
-      "reference": "APP-2026-001",
-      "station_id": 3,
-      "affectation_citerne_id": 2,
-      "date_approvision": "2026-07-29",
-      "total_litre_theorique": 10000,
-      "total_litre_reel": 9950,
-      "ecart": 50
-    }
-  ]
+    "status": 1,
+    "message": "Liste des approvisions chargee avec succes.",
+    "data": [
+        {
+            "id": 1,
+            "reference": "APP-2026-001",
+            "station_id": 3,
+            "affectation_citerne_id": 2,
+            "date_approvision": "2026-07-29",
+            "total_litre_theorique": 10000,
+            "total_litre_reel": 9950,
+            "ecart": 50
+        }
+    ]
 }
 ```
 
@@ -3579,28 +3834,28 @@ Request example:
 
 ```json
 {
-  "reference": "APP-2026-001",
-  "station_id": 3,
-  "affectation_citerne_id": 2,
-  "date_approvision": "2026-07-29",
-  "total_litre_theorique": 10000,
-  "total_litre_reel": 0,
-  "appro_compartiment_jauges": [
-    {
-      "hydrocarbure_id": 1,
-      "num_compartiment": 1,
-      "valeur_jauge": 2.1,
-      "volume_reel": 5000,
-      "volume_theorique": 5000
-    },
-    {
-      "hydrocarbure_id": 1,
-      "num_compartiment": 2,
-      "valeur_jauge": 2.1,
-      "volume_reel": 4950,
-      "volume_theorique": 5000
-    }
-  ]
+    "reference": "APP-2026-001",
+    "station_id": 3,
+    "affectation_citerne_id": 2,
+    "date_approvision": "2026-07-29",
+    "total_litre_theorique": 10000,
+    "total_litre_reel": 0,
+    "appro_compartiment_jauges": [
+        {
+            "hydrocarbure_id": 1,
+            "num_compartiment": 1,
+            "valeur_jauge": 2.1,
+            "volume_reel": 5000,
+            "volume_theorique": 5000
+        },
+        {
+            "hydrocarbure_id": 1,
+            "num_compartiment": 2,
+            "valeur_jauge": 2.1,
+            "volume_reel": 4950,
+            "volume_theorique": 5000
+        }
+    ]
 }
 ```
 
@@ -3608,16 +3863,16 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Approvision cree avec succes.",
-  "data": {
-    "id": 1,
-    "reference": "APP-2026-001",
-    "station_id": 3,
-    "total_litre_theorique": 10000,
-    "total_litre_reel": 9950,
-    "ecart": 50
-  }
+    "status": 1,
+    "message": "Approvision cree avec succes.",
+    "data": {
+        "id": 1,
+        "reference": "APP-2026-001",
+        "station_id": 3,
+        "total_litre_theorique": 10000,
+        "total_litre_reel": 9950,
+        "ecart": 50
+    }
 }
 ```
 
@@ -3627,16 +3882,16 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Approvision charge avec succes.",
-  "data": {
-    "id": 1,
-    "reference": "APP-2026-001",
-    "station_id": 3,
-    "total_litre_theorique": 10000,
-    "total_litre_reel": 9950,
-    "ecart": 50
-  }
+    "status": 1,
+    "message": "Approvision charge avec succes.",
+    "data": {
+        "id": 1,
+        "reference": "APP-2026-001",
+        "station_id": 3,
+        "total_litre_theorique": 10000,
+        "total_litre_reel": 9950,
+        "ecart": 50
+    }
 }
 ```
 
@@ -3646,7 +3901,7 @@ Request example:
 
 ```json
 {
-  "total_litre_theorique": 10100
+    "total_litre_theorique": 10100
 }
 ```
 
@@ -3654,13 +3909,13 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Approvision mis a jour avec succes.",
-  "data": {
-    "id": 1,
-    "total_litre_theorique": 10100,
-    "ecart": 150
-  }
+    "status": 1,
+    "message": "Approvision mis a jour avec succes.",
+    "data": {
+        "id": 1,
+        "total_litre_theorique": 10100,
+        "ecart": 150
+    }
 }
 ```
 
@@ -3670,8 +3925,8 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Approvision supprime avec succes."
+    "status": 1,
+    "message": "Approvision supprime avec succes."
 }
 ```
 
@@ -3685,19 +3940,19 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Liste des jauges chargee avec succes.",
-  "data": [
-    {
-      "id": 1,
-      "approvision_id": 1,
-      "hydrocarbure_id": 1,
-      "num_compartiment": 1,
-      "volume_reel": 5000,
-      "volume_theorique": 5000,
-      "ecart": 0
-    }
-  ]
+    "status": 1,
+    "message": "Liste des jauges chargee avec succes.",
+    "data": [
+        {
+            "id": 1,
+            "approvision_id": 1,
+            "hydrocarbure_id": 1,
+            "num_compartiment": 1,
+            "volume_reel": 5000,
+            "volume_theorique": 5000,
+            "ecart": 0
+        }
+    ]
 }
 ```
 
@@ -3707,12 +3962,12 @@ Request example:
 
 ```json
 {
-  "approvision_id": 1,
-  "hydrocarbure_id": 1,
-  "num_compartiment": 1,
-  "valeur_jauge": 2.1,
-  "volume_reel": 5000,
-  "volume_theorique": 5000
+    "approvision_id": 1,
+    "hydrocarbure_id": 1,
+    "num_compartiment": 1,
+    "valeur_jauge": 2.1,
+    "volume_reel": 5000,
+    "volume_theorique": 5000
 }
 ```
 
@@ -3720,17 +3975,17 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Jauge creee avec succes.",
-  "data": {
-    "id": 1,
-    "approvision_id": 1,
-    "hydrocarbure_id": 1,
-    "num_compartiment": 1,
-    "volume_reel": 5000,
-    "volume_theorique": 5000,
-    "ecart": 0
-  }
+    "status": 1,
+    "message": "Jauge creee avec succes.",
+    "data": {
+        "id": 1,
+        "approvision_id": 1,
+        "hydrocarbure_id": 1,
+        "num_compartiment": 1,
+        "volume_reel": 5000,
+        "volume_theorique": 5000,
+        "ecart": 0
+    }
 }
 ```
 
@@ -3740,17 +3995,17 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Jauge chargee avec succes.",
-  "data": {
-    "id": 1,
-    "approvision_id": 1,
-    "hydrocarbure_id": 1,
-    "num_compartiment": 1,
-    "volume_reel": 5000,
-    "volume_theorique": 5000,
-    "ecart": 0
-  }
+    "status": 1,
+    "message": "Jauge chargee avec succes.",
+    "data": {
+        "id": 1,
+        "approvision_id": 1,
+        "hydrocarbure_id": 1,
+        "num_compartiment": 1,
+        "volume_reel": 5000,
+        "volume_theorique": 5000,
+        "ecart": 0
+    }
 }
 ```
 
@@ -3760,7 +4015,7 @@ Request example:
 
 ```json
 {
-  "volume_reel": 4980
+    "volume_reel": 4980
 }
 ```
 
@@ -3768,13 +4023,13 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Jauge mise a jour avec succes.",
-  "data": {
-    "id": 1,
-    "volume_reel": 4980,
-    "ecart": 20
-  }
+    "status": 1,
+    "message": "Jauge mise a jour avec succes.",
+    "data": {
+        "id": 1,
+        "volume_reel": 4980,
+        "ecart": 20
+    }
 }
 ```
 
@@ -3784,7 +4039,7 @@ Response example:
 
 ```json
 {
-  "status": 1,
-  "message": "Jauge supprimee avec succes."
+    "status": 1,
+    "message": "Jauge supprimee avec succes."
 }
 ```

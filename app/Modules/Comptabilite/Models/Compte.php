@@ -11,6 +11,11 @@ class Compte extends Model
 {
     protected $table = 'comptes';
 
+    protected $casts = [
+        'solde_initial' => 'decimal:2',
+        'is_active' => 'boolean',
+    ];
+
     public function createdBy()
     {
         return $this->belongsTo(User::class, 'created_by');
@@ -23,5 +28,15 @@ class Compte extends Model
     public function versements()
     {
         return $this->hasMany(Versement::class, 'compte_id');
+    }
+
+    public function outgoingTransactions()
+    {
+        return $this->hasMany(CompteTransaction::class, 'compte_source_id');
+    }
+
+    public function incomingTransactions()
+    {
+        return $this->hasMany(CompteTransaction::class, 'compte_destination_id');
     }
 }

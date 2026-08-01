@@ -3,6 +3,7 @@
 namespace App\Modules\Transport\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Modules\Gestions\Models\AffectationStation;
 use App\Modules\Transport\Models\AffectationCiterne;
 use App\Modules\Transport\Requests\AffectationCiterneRequest;
 use App\Modules\Transport\Resources\AffectationCiterneResource;
@@ -80,6 +81,12 @@ class AffectationCiterneController extends Controller
         }
 
         $affectation = AffectationCiterne::create($data)->load($this->relations);
+        $userStation = AffectationStation::where('station_id', $data['station_id'])->where('is_active', true)->first();
+
+        if ($userStation) {
+            $telephone = $userStation->user->telephone;
+            $message = "Bonjour $userStation->user->name, vous avez un nouveau approvisionnement en cours.";
+        }
 
         logActivity("Creation d'une affectation de citerne", $affectation->toArray(), $affectation);
 

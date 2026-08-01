@@ -9,6 +9,7 @@ use App\Modules\Comptabilite\Resources\PaiementCreanceResource;
 use App\Modules\Gestions\Models\Creance;
 use App\Services\UserStationScopeService;
 use App\Traits\ApiResponses;
+use App\Traits\Helper;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +17,7 @@ use Illuminate\Support\Str;
 
 class PaiementCreanceController extends Controller
 {
-    use ApiResponses;
+    use ApiResponses, Helper;
 
     private array $relations = [
         'client',
@@ -113,6 +114,11 @@ class PaiementCreanceController extends Controller
             return $this->errorResponse($overpaymentError, 422);
         }
 
+        $solde_client = $this->soldeClient($creance->client_id) + $data['montant'];
+        if ($solde_client < 0) {
+            return $this->errorResponse("Solde client insuffisant.", 400);
+        }
+
         $paiement = PaiementCreance::create($data)->load($this->relations);
 
         logActivity("Creation d'un paiement de creance", $paiement->toArray(), $paiement);
@@ -176,6 +182,11 @@ class PaiementCreanceController extends Controller
         }
 
         $oldPaiement = $paiement->replicate()->fill($paiement->getAttributes());
+
+        $solde_client = $this->soldeClient($creance->client_id) + $newMontant - $paiement->montant;
+        if ($solde_client < 0) {
+            return $this->errorResponse("Solde client insuffisant.", 400);
+        }
 
         $paiement->update($data);
         $paiement->load($this->relations);

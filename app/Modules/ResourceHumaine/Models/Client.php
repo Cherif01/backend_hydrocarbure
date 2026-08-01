@@ -3,6 +3,7 @@
 namespace App\Modules\ResourceHumaine\Models;
 
 use App\Modules\Administration\Models\User;
+use App\Modules\Comptabilite\Models\ClientDepot;
 use App\Modules\Comptabilite\Models\PaiementCreance;
 use App\Modules\Gestions\Models\Creance;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
@@ -36,5 +37,10 @@ class Client extends Model
     public function paiementsCreances()
     {
         return $this->hasMany(PaiementCreance::class, 'client_id');
+    }
+
+    public function depots()
+    {
+        return $this->hasMany(ClientDepot::class, 'client_id');
     }
 }

@@ -9,6 +9,7 @@ use App\Modules\Comptabilite\Requests\VersementRequest;
 use App\Modules\Comptabilite\Resources\VersementResource;
 use App\Services\UserStationScopeService;
 use App\Traits\ApiResponses;
+use App\Traits\Helper;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +17,9 @@ use Illuminate\Validation\Rule;
 
 class VersementController extends Controller
 {
-    use ApiResponses;
+    use ApiResponses, Helper;
+
+    private const CAISSE_DEBIT_STATUSES = ['recu', 'confirmer'];
 
     private array $relations = [
         'compte',
@@ -141,6 +144,16 @@ class VersementController extends Controller
 
         $oldVersement = $versement->replicate()->fill($versement->getAttributes());
 
+        $isCurrentDebited = in_array($currentStatus, self::CAISSE_DEBIT_STATUSES, true);
+        $isNextDebited = in_array($nextStatus, self::CAISSE_DEBIT_STATUSES, true);
+        if (! $isCurrentDebited && $isNextDebited) {
+            $solde = $this->soldeCaisseFromDb((int) $versement->caisse_id);
+            $montant = (float) ($versement->montant ?? 0);
+            if (($solde - $montant) < 0) {
+                return $this->errorResponse("Solde de la caisse insuffisant.", 400);
+            }
+        }
+
         $versement->status = $nextStatus;
         if ($nextStatus === 'recu' && $versement->date_reception === null) {
             $versement->date_reception = now();
@@ -196,6 +209,19 @@ class VersementController extends Controller
             return $this->errorResponse("Vous n'avez pas la permission d'effectuer cette operation.", 403);
         }
 
+        $status = $data['status'] ?? 'en_cours';
+        if (in_array($status, self::CAISSE_DEBIT_STATUSES, true)) {
+            $solde = $this->soldeCaisseFromDb((int) $data['caisse_id']);
+            $montant = (float) ($data['montant'] ?? 0);
+            if (($solde - $montant) < 0) {
+                return $this->errorResponse("Solde de la caisse insuffisant.", 400);
+            }
+        }
+
+        if ($status === 'recu' && ! array_key_exists('date_reception', $data)) {
+            $data['date_reception'] = now();
+        }
+
         $versement = Versement::create($data)->load($this->relations);
 
         logActivity("Creation d'un versement", $versement->toArray(), $versement);
@@ -246,6 +272,48 @@ class VersementController extends Controller
             && ! Caisse::where('id', $caisseId)->where('station_id', $scope['station_id'])->exists()
         ) {
             return $this->errorResponse("Vous n'avez pas la permission d'effectuer cette operation.", 403);
+        }
+
+        $oldCaisseId = $versementScoped->caisse_id !== null ? (int) $versementScoped->caisse_id : null;
+        $newCaisseId = array_key_exists('caisse_id', $data) && $data['caisse_id'] !== null
+            ? (int) $data['caisse_id']
+            : $oldCaisseId;
+
+        $oldStatus = $versementScoped->status;
+        $newStatus = array_key_exists('status', $data) ? $data['status'] : $oldStatus;
+
+        $oldMontant = (float) ($versementScoped->montant ?? 0);
+        $newMontant = array_key_exists('montant', $data) ? (float) $data['montant'] : $oldMontant;
+
+        $oldEffect = ($oldCaisseId !== null && in_array($oldStatus, self::CAISSE_DEBIT_STATUSES, true)) ? -$oldMontant : 0.0;
+        $newEffect = ($newCaisseId !== null && in_array($newStatus, self::CAISSE_DEBIT_STATUSES, true)) ? -$newMontant : 0.0;
+
+        if ($oldCaisseId !== null && $newCaisseId !== null && $oldCaisseId === $newCaisseId) {
+            $soldeCurrent = $this->soldeCaisseFromDb($newCaisseId);
+            $soldeAfter = $soldeCurrent - $oldEffect + $newEffect;
+            if ($soldeAfter < 0) {
+                return $this->errorResponse("Solde de la caisse insuffisant.", 400);
+            }
+        } else {
+            if ($oldCaisseId !== null) {
+                $soldeOldCurrent = $this->soldeCaisseFromDb($oldCaisseId);
+                $soldeOldAfter = $soldeOldCurrent - $oldEffect;
+                if ($soldeOldAfter < 0) {
+                    return $this->errorResponse("Solde de la caisse insuffisant.", 400);
+                }
+            }
+
+            if ($newCaisseId !== null) {
+                $soldeNewCurrent = $this->soldeCaisseFromDb($newCaisseId);
+                $soldeNewAfter = $soldeNewCurrent + $newEffect;
+                if ($soldeNewAfter < 0) {
+                    return $this->errorResponse("Solde de la caisse insuffisant.", 400);
+                }
+            }
+        }
+
+        if ($newStatus === 'recu' && $versementScoped->date_reception === null && ! array_key_exists('date_reception', $data)) {
+            $data['date_reception'] = now();
         }
 
         $oldVersement = $versementScoped->replicate()->fill($versementScoped->getAttributes());

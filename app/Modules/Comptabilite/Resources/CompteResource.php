@@ -16,6 +16,10 @@ class CompteResource extends JsonResource
             'numero_compte' => $this->numero_compte,
             'libelle' => $this->libelle,
             'solde_initial' => $this->solde_initial !== null ? (float) $this->solde_initial : null,
+            'solde' => (float) ($this->solde_initial ?? 0)
+                + (float) ($this->versements_confirmed_sum ?? 0)
+                + (float) ($this->transactions_in_sum ?? 0)
+                - (float) ($this->transactions_out_sum ?? 0),
             'devise' => $this->devise,
             'is_active' => (bool) $this->is_active,
 

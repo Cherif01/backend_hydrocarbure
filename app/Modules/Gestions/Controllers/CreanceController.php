@@ -3,6 +3,7 @@
 namespace App\Modules\Gestions\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Modules\Comptabilite\Models\PaiementCreance;
 use App\Modules\Gestions\Models\AffectationPistolet;
 use App\Modules\Gestions\Models\Creance;
 use App\Modules\Gestions\Requests\CreanceRequest;

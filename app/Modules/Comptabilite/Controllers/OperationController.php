@@ -5,17 +5,19 @@ namespace App\Modules\Comptabilite\Controllers;
 use App\Http\Controllers\Controller;
 use App\Modules\Comptabilite\Models\Caisse;
 use App\Modules\Comptabilite\Models\Operation;
+use App\Modules\Comptabilite\Models\TypeOperation;
 use App\Modules\Comptabilite\Requests\OperationRequest;
 use App\Modules\Comptabilite\Resources\OperationResource;
 use App\Services\UserStationScopeService;
 use App\Traits\ApiResponses;
+use App\Traits\Helper;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class OperationController extends Controller
 {
-    use ApiResponses;
+    use ApiResponses, Helper;
 
     private array $relations = ['typeOperation', 'caisse', 'station', 'createdBy', 'updatedBy'];
 
@@ -69,6 +71,19 @@ class OperationController extends Controller
             return $this->errorResponse($error, 422);
         }
 
+        if (! empty($data['caisse_id'])) {
+            $nature = (bool) TypeOperation::query()->whereKey($data['type_operation_id'])->value('nature');
+            $montant = (float) ($data['montant'] ?? 0);
+            $effect = $nature ? $montant : -$montant;
+
+            if ($effect < 0) {
+                $solde = $this->soldeCaisseFromDb((int) $data['caisse_id']);
+                if (($solde + $effect) < 0) {
+                    return $this->errorResponse("Solde de la caisse insuffisant.", 400);
+                }
+            }
+        }
+
         $data['created_by'] = Auth::id();
 
         $operation = Operation::create($data)->load($this->relations);
@@ -98,6 +113,46 @@ class OperationController extends Controller
         }
 
         $data['updated_by'] = Auth::id();
+
+        $oldCaisseId = $operation->caisse_id !== null ? (int) $operation->caisse_id : null;
+        $newCaisseId = array_key_exists('caisse_id', $data) && $data['caisse_id'] !== null
+            ? (int) $data['caisse_id']
+            : $oldCaisseId;
+
+        if ($oldCaisseId !== null || $newCaisseId !== null) {
+            $oldNature = (bool) TypeOperation::query()->whereKey($operation->type_operation_id)->value('nature');
+            $oldMontant = (float) ($operation->montant ?? 0);
+            $oldEffect = $oldCaisseId !== null ? ($oldNature ? $oldMontant : -$oldMontant) : 0.0;
+
+            $newTypeOperationId = array_key_exists('type_operation_id', $data) ? (int) $data['type_operation_id'] : (int) $operation->type_operation_id;
+            $newNature = (bool) TypeOperation::query()->whereKey($newTypeOperationId)->value('nature');
+            $newMontant = array_key_exists('montant', $data) ? (float) $data['montant'] : (float) ($operation->montant ?? 0);
+            $newEffect = $newCaisseId !== null ? ($newNature ? $newMontant : -$newMontant) : 0.0;
+
+            if ($oldCaisseId !== null && $newCaisseId !== null && $oldCaisseId === $newCaisseId) {
+                $soldeCurrent = $this->soldeCaisseFromDb($newCaisseId);
+                $soldeAfter = $soldeCurrent - $oldEffect + $newEffect;
+                if ($soldeAfter < 0) {
+                    return $this->errorResponse("Solde de la caisse insuffisant.", 400);
+                }
+            } else {
+                if ($oldCaisseId !== null) {
+                    $soldeOldCurrent = $this->soldeCaisseFromDb($oldCaisseId);
+                    $soldeOldAfter = $soldeOldCurrent - $oldEffect;
+                    if ($soldeOldAfter < 0) {
+                        return $this->errorResponse("Solde de la caisse insuffisant.", 400);
+                    }
+                }
+
+                if ($newCaisseId !== null) {
+                    $soldeNewCurrent = $this->soldeCaisseFromDb($newCaisseId);
+                    $soldeNewAfter = $soldeNewCurrent + $newEffect;
+                    if ($soldeNewAfter < 0) {
+                        return $this->errorResponse("Solde de la caisse insuffisant.", 400);
+                    }
+                }
+            }
+        }
 
         $oldOperation = $operation->replicate()->fill($operation->getAttributes());
 
